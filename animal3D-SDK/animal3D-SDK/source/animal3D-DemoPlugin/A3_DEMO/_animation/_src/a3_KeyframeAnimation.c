@@ -38,43 +38,64 @@
 // allocate keyframe pool
 a3i32 a3keyframePoolCreate(a3_KeyframePool* keyframePool_out, const a3ui32 count)
 {
+	keyframePool_out->count = count;
+	a3keyframeInit(keyframePool_out->keyframe, 1, 1); //should this assign the keyframe the default values?
+
 	return -1;
 }
 
 // release keyframe pool
 a3i32 a3keyframePoolRelease(a3_KeyframePool* keyframePool)
 {
+	//how to release the array? I am not sure how it gets constructed in animal3D lol
+	keyframePool->keyframe = NULL; //would this release it?
+
 	return -1;
 }
 
 // initialize keyframe
 a3i32 a3keyframeInit(a3_Keyframe* keyframe_out, const a3real duration, const a3ui32 value_x)
 {
-	return -1;
+	keyframe_out->duration = duration;
+	keyframe_out->index = value_x;
+	keyframe_out->durationInverse = 1 / duration;
+
+	return -1; //do I return -1?
 }
 
 
 // allocate clip pool
 a3i32 a3clipPoolCreate(a3_ClipPool* clipPool_out, const a3ui32 count)
 {
+	a3clipInit(clipPool_out->clip, a3keyframeAnimation_nameLenMax, clipPool_out->clip->keyframePool, 1, 32);
+
 	return -1;
 }
 
 // release clip pool
 a3i32 a3clipPoolRelease(a3_ClipPool* clipPool)
 {
+	clipPool->clip = NULL; //??
+
 	return -1;
 }
 
 // initialize clip with first and last indices
 a3i32 a3clipInit(a3_Clip* clip_out, const a3byte clipName[a3keyframeAnimation_nameLenMax], const a3_KeyframePool* keyframePool, const a3ui32 firstKeyframeIndex, const a3ui32 finalKeyframeIndex)
 {
+	//clip_out->name = clipName;
+	clip_out->keyframePool = keyframePool;
+	clip_out->firstKeyframe = firstKeyframeIndex;
+	clip_out->lastKeyframe = finalKeyframeIndex;
+
 	return -1;
 }
 
 // get clip index from pool
 a3i32 a3clipGetIndexInPool(const a3_ClipPool* clipPool, const a3byte clipName[a3keyframeAnimation_nameLenMax])
 {
+	clipPool->clip->index;
+
 	return -1;
 }
 

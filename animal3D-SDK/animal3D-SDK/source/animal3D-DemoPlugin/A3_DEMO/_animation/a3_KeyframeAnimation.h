@@ -58,6 +58,18 @@ struct a3_Keyframe
 {
 	// index in keyframe pool
 	a3ui32 index;
+
+	//duration - how long the keyframe lasts
+	a3real duration; //i think it should be a3real based on a function down below
+
+	//duration inverse - the reciprocal of duration
+	float durationInverse; //I have it as float because it will be a fraction probably
+
+	//data - the value of the sample from the keyframe, random value from index
+	int data; //said a simple integer should suffice so I have that here
+
+	//constructor/initialize - set duration and inverse + change values of keyframes
+	//might be one of the functions down below like line 94
 };
 
 // pool of keyframe descriptors
@@ -68,6 +80,11 @@ struct a3_KeyframePool
 
 	// number of keyframes
 	a3ui32 count;
+
+	//constructor - allocate keyframe array to default values
+
+	//destructor - deallocate array
+
 };
 
 
@@ -92,6 +109,30 @@ struct a3_Clip
 
 	// index in clip pool
 	a3ui32 index;
+
+	//duration - the length of the clip (sum of all keyframe lengths) (cannot be 0)
+	a3real duration;
+
+	//duration inverse - reciprocal of duration
+	float durationInverse;
+
+	//keyframe count - number of keyframes referenced by clip
+	a3ui32 keyframeCount; //a3ui32??
+
+	//first keyframe - index of first keyframe referenced by clip
+	a3ui32 firstKeyframe;
+
+	//last keyframe - index of final keyframe referenced by clip
+	a3ui32 lastKeyframe;
+
+	//keyframe pool - pointer to a pool of keyframes for those within the clip (clip references keyframes owned elsewhere)
+	a3_KeyframePool* keyframePool;
+
+	//constructor - initializing values and setting names and etc
+
+	//calculate duration - calc duration and inverse of all referenced keyframes
+
+	//distribute duration - set duration and inverse uniformly across clip
 };
 
 // group of clips
@@ -102,6 +143,10 @@ struct a3_ClipPool
 
 	// number of clips
 	a3ui32 count;
+
+	//constructor
+
+	//destructor
 };
 
 
