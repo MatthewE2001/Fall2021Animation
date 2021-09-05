@@ -67,7 +67,8 @@ a3i32 a3keyframeInit(a3_Keyframe* keyframe_out, const a3real duration, const a3u
 // allocate clip pool
 a3i32 a3clipPoolCreate(a3_ClipPool* clipPool_out, const a3ui32 count)
 {
-	a3clipInit(clipPool_out->clip, a3keyframeAnimation_nameLenMax, clipPool_out->clip->keyframePool, 1, 32);
+	const a3byte clipName[a3keyframeAnimation_nameLenMax];
+	a3clipInit(clipPool_out->clip, clipName, clipPool_out->clip->keyframePool, 1, 32);
 
 	return -1;
 }
@@ -84,7 +85,7 @@ a3i32 a3clipPoolRelease(a3_ClipPool* clipPool)
 a3i32 a3clipInit(a3_Clip* clip_out, const a3byte clipName[a3keyframeAnimation_nameLenMax], const a3_KeyframePool* keyframePool, const a3ui32 firstKeyframeIndex, const a3ui32 finalKeyframeIndex)
 {
 	//clip_out->name = clipName;
-	clip_out->keyframePool = keyframePool;
+	clip_out->keyframePool->keyframe = keyframePool->keyframe;
 	clip_out->firstKeyframe = firstKeyframeIndex;
 	clip_out->lastKeyframe = finalKeyframeIndex;
 
