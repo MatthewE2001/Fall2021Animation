@@ -67,9 +67,6 @@ struct a3_Keyframe
 
 	//data - the value of the sample from the keyframe, random value from index
 	int data; //said a simple integer should suffice so I have that here
-
-	//constructor/initialize - set duration and inverse + change values of keyframes
-	//might be one of the functions down below like line 94
 };
 
 // pool of keyframe descriptors
@@ -80,11 +77,6 @@ struct a3_KeyframePool
 
 	// number of keyframes
 	a3ui32 count;
-
-	//constructor - allocate keyframe array to default values
-
-	//destructor - deallocate array
-
 };
 
 
@@ -128,8 +120,6 @@ struct a3_Clip
 	//keyframe pool - pointer to a pool of keyframes for those within the clip (clip references keyframes owned elsewhere)
 	a3_KeyframePool* keyframePool;
 
-	//constructor - initializing values and setting names and etc
-
 	//calculate duration - calc duration and inverse of all referenced keyframes
 
 	//distribute duration - set duration and inverse uniformly across clip
@@ -143,10 +133,6 @@ struct a3_ClipPool
 
 	// number of clips
 	a3ui32 count;
-
-	//constructor
-
-	//destructor
 };
 
 
