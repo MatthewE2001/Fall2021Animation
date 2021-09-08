@@ -32,12 +32,19 @@
 // update clip controller
 inline a3i32 a3clipControllerUpdate(a3_ClipController* clipCtrl, const a3real dt)
 {
+	clipCtrl->clipTime += dt;
+	clipCtrl->keyframeTime += dt;
+	//do I need to do this for param too?
+
 	return -1;
 }
 
 // set clip to play
 inline a3i32 a3clipControllerSetClip(a3_ClipController* clipCtrl, const a3_ClipPool* clipPool, const a3ui32 clipIndex_pool)
 {
+	clipCtrl->clipPool = clipPool;
+	clipCtrl->clip = clipIndex_pool;
+
 	return -1;
 }
 
