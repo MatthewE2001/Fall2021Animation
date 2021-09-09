@@ -34,7 +34,15 @@ inline a3i32 a3clipControllerUpdate(a3_ClipController* clipCtrl, const a3real dt
 {
 	clipCtrl->clipTime += dt;
 	clipCtrl->keyframeTime += dt;
-	//do I need to do this for param too?
+	
+	//so now i need to resolve time to determine the new keyframe and clip time? (7 cases of resolution?)
+	//case 1: stay still and do nothing
+	if (dt == 0.0f)
+	{
+		//I don't think anything really needs to happen in here 
+	}
+	//case 2: going forward within same keyframe
+	//if (clipCtrl->keyframeTime > 
 
 	return -1;
 }
