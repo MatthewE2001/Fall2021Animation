@@ -755,10 +755,10 @@ void a3demo_loadFramebuffers(a3_DemoState* demoState)
 // utility to load animations
 void a3demo_loadAnimations(a3_DemoState* demoState)
 {
+	printf("\n\n---------------- LOAD ANIMATIONS STARTED ---------------- \n");
 	// instantiate and set up a pool of keyframes (20+)
 
 	// instantiate and set up clips (5+)
-
 
 	//a3_ClipPool* clipPool0;
 	//a3clipPoolCreate(clipPool0, 5);
@@ -768,6 +768,8 @@ void a3demo_loadAnimations(a3_DemoState* demoState)
 	//a3clipControllerInit(clipController0, "ClipController0", clipPool0, 1);
 	//a3_ClipController* clipController1;
 	//a3_ClipController* clipController2;
+
+	printf("\n\n---------------- LOAD ANIMATIONS FINISHED ---------------- \n");
 }
 
 //-----------------------------------------------------------------------------

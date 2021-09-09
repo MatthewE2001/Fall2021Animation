@@ -91,9 +91,12 @@ void a3demo_unloadFramebuffers(a3_DemoState* demoState)
 }
 
 // utility to unload animations
-void a3demo_unloadloadAnimations(a3_DemoState* demoState)
+void a3demo_unloadAnimations(a3_DemoState* demoState)
 {
 
+	printf("\n\n---------------- UNLOAD ANIMATIONS STARTED ---------------- \n");
+
+	printf("\n\n---------------- UNLOAD ANIMATIONS FINISHED ---------------- \n");
 }
 
 //-----------------------------------------------------------------------------

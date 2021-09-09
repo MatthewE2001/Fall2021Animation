@@ -136,6 +136,9 @@ void a3demo_load(a3_DemoState* demoState)
 	// textures
 	a3demo_loadTextures(demoState);
 
+	// animations
+	a3demo_loadAnimations(demoState);
+
 
 	// set flags
 	demoState->displayGrid = a3true;
@@ -161,6 +164,7 @@ void a3demo_unload(a3_DemoState* demoState)
 	a3demo_unloadGeometry(demoState);
 	a3demo_unloadShaders(demoState);
 	a3demo_unloadTextures(demoState);
+	a3demo_unloadAnimations(demoState);
 	a3demo_unloadFramebuffers(demoState);
 }
 
