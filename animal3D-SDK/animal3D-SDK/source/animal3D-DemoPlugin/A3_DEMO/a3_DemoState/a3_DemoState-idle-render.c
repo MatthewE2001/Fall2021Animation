@@ -163,6 +163,23 @@ void a3demo_render_data(const a3_DemoState* demoState,
 		"Reload all shader programs: 'P' ****CHECK CONSOLE FOR ERRORS!**** ");
 }
 
+// animation data (HUD)
+void a3demo_render_animation(const a3_DemoState* demoState,
+	a3_TextRenderer const* text, a3vec4 const col,
+	a3f32 const textAlign, a3f32 const textDepth, a3f32 const textOffsetDelta, a3f32 textOffset)
+{
+	// display test text
+	a3textDraw(text, textAlign, textOffset += textOffsetDelta, textDepth, col.r, col.g, col.b, col.a,
+		"****PLACEHOLDER TEXT****");
+
+	// global controls
+	textOffset = -0.8f;
+	a3textDraw(text, textAlign, textOffset += textOffsetDelta, textDepth, col.r, col.g, col.b, col.a,
+		"Toggle text display:        't' (toggle) | 'T' (alloc/dealloc) ");
+	a3textDraw(text, textAlign, textOffset += textOffsetDelta, textDepth, col.r, col.g, col.b, col.a,
+		"Reload all shader programs: 'P' ****CHECK CONSOLE FOR ERRORS!**** ");
+}
+
 /*
 // bloom iteration
 void a3demo_render_bloomIteration(a3_DemoState const* demoState, a3real2 pixelSize, a3_Framebuffer const* fbo_prev,
@@ -240,6 +257,11 @@ void a3demo_render(a3_DemoState const* demoState, a3f64 const dt)
 				// general data
 			case demoState_textData:
 				a3demo_render_data(demoState, text, col, textAlign + x, textDepth, textOffsetDelta, textOffset + y);
+				break;
+
+				// animation data
+			case demoState_textAnimation:
+				a3demo_render_animation(demoState, text, col, textAlign + x, textDepth, textOffsetDelta, textOffset + y);
 				break;
 			}
 		}
