@@ -35,7 +35,7 @@ inline a3i32 a3clipControllerUpdate(a3_ClipController* clipCtrl, const a3real dt
 	clipCtrl->clipTime += dt;
 	clipCtrl->keyframeTime += dt;
 	
-	//so now i need to resolve time to determine the new keyframe and clip time? (7 cases of resolution?)
+	//so now I need to resolve time to determine the new keyframe and clip time? (7 cases of resolution?)
 	//case 1: stay still and do nothing
 	if (dt == 0.0f)
 	{
@@ -43,26 +43,25 @@ inline a3i32 a3clipControllerUpdate(a3_ClipController* clipCtrl, const a3real dt
 		clipCtrl->playbackDirection = 0;
 	}
 	//case 2: going forward within same keyframe
-	
+	//I think there might not need to be anything specific to do here
 	
 	//case 3: forward into a new keyframe
 	//updating keyframe value if it passes the duration
-	if (clipCtrl->keyframeTime > clipCtrl->clipPool[clipCtrl->clip].
-		clip->keyframePool[clipCtrl->keyframe].keyframe->duration)
+	if (clipCtrl->keyframeParam >= 1)
 	{
 		clipCtrl->keyframe++;
 	}
 
 	//case 4: forward into the end of the clip
-	//adjusting the clipTime back to 0 to loop the clip if it is over the clip duration
-	if (clipCtrl->clipTime > clipCtrl->clipPool[clipCtrl->clip].
-		clip->duration)
+	//restarting the loop if necessary
+	if (clipCtrl->clipParam >= 1)
 	{
 		clipCtrl->clipTime = 0;
 		clipCtrl->keyframe = 0; //making sure the keyframe values are also set to loop
 		clipCtrl->keyframeTime = 0;
 	}
 
+	//reverse cases could potentially have to do with dropping below durationInverse
 	//case 5: reverse in the same keyframe
 
 	//case 6: reverse into a new keyframe
@@ -71,8 +70,10 @@ inline a3i32 a3clipControllerUpdate(a3_ClipController* clipCtrl, const a3real dt
 
 	//finally to normalize the time values
 	//should I divide by a clip/keyframe durations or just something like 60?
-	clipCtrl->clipParam = clipCtrl->clipParam + (clipCtrl->clipTime / 60); //I think? cause then when it passes over the 60 frames it will be over 1 and needs to be reset
-	clipCtrl->keyframeParam = clipCtrl->keyframeParam + (clipCtrl->keyframeTime / 60); //all in this part of clip?
+	clipCtrl->clipParam = clipCtrl->clipParam + (clipCtrl->clipTime / clipCtrl->clipPool[clipCtrl->clip].
+		clip->duration); //I think? cause then when it passes over the 60 frames it will be over 1 and needs to be reset
+	clipCtrl->keyframeParam = clipCtrl->keyframeParam + (clipCtrl->keyframeTime / clipCtrl->clipPool[clipCtrl->clip].
+		clip->keyframePool[clipCtrl->keyframe].keyframe->duration); //all in this part of clip?
 
 	return -1;
 }
