@@ -35,7 +35,7 @@ inline a3i32 a3clipCalculateDuration(a3_Clip* clip)
 	//iterator changed to an unsigned int to fix mismatch warning
 	for (a3ui32 i = 0; i < clip->keyframePool->count; i++)
 	{
-		clip->duration = clip->duration + clip->keyframePool[i].keyframe->duration;
+		clip->duration = clip->duration + clip->keyframePool->keyframe[i]->duration;
 	}
 
 	return -1;
