@@ -39,23 +39,40 @@ inline a3i32 a3clipControllerUpdate(a3_ClipController* clipCtrl, const a3real dt
 	//case 1: stay still and do nothing
 	if (dt == 0.0f)
 	{
-		//I don't think anything really needs to happen in here 
+		//setting the clip controller to a paused state
+		clipCtrl->playbackDirection = 0;
 	}
-	//case 2: going forward within same keyframe (side note: this feels somewhat off, maybe use clip index)
-	//if (clipCtrl->keyframeTime < clipCtrl->clipPool->clip->keyframePool->keyframe->duration)
+	//case 2: going forward within same keyframe
+	
 	
 	//case 3: forward into a new keyframe
-	//could I call the clipUpdate function or something here to update the keyframe and other vals?
+	//updating keyframe value if it passes the duration
+	if (clipCtrl->keyframeTime > clipCtrl->clipPool[clipCtrl->clip].
+		clip->keyframePool[clipCtrl->keyframe].keyframe->duration)
+	{
+		clipCtrl->keyframe++;
+	}
 
 	//case 4: forward into the end of the clip
-	//so here I either need to tell it to loop from beginning or go back through in reverse
+	//adjusting the clipTime back to 0 to loop the clip if it is over the clip duration
+	if (clipCtrl->clipTime > clipCtrl->clipPool[clipCtrl->clip].
+		clip->duration)
+	{
+		clipCtrl->clipTime = 0;
+		clipCtrl->keyframe = 0; //making sure the keyframe values are also set to loop
+		clipCtrl->keyframeTime = 0;
+	}
 
 	//case 5: reverse in the same keyframe
 
 	//case 6: reverse into a new keyframe
 
 	//case 7: reverse into the end of the clip
-	//so here I either need to tell it to loop from beginning or go back through forwards again
+
+	//finally to normalize the time values
+	//should I divide by a clip/keyframe durations or just something like 60?
+	clipCtrl->clipParam = clipCtrl->clipParam + (clipCtrl->clipTime / 60); //I think? cause then when it passes over the 60 frames it will be over 1 and needs to be reset
+	clipCtrl->keyframeParam = clipCtrl->keyframeParam + (clipCtrl->keyframeTime / 60); //all in this part of clip?
 
 	return -1;
 }
