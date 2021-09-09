@@ -161,6 +161,7 @@ void a3demo_render_data(const a3_DemoState* demoState,
 		"Toggle text display:        't' (toggle) | 'T' (alloc/dealloc) ");
 	a3textDraw(text, textAlign, textOffset += textOffsetDelta, textDepth, col.r, col.g, col.b, col.a,
 		"Reload all shader programs: 'P' ****CHECK CONSOLE FOR ERRORS!**** ");
+
 }
 
 // animation data (HUD)
@@ -170,7 +171,13 @@ void a3demo_render_animation(const a3_DemoState* demoState,
 {
 	// display test text
 	a3textDraw(text, textAlign, textOffset += textOffsetDelta, textDepth, col.r, col.g, col.b, col.a,
-		"****PLACEHOLDER TEXT****");
+		"name = %07.4lf", demoState->timer_display->totalTime);
+	a3textDraw(text, textAlign, textOffset += textOffsetDelta, textDepth, col.r, col.g, col.b, col.a,
+		"clip = %07.4lf", demoState->timer_display->totalTime);
+	a3textDraw(text, textAlign, textOffset += textOffsetDelta, textDepth, col.r, col.g, col.b, col.a,
+		"clipTime = %07.4lf s", demoState->timer_display->totalTime);
+	a3textDraw(text, textAlign, textOffset += textOffsetDelta, textDepth, col.r, col.g, col.b, col.a,
+		"clipParam = %07.4lf", demoState->timer_display->totalTime);
 
 	// global controls
 	textOffset = -0.8f;
@@ -178,6 +185,14 @@ void a3demo_render_animation(const a3_DemoState* demoState,
 		"Toggle text display:        't' (toggle) | 'T' (alloc/dealloc) ");
 	a3textDraw(text, textAlign, textOffset += textOffsetDelta, textDepth, col.r, col.g, col.b, col.a,
 		"Reload all shader programs: 'P' ****CHECK CONSOLE FOR ERRORS!**** ");
+
+	// animation controls
+	textOffset = -0.6f;
+	a3textDraw(text, textAlign, textOffset += textOffsetDelta, textDepth, col.r, col.g, col.b, col.a,
+		"Animation control: ");
+	a3textDraw(text, textAlign, textOffset += textOffsetDelta, textDepth, col.r, col.g, col.b, col.a,
+		"    Play forward = '>' | Play reverse = '<' | Stop = '|' | Cycle clip = ','");
+
 }
 
 /*

@@ -101,6 +101,7 @@ void a3demo_loadGeometry(a3_DemoState* demoState);
 void a3demo_loadShaders(a3_DemoState* demoState);
 void a3demo_loadTextures(a3_DemoState* demoState);
 void a3demo_loadFramebuffers(a3_DemoState* demoState);
+void a3demo_loadAnimations(a3_DemoState* demoState);
 void a3demo_loadValidate(a3_DemoState* demoState);
 
 // unloading
@@ -108,6 +109,7 @@ void a3demo_unloadGeometry(a3_DemoState* demoState);
 void a3demo_unloadShaders(a3_DemoState* demoState);
 void a3demo_unloadTextures(a3_DemoState* demoState);
 void a3demo_unloadFramebuffers(a3_DemoState* demoState);
+void a3demo_unloadAnimations(a3_DemoState* demoState);
 void a3demo_unloadValidate(a3_DemoState const* demoState);
 
 
