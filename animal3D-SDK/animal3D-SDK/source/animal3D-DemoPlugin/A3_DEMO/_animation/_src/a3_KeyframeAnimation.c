@@ -48,7 +48,10 @@ a3i32 a3keyframePoolCreate(a3_KeyframePool* keyframePool_out, const a3ui32 count
 a3i32 a3keyframePoolRelease(a3_KeyframePool* keyframePool)
 {
 	//how to release the array? I am not sure how it gets constructed in animal3D lol
-	keyframePool->keyframe = NULL; //would this release it?
+	for (a3ui32 i = 0; i < keyframePool->count; i++)
+	{
+		keyframePool->keyframe[i] = NULL; //would this release it?
+	}	
 
 	return -1;
 }
@@ -68,8 +71,10 @@ a3i32 a3keyframeInit(a3_Keyframe* keyframe_out, const a3real duration, const a3u
 a3i32 a3clipPoolCreate(a3_ClipPool* clipPool_out, const a3ui32 count)
 {
 	const a3byte clipName[a3keyframeAnimation_nameLenMax];
-	//for (a3ui32 i = 0; i < clipPool_out->count; i++)
-	a3clipInit(clipPool_out->clip, clipName, clipPool_out->clip->keyframePool, 1, 32);
+	for (a3ui32 i = 0; i < clipPool_out->count; i++)
+	{
+		a3clipInit(clipPool_out->clip[i], clipName, clipPool_out->clip[i]->keyframePool, 1, 32);
+	}
 
 	return -1;
 }
@@ -77,7 +82,10 @@ a3i32 a3clipPoolCreate(a3_ClipPool* clipPool_out, const a3ui32 count)
 // release clip pool
 a3i32 a3clipPoolRelease(a3_ClipPool* clipPool)
 {
-	clipPool->clip = NULL; //??
+	for (a3ui32 i = 0; i < clipPool->count; i++)
+	{
+		clipPool->clip[i] = NULL; //??
+	}
 
 	return -1;
 }
@@ -86,7 +94,11 @@ a3i32 a3clipPoolRelease(a3_ClipPool* clipPool)
 a3i32 a3clipInit(a3_Clip* clip_out, const a3byte clipName[a3keyframeAnimation_nameLenMax], const a3_KeyframePool* keyframePool, const a3ui32 firstKeyframeIndex, const a3ui32 finalKeyframeIndex)
 {
 	//clip_out->name = clipName;
-	clip_out->keyframePool->keyframe = keyframePool->keyframe;
+	for (a3ui32 i = 0; i < keyframePool->count; i++)
+	{
+		clip_out->keyframePool->keyframe[i] = keyframePool->keyframe[i];
+	}
+
 	clip_out->firstKeyframe = firstKeyframeIndex;
 	clip_out->lastKeyframe = finalKeyframeIndex;
 
@@ -96,9 +108,12 @@ a3i32 a3clipInit(a3_Clip* clip_out, const a3byte clipName[a3keyframeAnimation_na
 // get clip index from pool
 a3i32 a3clipGetIndexInPool(const a3_ClipPool* clipPool, const a3byte clipName[a3keyframeAnimation_nameLenMax])
 {
-	if (clipPool->clip->name == clipName)
+	for (a3ui32 i = 0; i < clipPool->count; i++)
 	{
-		return clipPool->clip->index;
+		if (clipPool->clip[i]->name == clipName)
+		{
+			return clipPool->clip[i]->index;
+		}
 	}
 
 	return -1;
