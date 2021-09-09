@@ -39,7 +39,11 @@
 a3i32 a3keyframePoolCreate(a3_KeyframePool* keyframePool_out, const a3ui32 count)
 {
 	keyframePool_out->count = count;
-	a3keyframeInit(keyframePool_out->keyframe, 1, 1); //should this assign the keyframe the default values?
+
+	for (a3ui32 i = 0; i < count; i++)
+	{
+		a3keyframeInit(keyframePool_out->keyframe[i], 1, 1);
+	}
 
 	return -1;
 }
@@ -71,6 +75,7 @@ a3i32 a3keyframeInit(a3_Keyframe* keyframe_out, const a3real duration, const a3u
 a3i32 a3clipPoolCreate(a3_ClipPool* clipPool_out, const a3ui32 count)
 {
 	const a3byte clipName[a3keyframeAnimation_nameLenMax];
+
 	for (a3ui32 i = 0; i < clipPool_out->count; i++)
 	{
 		a3clipInit(clipPool_out->clip[i], clipName, clipPool_out->clip[i]->keyframePool, 1, 32);
