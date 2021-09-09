@@ -70,7 +70,8 @@ struct a3_ClipController
 	int playbackDirection;
 
 	//clip pool - pointer/reference to the pool of clips that the controller will ultimately control
-	a3_ClipPool* clipPool;
+	//replaced with constant to avoid warning when assigning a clip pool
+	const a3_ClipPool* clipPool;
 };
 
 
