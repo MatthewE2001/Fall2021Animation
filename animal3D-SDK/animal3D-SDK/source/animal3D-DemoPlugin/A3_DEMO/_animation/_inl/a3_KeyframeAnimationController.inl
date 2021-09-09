@@ -41,8 +41,21 @@ inline a3i32 a3clipControllerUpdate(a3_ClipController* clipCtrl, const a3real dt
 	{
 		//I don't think anything really needs to happen in here 
 	}
-	//case 2: going forward within same keyframe
-	//if (clipCtrl->keyframeTime > 
+	//case 2: going forward within same keyframe (side note: this feels somewhat off, maybe use clip index)
+	//if (clipCtrl->keyframeTime < clipCtrl->clipPool->clip->keyframePool->keyframe->duration)
+	
+	//case 3: forward into a new keyframe
+	//could I call the clipUpdate function or something here to update the keyframe and other vals?
+
+	//case 4: forward into the end of the clip
+	//so here I either need to tell it to loop from beginning or go back through in reverse
+
+	//case 5: reverse in the same keyframe
+
+	//case 6: reverse into a new keyframe
+
+	//case 7: reverse into the end of the clip
+	//so here I either need to tell it to loop from beginning or go back through forwards again
 
 	return -1;
 }
