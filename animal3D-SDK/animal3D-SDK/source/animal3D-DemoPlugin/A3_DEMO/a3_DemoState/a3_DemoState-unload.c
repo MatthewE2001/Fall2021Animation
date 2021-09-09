@@ -90,6 +90,11 @@ void a3demo_unloadFramebuffers(a3_DemoState* demoState)
 		a3framebufferRelease(currentFBO++);
 }
 
+// utility to unload animations
+void a3demo_unloadloadAnimations(a3_DemoState* demoState)
+{
+
+}
 
 //-----------------------------------------------------------------------------
 
