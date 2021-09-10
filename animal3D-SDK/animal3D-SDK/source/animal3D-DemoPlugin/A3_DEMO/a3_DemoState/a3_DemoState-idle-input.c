@@ -174,7 +174,7 @@ void a3demo_input_keyCharPress(a3_DemoState* demoState, a3i32 const asciiKey)
 		// toggle stencil test
 		a3demoCtrlCaseToggle(demoState->skipIntermediatePasses, 'I');
 
-		//a3demoCtrlCaseToggle(demoState->clipController, 'v');
+		//a3demoCtrlCasesCap(demoState->clipController, 3, 0, 'v', 'V');
 
 	}
 
