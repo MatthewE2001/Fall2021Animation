@@ -76,7 +76,7 @@ a3i32 a3clipPoolCreate(a3_ClipPool* clipPool_out, const a3ui32 count)
 {
 	const a3byte clipName[a3keyframeAnimation_nameLenMax];
 
-	for (a3ui32 i = 0; i < clipPool_out->count; i++)
+	for (a3ui32 i = 0; i < count; i++)
 	{
 		a3clipInit(clipPool_out->clip[i], clipName, clipPool_out->clip[i]->keyframePool, 1, 32);
 	}
