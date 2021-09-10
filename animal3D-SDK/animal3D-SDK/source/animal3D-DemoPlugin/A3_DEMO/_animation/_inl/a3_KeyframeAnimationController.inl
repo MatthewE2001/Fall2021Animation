@@ -22,6 +22,11 @@
 	inline definitions for keyframe animation controller.
 */
 
+/*
+Adjustments to the code made by Matthew Esslie and Benjamin Davies, this is primarily code from
+Daniel S. Buckstein
+*/
+
 #ifdef __ANIMAL3D_KEYFRAMEANIMATIONCONTROLLER_H
 #ifndef __ANIMAL3D_KEYFRAMEANIMATIONCONTROLLER_INL
 #define __ANIMAL3D_KEYFRAMEANIMATIONCONTROLLER_INL
@@ -71,6 +76,7 @@ inline a3i32 a3clipControllerUpdate(a3_ClipController* clipCtrl, const a3real dt
 	//finally to normalize the time values
 	//should I divide by a clip/keyframe durations or just something like 60?
 	clipCtrl->clipParam = clipCtrl->clipParam + (clipCtrl->clipTime / clipCtrl->clipPool->clip[clipCtrl->clip]->duration); //I think? cause then when it passes over the 60 frames it will be over 1 and needs to be reset
+	
 	clipCtrl->keyframeParam = clipCtrl->keyframeParam + (clipCtrl->keyframeTime / clipCtrl->clipPool->
 		clip[clipCtrl->clip]->keyframePool[clipCtrl->keyframe].keyframe[clipCtrl->keyframe]->duration); //all in this part of clip?
 	

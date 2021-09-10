@@ -22,6 +22,11 @@
 	Implementation of keyframe animation controller.
 */
 
+/*
+Adjustments to the code made by Matthew Esslie and Benjamin Davies, this is primarily code from
+Daniel S. Buckstein
+*/
+
 #include "../a3_KeyframeAnimationController.h"
 
 #include <string.h>

@@ -22,6 +22,11 @@
 	Inline definitions for keyframe animation.
 */
 
+/*
+Adjustments to the code made by Matthew Esslie and Benjamin Davies, this is primarily code from
+Daniel S. Buckstein
+*/
+
 #ifdef __ANIMAL3D_KEYFRAMEANIMATION_H
 #ifndef __ANIMAL3D_KEYFRAMEANIMATION_INL
 #define __ANIMAL3D_KEYFRAMEANIMATION_INL
