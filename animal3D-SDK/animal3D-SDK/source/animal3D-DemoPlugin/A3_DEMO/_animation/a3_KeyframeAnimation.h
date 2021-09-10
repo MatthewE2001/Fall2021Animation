@@ -119,10 +119,6 @@ struct a3_Clip
 
 	//keyframe pool - pointer to a pool of keyframes for those within the clip (clip references keyframes owned elsewhere)
 	a3_KeyframePool* keyframePool;
-
-	//calculate duration - calc duration and inverse of all referenced keyframes
-
-	//distribute duration - set duration and inverse uniformly across clip
 };
 
 // group of clips

@@ -762,8 +762,8 @@ void a3demo_loadAnimations(a3_DemoState* demoState)
 	a3ui32 i;
 
 	// instantiate and set up a pool of keyframes (20+)
-	//a3_KeyframePool* keyframePool;
-	//a3keyframePoolCreate(keyframePool, 20);
+	a3_KeyframePool* keyframePool;
+	a3keyframePoolCreate(&keyframePool, 20);
 
 	// instantiate and set up clips (5+)
 
