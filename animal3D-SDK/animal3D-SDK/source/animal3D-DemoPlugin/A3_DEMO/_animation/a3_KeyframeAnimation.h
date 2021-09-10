@@ -38,7 +38,8 @@
 extern "C"
 {
 #else	// !__cplusplus
-typedef struct a3_Keyframe					a3_Keyframe;
+typedef struct a3_Sample					a3_Sample; 
+typedef struct a3_Keyframe					a3_Keyframe; //keyframe describes the gap between two samples
 typedef struct a3_KeyframePool				a3_KeyframePool;
 typedef struct a3_Clip						a3_Clip;
 typedef struct a3_ClipPool					a3_ClipPool;
@@ -53,6 +54,12 @@ enum
 	a3keyframeAnimation_nameLenMax = 32,
 };
 
+//single generic value at time
+struct a3_Sample
+{
+	a3real time; //the x axis/independent variable
+	a3real value; //the y axis/dependent variable
+};
 
 // description of single keyframe
 // metaphor: moment
@@ -69,6 +76,9 @@ struct a3_Keyframe
 
 	//data - the value of the sample from the keyframe, random value from index
 	int data; //said a simple integer should suffice so I have that here
+	
+	//the known sample at the start of the interval
+	a3_Sample sample;
 };
 
 // pool of keyframe descriptors

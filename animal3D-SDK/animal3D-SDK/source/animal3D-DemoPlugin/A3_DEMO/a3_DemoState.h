@@ -308,6 +308,8 @@ struct a3_DemoState
 		};
 	};
 
+	//maybe apply the keyframePool and clipPool right here? (or in DemoMode0_Starter)
+
 	// framebuffers
 	union {
 		a3_Framebuffer framebuffer[demoStateMaxCount_framebuffer];
