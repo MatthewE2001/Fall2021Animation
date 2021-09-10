@@ -20,6 +20,8 @@
 	
 	a3_KeyframeAnimation.h
 	Data structures for fundamental keyframe animation.
+
+	Modified by Benjamin Davies and Matthew Esslie
 */
 
 #ifndef __ANIMAL3D_KEYFRAMEANIMATION_H

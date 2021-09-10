@@ -20,6 +20,8 @@
 	
 	a3_KeyframeAnimation.c
 	Implementation of keyframe animation interfaces.
+
+	Modified by Benjamin Davies and Matthew Esslie
 */
 
 #include "../a3_KeyframeAnimation.h"
