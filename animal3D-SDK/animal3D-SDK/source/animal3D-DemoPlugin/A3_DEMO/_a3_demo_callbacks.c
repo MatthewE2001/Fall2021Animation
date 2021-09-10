@@ -489,7 +489,9 @@ A3DYLIBSYMBOL void a3demoCB_keyCharPress(a3_DemoState *demoState, a3i32 asciiKey
 		a3demo_unloadShaders(demoState);
 		a3demo_loadShaders(demoState);
 		break;
+
 	}
+
 
 
 	// demo callback

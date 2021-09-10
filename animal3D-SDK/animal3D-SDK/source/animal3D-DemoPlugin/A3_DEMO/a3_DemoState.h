@@ -43,6 +43,8 @@
 #include "_a3_demo_utilities/a3_DemoSceneObject.h"
 #include "_a3_demo_utilities/a3_DemoShaderProgram.h"
 
+#include "_animation/a3_KeyframeAnimationController.h"
+
 #include "a3_DemoMode0_Starter.h"
 
 
@@ -98,6 +100,8 @@ enum a3_DemoState_ObjectMaxCount
 	demoStateMaxCount_shaderProgram = 32,
 
 	demoStateMaxCount_texture = 8,
+
+	demoStateMaxCount_clipController = 8,
 
 	demoStateMaxCount_framebuffer = 2,
 };
@@ -291,6 +295,18 @@ struct a3_DemoState
 		};
 	};
 
+	// clip controllers
+	union {
+		a3_ClipController clipController[demoStateMaxCount_clipController];
+		struct {
+			a3_ClipController
+				cc_0[1];
+			a3_ClipController
+				cc_1[1];
+			a3_ClipController
+				cc_2[1];
+		};
+	};
 
 	// framebuffers
 	union {
