@@ -758,7 +758,7 @@ void a3demo_loadAnimations(a3_DemoState* demoState)
 {
 	printf("\n\n---------------- LOAD ANIMATIONS STARTED ---------------- \n");
 
-	/*
+	
 	a3_ClipController* cc;
 	a3ui32 i;
 	
@@ -778,7 +778,7 @@ void a3demo_loadAnimations(a3_DemoState* demoState)
 	{
 		a3clipControllerInit(cc, "ClipController" + i, &clipPool0, 1);
 	}
-	*/
+	
 
 
 	printf("\n\n---------------- LOAD ANIMATIONS FINISHED ---------------- \n");
