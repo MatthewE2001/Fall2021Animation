@@ -174,8 +174,17 @@ void a3demo_input_keyCharPress(a3_DemoState* demoState, a3i32 const asciiKey)
 		// toggle stencil test
 		a3demoCtrlCaseToggle(demoState->skipIntermediatePasses, 'I');
 
-		//a3demoCtrlCasesCap(demoState->clipController, 3, 0, 'v', 'V');
+		//toggle the playback direction
+		a3demoCtrlCasesCap(demoState->clipController->playbackDirection, 1, -1, 'v', 'V');
 
+		//toggle the play/pause options?
+		a3demoCtrlCasesCap(demoState->clipController->playbackDirection, 1, 0, 'q', 'Q');
+
+		//toggle the time factor (what value exactly changes here)
+		//a3demoCtrl
+
+		//set 1st/last frame in clip
+		//a3demoCtrlCasesLoop();
 	}
 
 
