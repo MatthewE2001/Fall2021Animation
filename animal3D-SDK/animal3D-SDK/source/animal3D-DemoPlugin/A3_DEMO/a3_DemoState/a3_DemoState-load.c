@@ -767,8 +767,8 @@ void a3demo_loadAnimations(a3_DemoState* demoState)
 
 	// instantiate and set up clips (5+)
 
-	a3_ClipPool* clipPool0 = 0;
-	a3clipPoolCreate(clipPool0, 5);
+	a3_ClipPool* clipPool0;
+	a3clipPoolCreate(&clipPool0, 5);
 
 	// instantiate and set up clip controllers (3+)
 	for(i = 0, cc = demoState->clipController;
