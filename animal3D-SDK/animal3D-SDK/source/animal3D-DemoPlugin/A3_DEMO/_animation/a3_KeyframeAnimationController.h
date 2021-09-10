@@ -50,23 +50,34 @@ struct a3_ClipController
 {
 	a3byte name[a3keyframeAnimation_nameLenMax];
 
+	//index of clip being controlled
+	a3index clipIndex_pool;
+
+	//index of keyframe being processed
+	a3index keyframeIndex0_clip, keyframeIndex1_clip;
+
+	//referenced clip and keyframe
+	a3_Clip const* clipPtr; //ptr can change but the clip cannot
+	a3_Keyframe const* keyframePtr0; //ptr can change but the keyframe cannot
+	a3_Keyframe const* keyframePtr1; //ptr can change but the keyframe cannot
+
 	//clip - index of clip to control in referenced clip pool (what clip is being played by controller)
-	a3ui32 clip; //a3ui32 since it says index?
+	a3ui32 clip; //this may be irrelevant now
 
 	//clip time - current time relative to start of clip (value between 0 and full clip duration)
 	a3real clipTime; //a3real cause duration is a3real but perhaps it should be otherwise?
 
 	//clip parameter - normalized keyframe time (always between 0 and 1)
-	float clipParam; //since it needs to be between 0 and 1 thats basically all float vals (or double?)
+	a3real clipParam; //since it needs to be between 0 and 1 thats basically all float vals (or double?)
 
 	//keyframe - index of current keyframe in referenced keyframe pool
 	a3ui32 keyframe;
 
 	//keyframe time - current time relative to current keyframe (between 0 and keyframe duration)
-	float keyframeTime; //float??
+	a3real keyframeTime; //float??
 
 	//keyframe parameter - normalized keyframe time
-	float keyframeParam;
+	a3real keyframeParam;
 
 	//playback direction - the active behavior of playback (-1 reverse, 0 pause, 1 forward)
 	int playbackDirection;
@@ -87,6 +98,9 @@ a3i32 a3clipControllerUpdate(a3_ClipController* clipCtrl, const a3real dt);
 
 // set clip to play
 a3i32 a3clipControllerSetClip(a3_ClipController* clipCtrl, const a3_ClipPool* clipPool, const a3ui32 clipIndex_pool);
+
+//evaluate the current value at time
+a3i32 a3clipControllerEvaluate(a3_ClipController const* clipCtrl, a3_Sample* sample_out);
 
 
 //-----------------------------------------------------------------------------

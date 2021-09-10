@@ -37,6 +37,16 @@ Daniel S. Buckstein
 // update clip controller
 inline a3i32 a3clipControllerUpdate(a3_ClipController* clipCtrl, const a3real dt)
 {
+	//for step/nearest 
+		//nothing special occurs (same as Lab1)
+	//for lerp 
+		//if end, k0 <- k1, calc new k1
+		//if beginning, k1 <- k0, calc new k0
+	//for catmull
+		//if over, kp <- k0 <- k1 <- kn, calc new kn
+		//if begin, kn <- k1 <- k0 <- kp, calc new kp
+
+
 	clipCtrl->clipTime += dt;
 	clipCtrl->keyframeTime += dt;
 
@@ -89,6 +99,32 @@ inline a3i32 a3clipControllerSetClip(a3_ClipController* clipCtrl, const a3_ClipP
 {
 	clipCtrl->clipPool = clipPool;
 	clipCtrl->clip = clipIndex_pool;
+
+	return -1;
+}
+
+inline a3i32 a3clipControllerEvaluate(a3_ClipController const* clipCtrl, a3_Sample* sample_out)
+{
+	if (clipCtrl && clipCtrl->clipPtr && sample_out)
+	{
+		//0 - no interpolation (step function)
+		//*sample_out = clipCtrl->keyframePtr0->sample;
+
+		//1 - nearest
+		// if (u < 0.5) then k0, else k1 (u param, k0 value and k1 value)
+
+		//2 - lerp
+		// k = k0 + (k1 - k0)u
+		sample_out->time = clipCtrl->keyframeTime;
+		sample_out->value = a3lerp(clipCtrl->keyframePtr0->sample.value, 
+			clipCtrl->keyframePtr1->sample.value,
+			clipCtrl->keyframeParam);
+
+		//3 - Catmull-Rom/Cubic Hermite (would need increased info in clip controller for these)
+
+
+		return clipCtrl->keyframeIndex0_clip;
+	}
 
 	return -1;
 }
