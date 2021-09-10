@@ -15,6 +15,10 @@
 */
 
 /*
+	Modified by Benjamin Davies and Matthew Esslie
+*/
+
+/*
 	animal3D SDK: Minimal 3D Animation Framework
 	By Daniel S. Buckstein
 	
