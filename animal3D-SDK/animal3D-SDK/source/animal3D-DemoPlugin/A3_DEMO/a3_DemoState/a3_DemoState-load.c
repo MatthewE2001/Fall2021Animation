@@ -767,13 +767,14 @@ void a3demo_loadAnimations(a3_DemoState* demoState)
 	//a3ui32 i;
 	//
 	//// instantiate and set up a pool of keyframes (20+)
-	//a3_KeyframePool keyframePool;
-	//a3keyframePoolCreate(&keyframePool, 20);
+	a3_KeyframePool keyframePool; //PUT IN DEMO STATE IN THE FUTURE
+	//MAKE AN ARRAY OF 1 TO MAKE IT A POINTER BY DEFAULT (an address to itself)
+	a3keyframePoolCreate(&keyframePool, 20);
 
 	//// instantiate and set up clips (5+)
-
-	//a3_ClipPool clipPool0;
-	//a3clipPoolCreate(&clipPool0, 5);
+	a3_ClipPool clipPool0; //PUT IN DEMO STATE IN THE FUTURE
+	//MAKE AN ARRAY OF 1 TO MAKE IT A POINTER BY DEFAULT (an address to itself)
+	a3clipPoolCreate(&clipPool0, 5);
 
 	//// instantiate and set up clip controllers (3+)
 	//for(i = 0, cc = demoState->clipController;
