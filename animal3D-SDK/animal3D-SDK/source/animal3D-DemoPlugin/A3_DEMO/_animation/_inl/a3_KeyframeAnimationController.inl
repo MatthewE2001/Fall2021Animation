@@ -62,14 +62,15 @@ inline a3i32 a3clipControllerUpdate(a3_ClipController* clipCtrl, const a3real dt
 
 	//case 3: forward into a new keyframe
 	//updating keyframe value if it passes the duration
-	if (clipCtrl->keyframeParam >= 1) //use time for check (if (time > duration)
+	if (clipCtrl->keyframeTime > clipCtrl->keyframePtr0->duration) //use time for check (if (time > duration)
 	{
-		clipCtrl->keyframe++;
+		clipCtrl->keyframeIndex0_clip++;
+		clipCtrl->keyframeIndex1_clip++;
 	}
 
 	//case 4: forward into the end of the clip
 	//restarting the loop if necessary
-	if (clipCtrl->clipParam >= 1) //same as with case 3
+	if (clipCtrl->clipTime > clipCtrl->clipPtr->duration) //same as with case 3
 	{
 		clipCtrl->clipTime = 0;
 		clipCtrl->keyframe = 0; //making sure the keyframe values are also set to loop
@@ -80,14 +81,23 @@ inline a3i32 a3clipControllerUpdate(a3_ClipController* clipCtrl, const a3real dt
 	//case 5: reverse in the same keyframe
 
 	//case 6: reverse into a new keyframe
+	if (clipCtrl->keyframeTime < clipCtrl->keyframePtr0->durationInverse) //I think duration inverse?
+	{
+		clipCtrl->keyframeIndex0_clip--;
+		clipCtrl->keyframeIndex1_clip--;
+	}
 
 	//case 7: reverse into the end of the clip
+	if (clipCtrl->clipTime < clipCtrl->clipPtr->durationInverse)
+	{
+		clipCtrl->clipIndex_pool = clipCtrl->clipPool->count; //need to move it back to the max value somehow
+		//clipCtrl->keyframe = clipCtrl->clipPool->clip->keyframePool->count;
+		clipCtrl->keyframeTime = clipCtrl->keyframePtr0->duration; //possibly
+	}
 
-	//finally to normalize the time values
-	//clipCtrl->clipParam = clipCtrl->clipTime * clipCtrl->durationInverse;
-	
-	//clipCtrl->keyframeParam = clipCtrl->keyframeTime * clipCtrl->keyframeInverse;
-	
+	//finally to normalize the time values (double check this later)
+	clipCtrl->clipParam = clipCtrl->clipTime * clipCtrl->clipPtr->durationInverse;
+	clipCtrl->keyframeParam = clipCtrl->keyframeTime * clipCtrl->keyframePtr0->durationInverse;
 
 	return -1;
 }
