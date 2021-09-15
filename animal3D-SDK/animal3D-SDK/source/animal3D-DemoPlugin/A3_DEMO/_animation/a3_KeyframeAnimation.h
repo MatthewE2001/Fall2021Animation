@@ -38,6 +38,7 @@
 extern "C"
 {
 #else	// !__cplusplus
+typedef struct a3_Transition				a3_Transition;
 typedef struct a3_Sample					a3_Sample; 
 typedef struct a3_Keyframe					a3_Keyframe; //keyframe describes the gap between two samples
 typedef struct a3_KeyframePool				a3_KeyframePool;
@@ -141,6 +142,20 @@ struct a3_ClipPool
 
 	// number of clips
 	a3ui32 count;
+};
+
+struct a3_Transition
+{
+	//the target clip for the transition
+	a3_Clip* targetClip;
+
+	//the target index for the transition
+	a3index targetIndex;
+
+	//the target clip pool for the transition
+	a3_ClipPool targetClipPool;
+
+	//reinitialization for clip controller (would include ??)
 };
 
 
