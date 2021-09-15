@@ -72,9 +72,11 @@ inline a3i32 a3clipControllerUpdate(a3_ClipController* clipCtrl, const a3real dt
 	//restarting the loop if necessary
 	if (clipCtrl->clipTime > clipCtrl->clipPtr->duration) //same as with case 3
 	{
-		clipCtrl->clipTime = 0;
+		//I want this to switch using the transition parameters
+		clipCtrl->clipIndex_pool = 0;
 		clipCtrl->keyframe = 0; //making sure the keyframe values are also set to loop
 		clipCtrl->keyframeTime = 0;
+		clipCtrl->clipTime = 0;
 	}
 
 	//reverse cases could potentially have to do with dropping below durationInverse
@@ -90,6 +92,7 @@ inline a3i32 a3clipControllerUpdate(a3_ClipController* clipCtrl, const a3real dt
 	//case 7: reverse into the end of the clip
 	if (clipCtrl->clipTime < clipCtrl->clipPtr->durationInverse)
 	{
+		//I want this to switch using the transition parameters
 		clipCtrl->clipIndex_pool = clipCtrl->clipPool->count; //need to move it back to the max value somehow
 		//clipCtrl->keyframe = clipCtrl->clipPool->clip->keyframePool->count; //??
 		clipCtrl->keyframeTime = clipCtrl->keyframePtr0->duration; //possibly

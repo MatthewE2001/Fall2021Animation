@@ -148,6 +148,7 @@ struct a3_Transition
 {
 	//the target clip for the transition
 	a3_Clip* targetClip;
+	a3_Clip* targetClipReverse; //I assume this is what it means by targets for reverse as well
 
 	//the target index for the transition
 	a3index targetIndex;
