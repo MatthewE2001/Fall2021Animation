@@ -91,7 +91,7 @@ inline a3i32 a3clipControllerUpdate(a3_ClipController* clipCtrl, const a3real dt
 	if (clipCtrl->clipTime < clipCtrl->clipPtr->durationInverse)
 	{
 		clipCtrl->clipIndex_pool = clipCtrl->clipPool->count; //need to move it back to the max value somehow
-		//clipCtrl->keyframe = clipCtrl->clipPool->clip->keyframePool->count;
+		//clipCtrl->keyframe = clipCtrl->clipPool->clip->keyframePool->count; //??
 		clipCtrl->keyframeTime = clipCtrl->keyframePtr0->duration; //possibly
 	}
 
@@ -129,7 +129,7 @@ inline a3i32 a3clipControllerEvaluate(a3_ClipController const* clipCtrl, a3_Samp
 			clipCtrl->keyframeParam);
 
 		//3 - Catmull-Rom/Cubic Hermite (would need increased info in clip controller for these)
-
+		//specifically a previous and a next step along with the k0 and k1
 
 		return clipCtrl->keyframeIndex0_clip;
 	}

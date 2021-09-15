@@ -189,6 +189,13 @@ void a3demo_input_keyCharPress(a3_DemoState* demoState, a3i32 const asciiKey)
 
 		//set 1st/last frame in clip
 		//a3demoCtrlCasesLoop();
+
+		//select the clip controller to use
+		//a3demoCtrlCaseDecCap();
+
+		//change the slow motion
+
+		//change the clip to control
 	}
 
 
