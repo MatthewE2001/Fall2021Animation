@@ -110,6 +110,11 @@ a3i32 a3clipInit(a3_Clip* clip_out, const a3byte clipName[a3keyframeAnimation_na
 	//clip_out->name = clipName;
 	for (a3ui32 i = 0; i < keyframePool->count; i++)
 	{
+		//tmp thing to see if it fixes memory
+		a3_KeyframePool tmp;
+		a3keyframePoolCreate(&tmp, 12);
+		clip_out->keyframePool = &tmp;
+
 		clip_out->keyframePool->keyframe[i] = keyframePool->keyframe[i];
 	}
 
