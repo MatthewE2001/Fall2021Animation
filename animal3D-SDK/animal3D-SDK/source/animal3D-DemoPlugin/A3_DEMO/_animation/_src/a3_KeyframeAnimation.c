@@ -69,15 +69,13 @@ a3i32 a3keyframeInit(a3_Keyframe* keyframe_out, const a3real duration, const a3u
 	keyframe_out->index = value_x;
 	keyframe_out->durationInverse = 1 / duration;
 
-	return -1; //do I return -1?
+	return -1;
 }
 
 
 // allocate clip pool
 a3i32 a3clipPoolCreate(a3_ClipPool* clipPool_out, const a3ui32 count)
 {
-	//clipPool_out = 
-	
 	const a3byte clipName[a3keyframeAnimation_nameLenMax];
 
 	for (a3ui32 i = 0; i < count; i++)

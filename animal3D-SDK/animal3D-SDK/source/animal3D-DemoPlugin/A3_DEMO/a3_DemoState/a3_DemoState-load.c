@@ -767,20 +767,22 @@ void a3demo_loadAnimations(a3_DemoState* demoState)
 	a3ui32 i;
 	//
 	//// instantiate and set up a pool of keyframes (20+)
-	a3_KeyframePool keyframePool; //PUT IN DEMO STATE IN THE FUTURE
 	//MAKE AN ARRAY OF 1 TO MAKE IT A POINTER BY DEFAULT (an address to itself)
-	a3keyframePoolCreate(&keyframePool, 20);
+	a3keyframePoolCreate(demoState->keyframePool, 20);
+
+	//this could be where I temporarily test the parsed values
+	//demoState->keyframePool->keyframe[0] = a3keyframeInit();
 
 	//// instantiate and set up clips (5+)
-	a3_ClipPool clipPool0; //PUT IN DEMO STATE IN THE FUTURE
+	//PUT IN DEMO STATE IN THE FUTURE
 	//MAKE AN ARRAY OF 1 TO MAKE IT A POINTER BY DEFAULT (an address to itself)
-	a3clipPoolCreate(&clipPool0, 5);
+	a3clipPoolCreate(demoState->clipPool, 5);
 
 	for (i = 0, cc = demoState->clipController;
 		i < demoStateMaxCount_clipController;
 		++i, ++cc)
 	{
-		a3clipControllerInit(cc, "ClipController" + i, &clipPool0, 1);
+		a3clipControllerInit(cc, "ClipController" + i, demoState->clipPool, 1);
 	}
 	
 

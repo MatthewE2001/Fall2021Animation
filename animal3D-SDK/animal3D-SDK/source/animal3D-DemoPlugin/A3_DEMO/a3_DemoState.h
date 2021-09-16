@@ -311,24 +311,9 @@ struct a3_DemoState
 		};
 	};
 
-	//maybe apply the keyframePool and clipPool right here?
-	union
-	{
-		a3_ClipPool clipPool[demoStateMaxCount_clipPool];
-		struct
-		{
-			a3_ClipPool clipPool[1];
-		};
-	};
-
-	union
-	{
-		a3_KeyframePool keyframePool[demoStateMaxCount_keyframePool];
-		struct
-		{
-			a3_KeyframePool keyframePool[12]; //12 sets of keyframes parser will bring in for use in clips
-		};
-	};
+	//maybe apply the keyframePool and clipPool right here
+	a3_ClipPool clipPool[1];
+	a3_KeyframePool keyframePool[12]; //this could potentially just be 1 as well
 
 	// framebuffers
 	union {
