@@ -44,7 +44,9 @@ a3i32 a3keyframePoolCreate(a3_KeyframePool* keyframePool_out, const a3ui32 count
 
 	for (a3ui32 i = 0; i < count; i++)
 	{
-		a3keyframeInit(keyframePool_out->keyframe[i], 1, 1);
+		a3_Keyframe tmp;
+		a3keyframeInit(&tmp, 1, i);
+		keyframePool_out->keyframe[i] = &tmp;
 	}
 
 	return -1;
