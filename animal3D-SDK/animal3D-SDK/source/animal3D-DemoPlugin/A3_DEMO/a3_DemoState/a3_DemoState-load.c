@@ -763,8 +763,8 @@ void a3demo_loadAnimations(a3_DemoState* demoState)
 	printf("\n\n---------------- LOAD ANIMATIONS STARTED ---------------- \n");
 
 	
-	//a3_ClipController* cc;
-	//a3ui32 i;
+	a3_ClipController* cc;
+	a3ui32 i;
 	//
 	//// instantiate and set up a pool of keyframes (20+)
 	a3_KeyframePool keyframePool; //PUT IN DEMO STATE IN THE FUTURE
@@ -776,13 +776,12 @@ void a3demo_loadAnimations(a3_DemoState* demoState)
 	//MAKE AN ARRAY OF 1 TO MAKE IT A POINTER BY DEFAULT (an address to itself)
 	a3clipPoolCreate(&clipPool0, 5);
 
-	//// instantiate and set up clip controllers (3+)
-	//for(i = 0, cc = demoState->clipController;
-	//	i < demoStateMaxCount_clipController;
-	//	++i, ++cc)
-	//{
-	//	a3clipControllerInit(cc, "ClipController" + i, &clipPool0, 1);
-	//}
+	for (i = 0, cc = demoState->clipController;
+		i < demoStateMaxCount_clipController;
+		++i, ++cc)
+	{
+		a3clipControllerInit(cc, "ClipController" + i, &clipPool0, 1);
+	}
 	
 
 
