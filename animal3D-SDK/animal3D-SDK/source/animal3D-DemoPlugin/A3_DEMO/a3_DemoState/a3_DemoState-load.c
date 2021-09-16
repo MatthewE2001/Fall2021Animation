@@ -776,7 +776,8 @@ void a3demo_loadAnimations(a3_DemoState* demoState)
 	//// instantiate and set up clips (5+)
 	//PUT IN DEMO STATE IN THE FUTURE
 	//MAKE AN ARRAY OF 1 TO MAKE IT A POINTER BY DEFAULT (an address to itself)
-	a3clipPoolCreate(demoState->clipPool, 5);
+
+	a3clipPoolCreate(demoState->clipPool, 5, demoState->keyframePool);
 
 	for (i = 0, cc = demoState->clipController;
 		i < demoStateMaxCount_clipController;
