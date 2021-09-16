@@ -1,3 +1,4 @@
+#include "..\a3_KeyframeAnimation.h"
 /*
 	Copyright 2011-2020 Daniel S. Buckstein
 
@@ -52,6 +53,15 @@ inline a3i32 a3clipDistributeDuration(a3_Clip* clip, const a3real newClipDuratio
 	//idk which of these I want to use?? distributing is key here I think
 	//return clip->duration / newClipDuration;
 	clip->duration = newClipDuration; //I will just set it to this one for now
+
+	return -1;
+}
+
+inline a3i32 a3transitionInit(a3_Transition* transition_Out, a3_Clip* target, a3_ClipPool* targetPool, a3index targetIndex)
+{
+	transition_Out->targetClip = target;
+	transition_Out->targetClipPool = targetPool;
+	transition_Out->targetIndex = targetIndex;
 
 	return -1;
 }

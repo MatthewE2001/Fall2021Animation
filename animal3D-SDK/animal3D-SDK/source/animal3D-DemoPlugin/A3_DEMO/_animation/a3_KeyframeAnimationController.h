@@ -85,6 +85,9 @@ struct a3_ClipController
 	//clip pool - pointer/reference to the pool of clips that the controller will ultimately control
 	//replaced with constant to avoid warning when assigning a clip pool
 	const a3_ClipPool* clipPool;
+
+	//testing a connection of the new transition method
+	a3_Transition* transitionPtr;
 };
 
 

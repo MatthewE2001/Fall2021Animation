@@ -154,7 +154,7 @@ struct a3_Transition
 	a3index targetIndex;
 
 	//the target clip pool for the transition
-	a3_ClipPool targetClipPool;
+	a3_ClipPool* targetClipPool;
 
 	//reinitialization for clip controller (would include ??)
 };
@@ -177,6 +177,9 @@ a3i32 a3clipCalculateDuration(a3_Clip* clip);
 
 // calculate keyframes' durations by distributing clip's duration
 a3i32 a3clipDistributeDuration(a3_Clip* clip, const a3real newClipDuration);
+
+//initialize the transition structure
+a3i32 a3transitionInit(a3_Transition* transition_Out, a3_Clip* target, a3_ClipPool* targetPool, a3index targetIndex);
 
 
 //-----------------------------------------------------------------------------
