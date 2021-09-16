@@ -314,6 +314,8 @@ struct a3_DemoState
 	//maybe apply the keyframePool and clipPool right here
 	a3_ClipPool clipPool[1];
 	a3_KeyframePool keyframePool[12]; //this could potentially just be 1 as well?
+	//a3_KeyframePool keyframePool[1]; //this could potentially just be 1 as well
+
 
 	// framebuffers
 	union {

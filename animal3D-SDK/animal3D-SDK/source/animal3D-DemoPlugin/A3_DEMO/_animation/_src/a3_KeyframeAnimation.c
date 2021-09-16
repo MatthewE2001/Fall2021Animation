@@ -47,6 +47,10 @@ a3i32 a3keyframePoolCreate(a3_KeyframePool* keyframePool_out, const a3ui32 count
 		a3_Keyframe tmp;
 		a3keyframeInit(&tmp, 1, i);
 		keyframePool_out->keyframe[i] = &tmp;
+
+		keyframePool_out->keyframe[i] = malloc(sizeof(*keyframePool_out->keyframe[i]));
+		a3keyframeInit(keyframePool_out->keyframe[i], 1, 1);
+		//printf("%d", keyframePool_out->keyframe[i]->duration);
 	}
 
 	return -1;
@@ -82,6 +86,7 @@ a3i32 a3clipPoolCreate(a3_ClipPool* clipPool_out, const a3ui32 count)
 
 	for (a3ui32 i = 0; i < count; i++)
 	{
+		clipPool_out->clip[i] = malloc(sizeof(*clipPool_out->clip[i]));
 		a3clipInit(clipPool_out->clip[i], clipName, clipPool_out->clip[i]->keyframePool, 1, 32);
 	}
 
