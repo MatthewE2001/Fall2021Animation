@@ -102,6 +102,9 @@ enum a3_DemoState_ObjectMaxCount
 	demoStateMaxCount_texture = 8,
 
 	demoStateMaxCount_clipController = 8,
+	demoStateMaxCount_clipPool = 10,
+	demoStateMaxCount_clip = 20,
+	demoStateMaxCount_keyframePool = 25,
 
 	demoStateMaxCount_framebuffer = 2,
 };
@@ -308,7 +311,24 @@ struct a3_DemoState
 		};
 	};
 
-	//maybe apply the keyframePool and clipPool right here? (or in DemoMode0_Starter)
+	//maybe apply the keyframePool and clipPool right here?
+	union
+	{
+		a3_ClipPool clipPool[demoStateMaxCount_clipPool];
+		struct
+		{
+			a3_ClipPool clipPool[1];
+		};
+	};
+
+	union
+	{
+		a3_KeyframePool keyframePool[demoStateMaxCount_keyframePool];
+		struct
+		{
+			a3_KeyframePool keyframePool[12]; //12 sets of keyframes parser will bring in for use in clips
+		};
+	};
 
 	// framebuffers
 	union {
