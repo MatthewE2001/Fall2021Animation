@@ -57,6 +57,7 @@ inline a3i32 a3clipDistributeDuration(a3_Clip* clip, const a3real newClipDuratio
 	return -1;
 }
 
+//initializing the transition structure
 inline a3i32 a3transitionInit(a3_Transition* transition_Out, a3_Clip* target, a3_ClipPool* targetPool, a3index targetIndex)
 {
 	transition_Out->targetClip = target;

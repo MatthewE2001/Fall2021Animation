@@ -157,6 +157,7 @@ struct a3_Transition
 	a3_ClipPool* targetClipPool;
 
 	//reinitialization for clip controller (would include ??)
+	//a3_clipPool* nextClipPool; //or something to fuel the transitory process
 };
 
 
