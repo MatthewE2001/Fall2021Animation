@@ -767,6 +767,10 @@ void a3demo_loadFramebuffers(a3_DemoState* demoState)
 int a3demo_loadAnimationFromFile(a3_DemoState* demoState)
 {
 	printf("\n\n---------------- LOAD ANIMATIONS FROM FILE STARTED ---------------- \n");
+
+	a3ui32 i;
+	a3boolean ignore = a3false;
+
 	char line[MAX_LINE_LENGTH] = { 0 };
 	unsigned int line_count = 0;
 
@@ -787,6 +791,39 @@ int a3demo_loadAnimationFromFile(a3_DemoState* demoState)
 			// print the line number and data
 			printf("line[%06d]: %s", ++line_count, data);
 			printf("\n");
+
+			// break apart the whitespace to get data values
+			// iterate through the line
+			size_t n = strlen(data);
+			printf("%zu", n);
+
+			for (i = 0; i < n; i++)
+			{
+				ignore = a3false;
+				// pass if the data is whitespace or line start
+				if (data[i] == ' ')
+				{
+					ignore = a3true;
+				}
+				if (data[i] == '	')
+				{
+					ignore = a3true;
+				}
+				if (data[i] == '@')
+				{
+					ignore = a3true;
+				}
+
+				if (!ignore)
+				{
+					printf("%c", data[i]);
+					printf("\n");
+				}
+
+
+				//printf("%c", data[i]);
+				
+			}
 		}
 		else
 		{
