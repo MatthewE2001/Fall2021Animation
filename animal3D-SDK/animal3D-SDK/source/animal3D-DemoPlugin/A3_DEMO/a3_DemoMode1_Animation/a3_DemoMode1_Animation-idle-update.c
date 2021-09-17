@@ -39,6 +39,8 @@
 //-----------------------------------------------------------------------------
 // UPDATE
 
+//This file is where we will do a lot of anim stuff
+
 void a3demo_update_objects(a3_DemoState* demoState, a3f64 const dt,
 	a3_DemoSceneObject* sceneObjectBase, a3ui32 count, a3boolean useZYX, a3boolean applyScale);
 void a3demo_update_defaultAnimation(a3_DemoState* demoState, a3f64 const dt,
@@ -81,6 +83,12 @@ void a3animation_update(a3_DemoState* demoState, a3_DemoMode1_Animation* demoMod
 			activeCamera->projectionMat.m, activeCameraObject->modelMat.m, activeCameraObject->modelMatInv.m,
 			demoMode->object_scene[i].modelMat.m, a3mat4_identity.m);
 	}
+
+	//resolve 4 animation steps here
+		//interpolate (between deltas)
+		//concatenate (with base)
+		//convert
+		//FK (forward kinematics)
 }
 
 
