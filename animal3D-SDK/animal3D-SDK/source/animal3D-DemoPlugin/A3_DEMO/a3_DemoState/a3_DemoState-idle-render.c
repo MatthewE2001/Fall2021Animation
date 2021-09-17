@@ -175,13 +175,13 @@ void a3demo_render_animation(const a3_DemoState* demoState,
 {
 	// display test text
 	a3textDraw(text, textAlign, textOffset += textOffsetDelta, textDepth, col.r, col.g, col.b, col.a,
-		"name = %07.4lf", demoState->clipController[0].name);
+		"name = %07.4lf", demoState->cc_0->clipPool->clip[0]->name);
 	a3textDraw(text, textAlign, textOffset += textOffsetDelta, textDepth, col.r, col.g, col.b, col.a,
-		"clip = %07.4lf", demoState->clipController[0].clip);
+		"clip = %07.4lf", demoState->cc_0->clipPool->clip);
 	a3textDraw(text, textAlign, textOffset += textOffsetDelta, textDepth, col.r, col.g, col.b, col.a,
-		"clipTime = %07.4lf s", demoState->clipController[0].clipTime);
+		"clipTime = %07.4lf s", demoState->cc_0->clipPool->clip[0]->duration);
 	a3textDraw(text, textAlign, textOffset += textOffsetDelta, textDepth, col.r, col.g, col.b, col.a,
-		"clipParam = %07.4lf", demoState->clipController[0].clipParam);
+		"clipParam = %07.4lf", demoState->cc_0->clipParam);
 
 	// global controls
 	textOffset = -0.8f;
