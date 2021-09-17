@@ -43,8 +43,13 @@ a3i32 a3clipControllerInit(a3_ClipController* clipCtrl_out, const a3byte ctrlNam
 	{
 		clipCtrl_out->name[i] = ctrlName[i];
 	}
+
 	clipCtrl_out->clipPool = clipPool;
 	clipCtrl_out->clip = clipIndex_pool; //this maybe should be different
+
+	clipCtrl_out->clipPtr = clipPool->clip[clipIndex_pool];
+	clipCtrl_out->keyframePtr0 = clipCtrl_out->clipPool->clip[clipIndex_pool]->keyframePool->keyframe[0];
+	clipCtrl_out->keyframePtr1 = clipCtrl_out->clipPool->clip[clipIndex_pool]->keyframePool->keyframe[1];
 
 	return -1;
 }
