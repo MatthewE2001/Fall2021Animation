@@ -177,11 +177,11 @@ void a3demo_render_animation(const a3_DemoState* demoState,
 	a3textDraw(text, textAlign, textOffset += textOffsetDelta, textDepth, col.r, col.g, col.b, col.a,
 		"name = %s", demoState->clipController->name);
 	a3textDraw(text, textAlign, textOffset += textOffsetDelta, textDepth, col.r, col.g, col.b, col.a,
-		"clip = %07.4lf", demoState->clipController[1].clip);
+		"clip = %d", demoState->clipController->clip);
 	a3textDraw(text, textAlign, textOffset += textOffsetDelta, textDepth, col.r, col.g, col.b, col.a,
-		"clipTime = %07.4lf s", demoState->clipController[1].clipTime);
+		"clipTime = %07.4lf s", demoState->clipController->clipTime);
 	a3textDraw(text, textAlign, textOffset += textOffsetDelta, textDepth, col.r, col.g, col.b, col.a,
-		"clipParam = %07.4lf", demoState->clipController[1].clipParam);
+		"clipParam = %f", demoState->clipController->clipParam);
 
 
 	// global controls
