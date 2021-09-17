@@ -59,6 +59,7 @@ inline a3i32 a3clipControllerUpdate(a3_ClipController* clipCtrl, const a3real dt
 	}
 	//case 2: going forward within same keyframe
 	//I think there might not need to be anything specific to do here
+	
 
 	//case 3: forward into a new keyframe
 	//updating keyframe value if it passes the duration
