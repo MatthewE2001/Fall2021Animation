@@ -63,10 +63,11 @@
 
 
 // define resource directories
-#define A3_DEMO_RES_DIR	"../../../../resource/"
-#define A3_DEMO_GLSL	A3_DEMO_RES_DIR"glsl/"
-#define A3_DEMO_TEX		A3_DEMO_RES_DIR"tex/"
-#define A3_DEMO_OBJ		A3_DEMO_RES_DIR"obj/"
+#define A3_DEMO_RES_DIR		"../../../../resource/"
+#define A3_DEMO_GLSL		A3_DEMO_RES_DIR"glsl/"
+#define A3_DEMO_TEX			A3_DEMO_RES_DIR"tex/"
+#define A3_DEMO_OBJ			A3_DEMO_RES_DIR"obj/"
+#define A3_DEMO_ANIMDATA	A3_DEMO_RES_DIR"animdata/"
 
 // define resource subdirectories
 #define A3_DEMO_VS		A3_DEMO_GLSL"4x/vs/"
@@ -74,6 +75,9 @@
 #define A3_DEMO_GS		A3_DEMO_GLSL"4x/gs/"
 #define A3_DEMO_FS		A3_DEMO_GLSL"4x/fs/"
 #define A3_DEMO_CS		A3_DEMO_GLSL"4x/cs/"
+
+// file readings variables
+#define MAX_LINE_LENGTH 256
 
 
 //-----------------------------------------------------------------------------
@@ -83,7 +87,9 @@
 #include "../_animation/a3_KeyframeAnimation.h"
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
+
 
 
 //-----------------------------------------------------------------------------
@@ -758,12 +764,54 @@ void a3demo_loadFramebuffers(a3_DemoState* demoState)
 	a3textureDeactivate(a3tex_unit00);
 }
 
+int a3demo_loadAnimationFromFile(a3_DemoState* demoState)
+{
+	printf("\n\n---------------- LOAD ANIMATIONS FROM FILE STARTED ---------------- \n");
+	char line[MAX_LINE_LENGTH] = { 0 };
+	unsigned int line_count = 0;
+
+	FILE* file = fopen(A3_DEMO_ANIMDATA"sprite_anim.txt", "r");
+
+	if (!file)
+	{
+		return EXIT_FAILURE;
+	}
+
+	while (fgets(line, MAX_LINE_LENGTH, file))
+	{
+		// only read data lines (starting with @)
+		if (line[0] == '@')
+		{
+			// filter out anything following a comment (starting with #)
+			char* data = strtok(line, "#");
+			// print the line number and data
+			printf("line[%06d]: %s", ++line_count, data);
+			printf("\n");
+		}
+		else
+		{
+			// increment the line counter if the line is skipped
+			++line_count;
+		}
+	}
+
+	if (fclose(file))
+	{
+		return EXIT_FAILURE;
+	}
+
+	printf("\n\n---------------- LOAD ANIMATIONS FROM FILE FINISHED ---------------- \n");
+	return -1;
+}
+
 // utility to load animations
 void a3demo_loadAnimations(a3_DemoState* demoState)
 {
+	a3demo_loadAnimationFromFile(demoState);
 	printf("\n\n---------------- LOAD ANIMATIONS STARTED ---------------- \n");
 
-	
+	// TODO: REPLACE WITH FILE-BASED ANIMATION SYSTEM
+
 	a3_ClipController* cc;
 	a3ui32 i;
 	//

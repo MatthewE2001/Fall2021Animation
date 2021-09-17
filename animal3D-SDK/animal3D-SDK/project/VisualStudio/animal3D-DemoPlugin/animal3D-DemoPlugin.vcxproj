@@ -260,6 +260,11 @@
     <None Include="..\..\..\source\animal3D-DemoPlugin\A3_DEMO\_animation\_inl\a3_Kinematics.inl" />
     <None Include="..\..\..\source\animal3D-DemoPlugin\A3_DEMO\_animation\_inl\a3_SpatialPose.inl" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\..\..\resource\animdata\slime_anim.txt" />
+    <Text Include="..\..\..\resource\animdata\slime_cells.txt" />
+    <Text Include="..\..\..\resource\animdata\sprite_anim.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

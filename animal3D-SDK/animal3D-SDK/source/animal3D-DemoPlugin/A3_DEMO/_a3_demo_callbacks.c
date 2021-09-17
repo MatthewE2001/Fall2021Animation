@@ -101,6 +101,7 @@ void a3demo_loadGeometry(a3_DemoState* demoState);
 void a3demo_loadShaders(a3_DemoState* demoState);
 void a3demo_loadTextures(a3_DemoState* demoState);
 void a3demo_loadFramebuffers(a3_DemoState* demoState);
+void a3demo_loadAnimationFromFile(a3_DemoState* demoState);
 void a3demo_loadAnimations(a3_DemoState* demoState);
 void a3demo_loadValidate(a3_DemoState* demoState);
 
