@@ -1,3 +1,4 @@
+#include "..\a3_SpatialPose.h"
 /*
 	Copyright 2011-2020 Daniel S. Buckstein
 
@@ -68,8 +69,15 @@ inline a3i32 a3spatialPoseReset(a3_SpatialPose* spatialPose)
 {
 	if (spatialPose)
 	{
+		spatialPose->transform = a3mat4_identity;
+		spatialPose->rotate = a3vec3_zero; //this and translate are 0 because it is addition based
+		spatialPose->translate = a3vec3_zero;
+		spatialPose->scale = a3vec3_one; //this is one cause it is multiplication based (also transform is multiply based)
 
+		//finished
+		return 0;
 	}
+
 	return -1;
 }
 
@@ -90,6 +98,16 @@ inline a3i32 a3spatialPoseCopy(a3_SpatialPose* spatialPose_out, const a3_Spatial
 	{
 
 	}
+	return -1;
+}
+
+inline a3i32 a3spatialPoseConcat(a3_SpatialPose* spatialPose_out, const a3_SpatialPose* spatialPose_lh, const a3_SpatialPose* spatialPose_rh)
+{
+	return -1;
+}
+
+inline a3i32 a3spatialPoseLerp(a3_SpatialPose* spatialPose_out, const a3_SpatialPose* spatialPose0, const a3_SpatialPose* spatialPose1, const a3real u)
+{
 	return -1;
 }
 
