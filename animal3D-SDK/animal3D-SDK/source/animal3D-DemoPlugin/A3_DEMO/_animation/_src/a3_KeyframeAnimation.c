@@ -48,6 +48,7 @@ a3i32 a3keyframePoolCreate(a3_KeyframePool* keyframePool_out, const a3ui32 count
 		a3keyframeInit(&tmp, 1, i);
 		keyframePool_out->keyframe[i] = &tmp;
 
+		//so I think that perhaps I should input the clip format pt 2 values here
 		keyframePool_out->keyframe[i] = malloc(sizeof(*keyframePool_out->keyframe[i]));
 		a3keyframeInit(keyframePool_out->keyframe[i], 1, 1);
 		//printf("%d", keyframePool_out->keyframe[i]->duration);

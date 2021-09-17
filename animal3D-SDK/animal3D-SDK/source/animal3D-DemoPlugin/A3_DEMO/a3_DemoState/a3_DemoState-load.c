@@ -771,8 +771,15 @@ void a3demo_loadAnimations(a3_DemoState* demoState)
 	//MAKE AN ARRAY OF 1 TO MAKE IT A POINTER BY DEFAULT (an address to itself)
 	a3keyframePoolCreate(demoState->keyframePool, 20);
 
-	//this could be where I temporarily test the parsed values
-	//demoState->keyframePool->keyframe[0] = a3keyframeInit();
+
+
+	//hard setting the parsed values to test the application some
+	a3keyframeInit(demoState->keyframePool->keyframe[0], 10, 1);
+	a3keyframeInit(demoState->keyframePool->keyframe[1], 8, 2);
+	a3keyframeInit(demoState->keyframePool->keyframe[2], 4, 3);
+	a3keyframeInit(demoState->keyframePool->keyframe[3], 2, 4);
+	a3keyframeInit(demoState->keyframePool->keyframe[4], 1, 5);
+	a3keyframeInit(demoState->keyframePool->keyframe[5], 2.5, 6);
 
 	//// instantiate and set up clips (5+)
 	//PUT IN DEMO STATE IN THE FUTURE
