@@ -30,6 +30,7 @@ Daniel S. Buckstein
 #include "../a3_KeyframeAnimationController.h"
 
 #include <string.h>
+#include <stdlib.h>
 
 
 //-----------------------------------------------------------------------------
@@ -37,7 +38,11 @@ Daniel S. Buckstein
 // initialize clip controller
 a3i32 a3clipControllerInit(a3_ClipController* clipCtrl_out, const a3byte ctrlName[a3keyframeAnimation_nameLenMax], const a3_ClipPool* clipPool, const a3ui32 clipIndex_pool)
 {
-	//clipCtrl_out->name = ctrlName;
+	// loop to assign the name
+	for (a3ui32 i = 0; i < a3keyframeAnimation_nameLenMax; i++)
+	{
+		clipCtrl_out->name[i] = ctrlName[i];
+	}
 	clipCtrl_out->clipPool = clipPool;
 	clipCtrl_out->clip = clipIndex_pool; //this maybe should be different
 

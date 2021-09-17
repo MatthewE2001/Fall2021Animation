@@ -83,6 +83,7 @@
 #include "../_animation/a3_KeyframeAnimation.h"
 
 #include <stdio.h>
+#include <string.h>
 
 
 //-----------------------------------------------------------------------------
@@ -783,7 +784,10 @@ void a3demo_loadAnimations(a3_DemoState* demoState)
 		i < demoStateMaxCount_clipController;
 		++i, ++cc)
 	{
-		a3clipControllerInit(cc, "ClipController" + i, demoState->clipPool, 1);
+		// dynamic clip controller name
+		char clipCtrlName[32];
+		snprintf(clipCtrlName, 32, "ClipController%d", i);
+		a3clipControllerInit(cc, clipCtrlName, demoState->clipPool, 1);
 	}
 	
 
