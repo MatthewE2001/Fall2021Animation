@@ -46,6 +46,7 @@ a3i32 a3clipControllerInit(a3_ClipController* clipCtrl_out, const a3byte ctrlNam
 
 	clipCtrl_out->clipPool = clipPool;
 	clipCtrl_out->clip = clipIndex_pool; //this maybe should be different
+	clipCtrl_out->clipParam = 0.0;
 
 	clipPool->clip[clipIndex_pool]->duration = 10;
 	clipCtrl_out->clipPtr = clipPool->clip[clipIndex_pool];
