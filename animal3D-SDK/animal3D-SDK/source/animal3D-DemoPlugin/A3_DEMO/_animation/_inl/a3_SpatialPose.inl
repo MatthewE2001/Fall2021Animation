@@ -101,8 +101,11 @@ inline a3i32 a3spatialPoseConvert(a3mat4* mat_out, const a3_SpatialPose* spatial
 {
 	if (mat_out && spatialPose_in)
 	{
+		//mat_out = spatialPose_in->transform; ?
 
+		//what do I wanna use the order and channel for
 	}
+
 	return -1;
 }
 
@@ -113,16 +116,21 @@ inline a3i32 a3spatialPoseCopy(a3_SpatialPose* spatialPose_out, const a3_Spatial
 	{
 
 	}
+
 	return -1;
 }
 
 inline a3i32 a3spatialPoseConcat(a3_SpatialPose* spatialPose_out, const a3_SpatialPose* spatialPose_lh, const a3_SpatialPose* spatialPose_rh)
 {
+
+
 	return -1;
 }
 
 inline a3i32 a3spatialPoseLerp(a3_SpatialPose* spatialPose_out, const a3_SpatialPose* spatialPose0, const a3_SpatialPose* spatialPose1, const a3real u)
 {
+
+
 	return -1;
 }
 
