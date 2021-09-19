@@ -59,7 +59,7 @@ struct a3_HierarchyNode
 {
 	a3byte name[a3node_nameSize];
 	a3i32 index;
-	a3i32 parentIndex;
+	a3i32 parentIndex; //parent index should always be less than the index for the node itself
 };
 
 
