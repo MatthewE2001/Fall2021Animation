@@ -114,7 +114,9 @@ inline a3i32 a3spatialPoseCopy(a3_SpatialPose* spatialPose_out, const a3_Spatial
 {
 	if (spatialPose_out && spatialPose_in)
 	{
+		spatialPose_out = spatialPose_in; //I assume this is what I have to copy
 
+		return 1;
 	}
 
 	return -1;
@@ -122,7 +124,7 @@ inline a3i32 a3spatialPoseCopy(a3_SpatialPose* spatialPose_out, const a3_Spatial
 
 inline a3i32 a3spatialPoseConcat(a3_SpatialPose* spatialPose_out, const a3_SpatialPose* spatialPose_lh, const a3_SpatialPose* spatialPose_rh)
 {
-
+	//concat means ?
 
 	return -1;
 }
