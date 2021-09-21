@@ -282,6 +282,15 @@ struct a3_DemoState
 		};
 	};
 
+	//need to do UBOs here
+	//union
+	//{
+		//a3_UniformBuffer ubo[demostateMaxCount_uniformBuffer];
+
+		//struct
+			//a3_uniformBuffer
+	//};
+
 
 	// textures
 	union {

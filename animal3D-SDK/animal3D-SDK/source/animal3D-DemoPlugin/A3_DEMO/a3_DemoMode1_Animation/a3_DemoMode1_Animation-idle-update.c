@@ -89,6 +89,9 @@ void a3animation_update(a3_DemoState* demoState, a3_DemoMode1_Animation* demoMod
 		//concatenate (with base)
 		//convert
 		//FK (forward kinematics)
+
+	//resolve graphics
+		//upload results of FK to UBO (uniform buffer object?)
 }
 
 

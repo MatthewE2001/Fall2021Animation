@@ -32,6 +32,7 @@
 
 #include "../a3_DemoState.h"
 
+//this function is where the skeleton is drawn
 
 //-----------------------------------------------------------------------------
 
@@ -133,7 +134,7 @@ void a3animation_init_animation(a3_DemoState const* demoState, a3_DemoMode1_Anim
 	//	description for each joint (not a literal transform)
 	p = 0;
 	j = a3hierarchyGetNodeIndex(hierarchy, "skel:root");
-	//spatialPose = hierarchyPoseGroup->hpose[p].pose + j;
+	//spatialPose = hierarchyPoseGroup->hpose[p].pose + j; //hpose does not exist yet we need to make it
 	a3spatialPoseSetTranslation(spatialPose, 0.0f, 0.0f, +3.6f);
 	spatialPoseChannel[j] = a3poseChannel_orient_xyz | a3poseChannel_scale_xyz | a3poseChannel_translate_xyz;
 

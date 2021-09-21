@@ -533,6 +533,7 @@ void a3animation_render(a3_DemoState const* demoState, a3_DemoMode1_Animation co
 			const a3_HierarchyState* currentHierarchyState;
 			const a3_Hierarchy* currentHierarchy;
 
+			//this is where the skeleton actually gets rendered to the screen
 			// set up to draw skeleton
 			currentDemoProgram = demoState->prog_drawColorUnif_instanced;
 			a3shaderProgramActivate(currentDemoProgram->program);

@@ -159,6 +159,8 @@ inline a3i32 a3spatialPoseConcat(a3_SpatialPose* spatialPose_out, const a3_Spati
 		spatialPose_out->rotate; // Euler - validate(lh + rh) (constrain sum to rotational domain)
 		spatialPose_out->scale; // comp(lh * rh) (component-wise)
 		spatialPose_out->translate; // (lh + rh)
+
+		return 0;
 	}
 
 	return -1;
@@ -166,7 +168,15 @@ inline a3i32 a3spatialPoseConcat(a3_SpatialPose* spatialPose_out, const a3_Spati
 
 inline a3i32 a3spatialPoseLerp(a3_SpatialPose* spatialPose_out, const a3_SpatialPose* spatialPose0, const a3_SpatialPose* spatialPose1, const a3real u)
 {
+	if (spatialPose_out && spatialPose0 && spatialPose1) //these if statements are not needed forever
+	{
+		//spatialPose_out->transform; //no again because interpolations just full transform creates issues with object
+		spatialPose_out->rotate; // Euler - lerp(p0, p1, u) 
+		spatialPose_out->scale; // exp() //exponential equation for lerp (p1(po^-1))^u * p0 (this equation here may be a bit off)
+		spatialPose_out->translate; // lerp (p0, p1, u) 
 
+		return 0;
+	}
 
 	return -1;
 }
