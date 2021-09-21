@@ -104,6 +104,32 @@ inline a3i32 a3spatialPoseConvert(a3mat4* mat_out, const a3_SpatialPose* spatial
 		//mat_out = spatialPose_in->transform; ?
 
 		//what do I wanna use the order and channel for
+
+		//order of rotations depends on the order passed in from the parameter spatialPoseEulerOrder
+		// M = T * ((R * R * R) * S)
+
+		// M = (_ _ _ tx
+				//_ RS _ ty
+				//_ _ _ tz
+				//0 0 0 1
+
+		// S = mat3 (x 0 0
+					//0 y 0
+					//0 0 z)
+
+		// Rx = mat3 (1, 0, 0 //c is cos and s is sin
+					//0, c -s
+					//0 +s c)
+							 
+		// Ry = mat3 (c 0 +s 
+					//0 1 0	 
+					//-s 0 c)
+							 
+		// Rz = mat3 (c -s 0 
+					//+s c 0 
+					//0 0 1) 
+
+		// mat_out = M //I assume
 	}
 
 	return -1;
@@ -122,9 +148,18 @@ inline a3i32 a3spatialPoseCopy(a3_SpatialPose* spatialPose_out, const a3_Spatial
 	return -1;
 }
 
+//concat/combine
 inline a3i32 a3spatialPoseConcat(a3_SpatialPose* spatialPose_out, const a3_SpatialPose* spatialPose_lh, const a3_SpatialPose* spatialPose_rh)
 {
-	//concat means ?
+	//concat means ______
+
+	if (spatialPose_out && spatialPose_lh && spatialPose_rh)
+	{
+		//spatialPose_out->transform; //no need to do transform no data is there yet (comes at later step in full process)
+		spatialPose_out->rotate; // Euler - validate(lh + rh) (constrain sum to rotational domain)
+		spatialPose_out->scale; // comp(lh * rh) (component-wise)
+		spatialPose_out->translate; // (lh + rh)
+	}
 
 	return -1;
 }
