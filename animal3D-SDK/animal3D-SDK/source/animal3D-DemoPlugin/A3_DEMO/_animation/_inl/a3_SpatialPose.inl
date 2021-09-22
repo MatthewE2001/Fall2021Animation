@@ -103,33 +103,33 @@ inline a3i32 a3spatialPoseConvert(a3mat4* mat_out, const a3_SpatialPose* spatial
 	{
 		//mat_out = spatialPose_in->transform; ?
 
-		//what do I wanna use the order and channel for
-
 		//order of rotations depends on the order passed in from the parameter spatialPoseEulerOrder
 		// M = T * ((R * R * R) * S)
 
-		// M = (_ _ _ tx
+		//a3mat4 M = (_ _ _ tx
 				//_ RS _ ty
 				//_ _ _ tz
 				//0 0 0 1
 
-		// S = mat3 (x 0 0
+		//a3mat3 S = a3mat3 (x 0 0
 					//0 y 0
 					//0 0 z)
 
-		// Rx = mat3 (1, 0, 0 //c is cos and s is sin
-					//0, c -s
-					//0 +s c)
+		//a3mat3 Rx = a3mat3 (1, 0, 0
+					//0, cos -sin
+					//0 +sin cos)
 							 
-		// Ry = mat3 (c 0 +s 
+		//a3mat3 Ry = a3mat3 (cos 0 +sin 
 					//0 1 0	 
-					//-s 0 c)
+					//-sin 0 cos)
 							 
-		// Rz = mat3 (c -s 0 
-					//+s c 0 
+		//a3mat3 Rz = a3mat3 (cos -sin 0 
+					//+sin cos 0 
 					//0 0 1) 
 
-		// mat_out = M //I assume
+		//M = T * (Rx + Ry * Rz) * S
+
+		// mat_out = M  // (I assume this is the case)
 	}
 
 	return -1;
