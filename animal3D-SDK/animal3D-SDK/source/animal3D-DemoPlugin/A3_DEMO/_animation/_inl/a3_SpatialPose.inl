@@ -157,9 +157,17 @@ inline a3i32 a3spatialPoseConcat(a3_SpatialPose* spatialPose_out, const a3_Spati
 	{
 		//spatialPose_out->transform; //no need to do transform no data is there yet (comes at later step in full process)
 		spatialPose_out->rotate; // Euler - validate(lh + rh) (constrain sum to rotational domain)
-		spatialPose_out->scale; // comp(lh * rh) (component-wise)
-		spatialPose_out->translate; //= spatialPose_lh->translate + spatialPose_rh->translate; // (lh + rh)
 
+		//this seems like the best way to do component wise since the system does not like me making an a3vec3
+		spatialPose_out->scale.x = spatialPose_lh->scale.x * spatialPose_rh->scale.x;
+		spatialPose_out->scale.y = spatialPose_lh->scale.y * spatialPose_rh->scale.y;
+		spatialPose_out->scale.z = spatialPose_lh->scale.z * spatialPose_rh->scale.z;
+		
+		//split the translate up into each part of the vector in order to add it
+		spatialPose_out->translate.x = spatialPose_lh->translate.x + spatialPose_rh->translate.x;
+		spatialPose_out->translate.y = spatialPose_lh->translate.y + spatialPose_rh->translate.y;
+		spatialPose_out->translate.z = spatialPose_lh->translate.z + spatialPose_rh->translate.z;
+		
 		return 0;
 	}
 
