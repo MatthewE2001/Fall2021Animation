@@ -101,8 +101,6 @@ inline a3i32 a3spatialPoseConvert(a3mat4* mat_out, const a3_SpatialPose* spatial
 {
 	if (mat_out && spatialPose_in)
 	{
-		//mat_out = spatialPose_in->transform; ?
-
 		//order of rotations depends on the order passed in from the parameter spatialPoseEulerOrder
 		// M = T * ((R * R * R) * S)
 
@@ -111,21 +109,21 @@ inline a3i32 a3spatialPoseConvert(a3mat4* mat_out, const a3_SpatialPose* spatial
 				//_ _ _ tz
 				//0 0 0 1
 
-		//a3mat3 S = a3mat3 (x 0 0
-					//0 y 0
-					//0 0 z)
+		//a3mat3 S =  a3mat3 (spatialPose_in->scale.x, 0, 0,
+					//0, spatialPose_in->scale.y, 0,
+					//0, 0, spatialPose_in->scale.z);
 
 		//a3mat3 Rx = a3mat3 (1, 0, 0
-					//0, cos -sin
-					//0 +sin cos)
+					//0, cos(spatialPose_in->rotate.x) -sin(spatialPose_in->rotate.x)
+					//0 +sin(spatialPose_in->rotate.x) cos(spatialPose_in->rotate.x));
 							 
-		//a3mat3 Ry = a3mat3 (cos 0 +sin 
+		//a3mat3 Ry = a3mat3 (cos(spatialPose_in->rotate.y) 0 +sin(spatialPose_in->rotate.y) 
 					//0 1 0	 
-					//-sin 0 cos)
+					//-sin(spatialPose_in->rotate.y) 0 cos(spatialPose_in->rotate.y));
 							 
-		//a3mat3 Rz = a3mat3 (cos -sin 0 
-					//+sin cos 0 
-					//0 0 1) 
+		//a3mat3 Rz = a3mat3 (cos(spatialPose_in->rotate.z) -sin(spatialPose_in->rotate.z) 0 
+					//+sin(spatialPose_in->rotate.z) cos(spatialPose_in->rotate.z) 0 
+					//0 0 1);
 
 		//M = T * (Rx + Ry * Rz) * S
 
