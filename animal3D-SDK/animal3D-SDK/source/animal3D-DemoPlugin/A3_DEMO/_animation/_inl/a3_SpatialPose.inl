@@ -178,11 +178,20 @@ inline a3i32 a3spatialPoseLerp(a3_SpatialPose* spatialPose_out, const a3_Spatial
 	if (spatialPose_out && spatialPose0 && spatialPose1) //these if statements are not needed forever
 	{
 		//spatialPose_out->transform; //no again because interpolations just full transform creates issues with object
-		spatialPose_out->rotate;  //= a3lerpFunc(spatialPose0->rotate, spatialPose1->rotate, u); // Euler - lerp(p0, p1, u) 
 		spatialPose_out->scale; // exp() //exponential equation for lerp (p1(po^-1))^u * p0 (this equation here may be a bit off)
-		spatialPose_out->translate; // lerp (p0, p1, u) 
 
-		//a3real3Lerp(spatialPose_out->rotate, ) //testing ways to try and work the lerp
+		//rotate lerp functions
+		spatialPose_out->rotate.x = a3lerpFunc(spatialPose0->rotate.x, spatialPose1->rotate.x, u);
+		spatialPose_out->rotate.y = a3lerpFunc(spatialPose0->rotate.y, spatialPose1->rotate.y, u);
+		spatialPose_out->rotate.z = a3lerpFunc(spatialPose0->rotate.z, spatialPose1->rotate.z, u);
+
+		//scale lerp functions (what will become the exponential part?)
+		
+
+		//hopefully this should lerp for translate
+		spatialPose_out->translate.x = a3lerpFunc(spatialPose0->translate.x, spatialPose1->translate.x, u);
+		spatialPose_out->translate.y = a3lerpFunc(spatialPose0->translate.y, spatialPose1->translate.y, u);
+		spatialPose_out->translate.z = a3lerpFunc(spatialPose0->translate.z, spatialPose1->translate.z, u);
 
 		return 0;
 	}
