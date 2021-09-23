@@ -101,6 +101,8 @@ enum a3_DemoState_ObjectMaxCount
 	demoStateMaxCount_texture = 8,
 
 	demoStateMaxCount_framebuffer = 2,
+
+	demoStateMaxCount_uniformBuffer = 1,
 };
 
 	
@@ -283,13 +285,17 @@ struct a3_DemoState
 	};
 
 	//need to do UBOs here
-	//union
-	//{
-		//a3_UniformBuffer ubo[demostateMaxCount_uniformBuffer];
+	union
+	{
+		a3_UniformBuffer ubo[demoStateMaxCount_uniformBuffer];
 
-		//struct
-			//a3_uniformBuffer
-	//};
+		struct 
+		{
+			//this might need to change a bit
+			a3_UniformBuffer
+				ubo[1];
+		};
+	};
 
 
 	// textures
