@@ -293,7 +293,9 @@ struct a3_DemoState
 		{
 			//this might need to change a bit
 			a3_UniformBuffer
-				ubo_default[1];
+				ubo_default[1],
+				ubo_transformLMVP_bone[1],
+				ubo_transformLMVP_joint[1];
 		};
 	};
 

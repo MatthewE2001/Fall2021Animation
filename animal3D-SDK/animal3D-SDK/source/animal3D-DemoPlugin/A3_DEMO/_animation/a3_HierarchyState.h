@@ -65,7 +65,7 @@ struct a3_HierarchyPoseGroup //this might be the hierarchy pose pool I think
 	a3_SpatialPose* spatialPosePool[1]; //will need to be higher than 1, 1 is just filler
 
 	//hierarchical poses - organizes the individual node poses
-	a3_HierarchyPose* hierarchyPosePool[1];
+	a3_HierarchyPose* hpose[1]; //hpose to match animation load.c (also probably change this from 1)
 
 	//channels - describes which individual pose transformation components are used by each node
 	a3_SpatialPoseChannel poseChannel;
