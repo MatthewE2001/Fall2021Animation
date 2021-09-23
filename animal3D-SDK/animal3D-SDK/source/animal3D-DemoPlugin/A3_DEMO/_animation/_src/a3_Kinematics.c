@@ -40,6 +40,8 @@ a3i32 a3kinematicsSolveForwardPartial(const a3_HierarchyState *hierarchyState, c
 		//		- else
 		//			- copy local matrix to object matrix
 
+		hierarchyState->hierarchy->nodes[firstIndex];
+
 		//function is something like a3mat4Concat();
 	}
 	return -1;

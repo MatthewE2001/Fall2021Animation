@@ -134,7 +134,7 @@ inline a3i32 a3spatialPoseConvert(a3mat4* mat_out, const a3_SpatialPose* spatial
 }
 
 // copy operation for single node pose
-inline a3i32 a3spatialPoseCopy(a3_SpatialPose* spatialPose_out, const a3_SpatialPose* spatialPose_in)
+inline a3i32 a3spatialPoseCopy(a3_SpatialPose* spatialPose_out, a3_SpatialPose* spatialPose_in)
 {
 	if (spatialPose_out && spatialPose_in)
 	{
