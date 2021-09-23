@@ -101,6 +101,7 @@ void a3demo_loadGeometry(a3_DemoState* demoState);
 void a3demo_loadShaders(a3_DemoState* demoState);
 void a3demo_loadTextures(a3_DemoState* demoState);
 void a3demo_loadFramebuffers(a3_DemoState* demoState);
+void a3demo_loadHierarchy(a3_DemoState* demoState);
 void a3demo_loadValidate(a3_DemoState* demoState);
 
 // unloading
@@ -135,6 +136,9 @@ void a3demo_load(a3_DemoState* demoState)
 
 	// textures
 	a3demo_loadTextures(demoState);
+
+	// hierarchy
+	a3demo_loadHierarchy(demoState);
 
 
 	// set flags

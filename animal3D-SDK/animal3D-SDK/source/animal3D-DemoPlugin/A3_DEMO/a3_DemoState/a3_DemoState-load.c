@@ -827,6 +827,23 @@ void a3demo_loadTextures(a3_DemoState* demoState)
 	a3textureDeactivate(a3tex_unit00);
 }
 
+// utility to load hierarchy
+void a3demo_loadHierarchy(a3_DemoState* demoState)
+{
+	printf("\n\n---------------- LOAD HIERARCHY STARTED ---------------- \n");
+	// skeletal animation
+	a3_Hierarchy hierarchy_skel[1];
+	a3_HierarchyState hierarchyState_skel[1];
+	a3_HierarchyPoseGroup hierarchyPoseGroup_skel[1];
+
+	// Create a hierarchy with three nodes
+	a3hierarchyCreate(hierarchy_skel, 3, 0);
+	// Initalize the hierarchy state
+	a3hierarchyStateCreate(hierarchyState_skel, hierarchy_skel);
+	// Create a pose group with three poses
+	a3hierarchyPoseGroupCreate(hierarchyPoseGroup_skel, hierarchy_skel, 3);
+	printf("\n\n---------------- LOAD HIERARCHY FINISHED ---------------- \n");
+}
 
 // utility to load framebuffers
 void a3demo_loadFramebuffers(a3_DemoState* demoState)
