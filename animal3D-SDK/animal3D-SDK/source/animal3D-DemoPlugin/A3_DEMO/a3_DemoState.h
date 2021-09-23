@@ -293,7 +293,7 @@ struct a3_DemoState
 		{
 			//this might need to change a bit
 			a3_UniformBuffer
-				ubo[1];
+				ubo_default[1];
 		};
 	};
 

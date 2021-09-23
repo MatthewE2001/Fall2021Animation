@@ -24,6 +24,8 @@
 
 #include "../a3_Kinematics.h"
 
+// For debug output to console
+#include <stdio.h>
 
 //-----------------------------------------------------------------------------
 
@@ -41,6 +43,20 @@ a3i32 a3kinematicsSolveForwardPartial(const a3_HierarchyState *hierarchyState, c
 		//			- copy local matrix to object matrix
 
 		hierarchyState->hierarchy->nodes[firstIndex];
+
+		for (a3ui32 i = firstIndex; i < hierarchyState->hierarchy->numNodes; i++)
+		{
+			if (hierarchyState->hierarchy->nodes[i].parentIndex != -1)
+			{
+				// Object matrix = parent object matrix * local matrix
+				printf("Child");
+			}
+			else
+			{
+				// Copy local matrix to object matrix
+				printf("Root");
+			}
+		}
 
 		//function is something like a3mat4Concat();
 	}
