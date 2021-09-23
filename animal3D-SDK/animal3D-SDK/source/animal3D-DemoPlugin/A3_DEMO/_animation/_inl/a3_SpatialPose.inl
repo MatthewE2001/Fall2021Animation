@@ -140,6 +140,8 @@ inline a3i32 a3spatialPoseCopy(a3_SpatialPose* spatialPose_out, const a3_Spatial
 	{
 		spatialPose_out = spatialPose_in; //I assume this is what I have to copy
 
+		//or maybe copy each part individually
+
 		return 1;
 	}
 

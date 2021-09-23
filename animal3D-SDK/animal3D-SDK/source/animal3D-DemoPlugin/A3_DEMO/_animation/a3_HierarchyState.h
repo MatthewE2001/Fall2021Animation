@@ -56,13 +56,28 @@ struct a3_HierarchyPose
 
 
 // pose group
-struct a3_HierarchyPoseGroup
+struct a3_HierarchyPoseGroup //this might be the hierarchy pose pool I think
 {
 	// pointer to hierarchy
 	const a3_Hierarchy* hierarchy;
 
+	//spatial pose pool (set of all poses for all nodes)
+	a3_SpatialPose* spatialPosePool[1]; //will need to be higher than 1, 1 is just filler
+
+	//hierarchical poses - organizes the individual node poses
+	a3_HierarchyPose* hierarchyPosePool[1];
+
+	//channels - describes which individual pose transformation components are used by each node
+	a3_SpatialPoseChannel poseChannel;
+
+	//euler order - Some global flag for the pool that describes the concatenation order of orientation channels
+	a3_SpatialPoseEulerOrder eulerOrder;
+
 	// number of hierarchical poses
 	a3ui32 poseCount;
+
+	//spatial pose count - hierarchical pose count times hierarchy node count
+	a3ui32 spatialPoseCount;
 };
 
 
