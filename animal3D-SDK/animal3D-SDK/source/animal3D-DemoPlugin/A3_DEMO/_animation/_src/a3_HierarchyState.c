@@ -40,12 +40,12 @@ a3i32 a3hierarchyPoseGroupCreate(a3_HierarchyPoseGroup *poseGroup_out, const a3_
 		// determine memory requirements
 
 		// allocate everything (one malloc)
-		//??? = (...)malloc(sz);
+		poseGroup_out->hierarchy = malloc(sizeof(hierarchy)); //I think malloc to pose group?
 
 		// set pointers
 		poseGroup_out->hierarchy = hierarchy;
 
-		// reset all data
+		// reset all data (what do I need to do to reset all data)
 
 		// done
 		return 1;
@@ -60,7 +60,7 @@ a3i32 a3hierarchyPoseGroupRelease(a3_HierarchyPoseGroup *poseGroup)
 	if (poseGroup && poseGroup->hierarchy)
 	{
 		// release everything (one free)
-		//free(???);
+		free(poseGroup); //I assume just the whole thing
 
 		// reset pointers
 		poseGroup->hierarchy = 0;
@@ -84,7 +84,7 @@ a3i32 a3hierarchyStateCreate(a3_HierarchyState *state_out, const a3_Hierarchy *h
 		// determine memory requirements
 
 		// allocate everything (one malloc)
-		//??? = (...)malloc(sz);
+		state_out->hierarchy = malloc(sizeof(a3_Hierarchy));
 
 		// set pointers
 		state_out->hierarchy = hierarchy;
@@ -105,6 +105,7 @@ a3i32 a3hierarchyStateRelease(a3_HierarchyState *state)
 	{
 		// release everything (one free)
 		//free(???);
+		free(state);
 
 		// reset pointers
 		state->hierarchy = 0;
@@ -125,6 +126,7 @@ a3i32 a3hierarchyPoseGroupLoadHTR(a3_HierarchyPoseGroup* poseGroup_out, a3_Hiera
 	{
 
 	}
+
 	return -1;
 }
 
@@ -135,6 +137,7 @@ a3i32 a3hierarchyPoseGroupLoadBVH(a3_HierarchyPoseGroup* poseGroup_out, a3_Hiera
 	{
 
 	}
+
 	return -1;
 }
 
