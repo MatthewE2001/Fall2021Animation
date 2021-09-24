@@ -834,12 +834,14 @@ void a3demo_loadHierarchy(a3_DemoState* demoState)
 	printf("\n\n---------------- LOAD HIERARCHY STARTED ---------------- \n");
 	
 	// iterators
-	//a3ui32 j, p;
+	a3ui32 j, p;
 
 	// setup empty pointers
 	a3_Hierarchy* hierarchy = 0;
 	a3_HierarchyState* hierarchyState = 0;;
 	a3_HierarchyPoseGroup* hierarchyPoseGroup = 0;
+	a3_SpatialPose* spatialPose = 0;
+	a3_SpatialPoseChannel spatialPoseChannel[32] = { a3poseChannel_none };
 
 
 	a3_FileStream fileStream[1] = { 0 };
@@ -911,6 +913,18 @@ void a3demo_loadHierarchy(a3_DemoState* demoState)
 		a3fileStreamClose(fileStream);
 
 	}
+
+	// hierarchy pose setup
+	hierarchy = demoState->hierarchy_skel;
+	hierarchyPoseGroup = demoState->hierarchyPoseGroup_skel;
+	hierarchyPoseGroup->hierarchy = 0;
+	a3hierarchyPoseGroupCreate(hierarchyPoseGroup, hierarchy, 4);
+
+	p = 0;
+	j = a3hierarchyGetNodeIndex(hierarchy, "skel:root");
+	spatialPose = hierarchyPoseGroup->hpose[p]->spatialPose + j;
+	a3spatialPoseSetTranslation(spatialPose, 0.0f, 0.0f, +3.6f);
+	spatialPoseChannel[j] = a3poseChannel_orient_xyz | a3poseChannel_scale_xyz | a3poseChannel_translate_xyz;
 
 
 	printf("\n\n---------------- LOAD HIERARCHY FINISHED ---------------- \n");
