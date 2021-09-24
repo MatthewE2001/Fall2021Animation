@@ -184,6 +184,10 @@ struct a3_DemoState
 	a3boolean stencilTest;
 	a3boolean skipIntermediatePasses;
 
+	a3_Hierarchy hierarchy_skel[1];
+	a3_HierarchyState hierarchyState_skel[1];
+	a3_HierarchyPoseGroup hierarchyPoseGroup_skel[1];
+
 
 	//-------------------------------------------------------------------------
 	// object arrays: organized as anonymous unions for two reasons: 
