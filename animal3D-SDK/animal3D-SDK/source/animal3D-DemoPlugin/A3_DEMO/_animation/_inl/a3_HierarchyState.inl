@@ -57,8 +57,9 @@ inline a3i32 a3hierarchyPoseReset(const a3_HierarchyPose* pose_inout, const a3ui
 {
 	if (pose_inout && nodeCount)
 	{
-
+		pose_inout = 0; //reset them to what (use free?)
 	}
+
 	return -1;
 }
 
@@ -69,6 +70,7 @@ inline a3i32 a3hierarchyPoseConvert(const a3_HierarchyPose* pose_inout, const a3
 	{
 
 	}
+
 	return -1;
 }
 
@@ -77,8 +79,9 @@ inline a3i32 a3hierarchyPoseCopy(const a3_HierarchyPose* pose_out, const a3_Hier
 {
 	if (pose_out && pose_in && nodeCount)
 	{
-
+		pose_out = pose_in;	
 	}
+	
 	return -1;
 }
 
