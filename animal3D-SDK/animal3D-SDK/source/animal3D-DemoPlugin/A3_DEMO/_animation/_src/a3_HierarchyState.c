@@ -48,6 +48,7 @@ a3i32 a3hierarchyPoseGroupCreate(a3_HierarchyPoseGroup *poseGroup_out, const a3_
 		//printf("%i", poseGroup_out->hierarchy->numNodes);
 		// reset all data (what do I need to do to reset all data)
 
+		//this will probably need to change in the future
 		poseGroup_out->hpose[0] = malloc(sizeof(a3_HierarchyPose));
 		poseGroup_out->hpose[0]->spatialPose = malloc(sizeof(a3_SpatialPose));
 		a3spatialPoseSetTranslation(poseGroup_out->hpose[0]->spatialPose, 0.0, 0.0, 0.0);
@@ -164,10 +165,38 @@ a3i32 a3hierarchyPoseGroupLoadBVH(a3_HierarchyPoseGroup* poseGroup_out, a3_Hiera
 	if (poseGroup_out && !poseGroup_out->poseCount && hierarchy_out && !hierarchy_out->numNodes && resourceFilePath && *resourceFilePath)
 	{
 		//a3fileStreamOpenRead(, resourceFilePath);
-		//FILE* file;
 
 		//poseGroup_out = 
 		//hierarchy_out = 
+	}
+
+	return -1;
+}
+
+//save HTR file, write and store complete pose group and hierarchy
+a3i32 a3hierarchyPoseGroupSaveHTR(a3_HierarchyPoseGroup const* poseGroup, a3_Hierarchy* hierarchy, const a3byte* resourceFilePath)
+{
+	if (poseGroup && !poseGroup->poseCount && hierarchy && !hierarchy->numNodes && resourceFilePath && *resourceFilePath)
+	{
+		//a3fileStreamOpenWrite(resourseFilePath, 'w');
+
+		return 0;
+	}
+
+
+	return -1;
+}
+
+//save BVH file, write and store complete pose group and hierarchy
+a3i32 a3hierarchyPoseGroupSaveBVH(a3_HierarchyPoseGroup const* poseGroup, a3_Hierarchy* hierarchy, const a3byte* resourceFilePath)
+{
+	if (poseGroup && !poseGroup->poseCount && hierarchy && !hierarchy->numNodes && resourceFilePath && *resourceFilePath)
+	{
+		//a3fileStreamOpenWrite(resourceFilePath, 'w');
+
+		//I think values from the file go to hierarchy
+
+		return 0;
 	}
 
 	return -1;

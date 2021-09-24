@@ -49,11 +49,14 @@ a3i32 a3kinematicsSolveForwardPartial(const a3_HierarchyState *hierarchyState, c
 			if (hierarchyState->hierarchy->nodes[i].parentIndex != -1)
 			{
 				// Object matrix = parent object matrix * local matrix
+				//hierarchyState->objectSpacePose = hierarchyState
+				//hierarchyState->hpose[firstIndex]spatialPose =  //another way to try this
 				printf("Child");
 			}
 			else
 			{
 				// Copy local matrix to object matrix
+				//hierarchyState->objectSpacePose = hierarchyState->localSpacePose;
 				printf("Root");
 			}
 		}
