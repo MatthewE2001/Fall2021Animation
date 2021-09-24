@@ -26,6 +26,7 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
 
 //-----------------------------------------------------------------------------
 
@@ -37,20 +38,44 @@ a3i32 a3hierarchyPoseGroupCreate(a3_HierarchyPoseGroup *poseGroup_out, const a3_
 	if (poseGroup_out && hierarchy && !poseGroup_out->hierarchy && hierarchy->nodes)
 	{
 		// determine memory requirements
-
+		//printf("%i", hierarchy->numNodes);
 		// allocate everything (one malloc)
 		poseGroup_out->hierarchy = malloc(sizeof(a3_Hierarchy)); //I think malloc to pose group?
 		//hierarchy = malloc(sizeof(hierarchy));
 
 		// set pointers
 		poseGroup_out->hierarchy = hierarchy;
-
+		//printf("%i", poseGroup_out->hierarchy->numNodes);
 		// reset all data (what do I need to do to reset all data)
+
+		poseGroup_out->hpose[0] = malloc(sizeof(a3_HierarchyPose));
+		poseGroup_out->hpose[0]->spatialPose = malloc(sizeof(a3_SpatialPose));
+		a3spatialPoseSetTranslation(poseGroup_out->hpose[0]->spatialPose, 0.0, 0.0, 0.0);
+		a3spatialPoseSetRotation(poseGroup_out->hpose[0]->spatialPose, 0.0, 0.0, 0.0);
+		a3spatialPoseSetScale(poseGroup_out->hpose[0]->spatialPose, 0.0, 0.0, 0.0);
+
+		poseGroup_out->hpose[1] = malloc(sizeof(a3_HierarchyPose));
+		poseGroup_out->hpose[1]->spatialPose = malloc(sizeof(a3_SpatialPose));
+		a3spatialPoseSetTranslation(poseGroup_out->hpose[1]->spatialPose, 0.0, 0.0, 0.0);
+		a3spatialPoseSetRotation(poseGroup_out->hpose[1]->spatialPose, 0.0, 0.0, 0.0);
+		a3spatialPoseSetScale(poseGroup_out->hpose[1]->spatialPose, 0.0, 0.0, 0.0);
+
+		poseGroup_out->hpose[2] = malloc(sizeof(a3_HierarchyPose));
+		poseGroup_out->hpose[2]->spatialPose = malloc(sizeof(a3_SpatialPose));
+		a3spatialPoseSetTranslation(poseGroup_out->hpose[2]->spatialPose, 0.0, 0.0, 0.0);
+		a3spatialPoseSetRotation(poseGroup_out->hpose[2]->spatialPose, 0.0, 0.0, 0.0);
+		a3spatialPoseSetScale(poseGroup_out->hpose[2]->spatialPose, 0.0, 0.0, 0.0);
+
+		poseGroup_out->hpose[3] = malloc(sizeof(a3_HierarchyPose));
+		poseGroup_out->hpose[3]->spatialPose = malloc(sizeof(a3_SpatialPose));
+		a3spatialPoseSetTranslation(poseGroup_out->hpose[3]->spatialPose, 0.0, 0.0, 0.0);
+		a3spatialPoseSetRotation(poseGroup_out->hpose[3]->spatialPose, 0.0, 0.0, 0.0);
+		a3spatialPoseSetScale(poseGroup_out->hpose[3]->spatialPose, 0.0, 0.0, 0.0);
 
 		// done
 		return 1;
 	}
-
+	printf("IF DOES NOT WORKS");
 	return -1;
 }
 
