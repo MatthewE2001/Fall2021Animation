@@ -26,6 +26,7 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <cstdio>
 
 
 //-----------------------------------------------------------------------------
@@ -50,6 +51,7 @@ a3i32 a3hierarchyPoseGroupCreate(a3_HierarchyPoseGroup *poseGroup_out, const a3_
 		// done
 		return 1;
 	}
+
 	return -1;
 }
 
@@ -124,6 +126,8 @@ a3i32 a3hierarchyPoseGroupLoadHTR(a3_HierarchyPoseGroup* poseGroup_out, a3_Hiera
 {
 	if (poseGroup_out && !poseGroup_out->poseCount && hierarchy_out && !hierarchy_out->numNodes && resourceFilePath && *resourceFilePath)
 	{
+		//a3fileStreamOpenRead(, resourceFilePath);
+
 		//poseGroup_out = 
 		//hierarchy_out = 
 	}
@@ -136,6 +140,9 @@ a3i32 a3hierarchyPoseGroupLoadBVH(a3_HierarchyPoseGroup* poseGroup_out, a3_Hiera
 {
 	if (poseGroup_out && !poseGroup_out->poseCount && hierarchy_out && !hierarchy_out->numNodes && resourceFilePath && *resourceFilePath)
 	{
+		//a3fileStreamOpenRead(, resourceFilePath);
+		FILE* file;
+
 		//poseGroup_out = 
 		//hierarchy_out = 
 	}
