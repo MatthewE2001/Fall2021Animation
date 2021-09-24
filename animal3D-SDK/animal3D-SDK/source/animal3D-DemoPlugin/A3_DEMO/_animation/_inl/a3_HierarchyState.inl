@@ -68,6 +68,7 @@ inline a3i32 a3hierarchyPoseConvert(const a3_HierarchyPose* pose_inout, const a3
 {
 	if (pose_inout && nodeCount)
 	{
+		//what hierarchy transforms actually should these poses become?
 
 	}
 
@@ -91,6 +92,8 @@ inline a3i32 a3hierarchyPoseCopy(const a3_HierarchyPose* pose_out, const a3_Hier
 // update inverse object-space matrices
 inline a3i32 a3hierarchyStateUpdateObjectInverse(const a3_HierarchyState *state)
 {
+
+
 	return -1;
 }
 
