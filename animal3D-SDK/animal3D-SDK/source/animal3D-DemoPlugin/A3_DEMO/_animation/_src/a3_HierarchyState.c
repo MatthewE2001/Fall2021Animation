@@ -27,7 +27,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-
 //-----------------------------------------------------------------------------
 
 // initialize pose set given an initialized hierarchy and key pose count
@@ -126,7 +125,6 @@ a3i32 a3hierarchyPoseGroupLoadHTR(a3_HierarchyPoseGroup* poseGroup_out, a3_Hiera
 	if (poseGroup_out && !poseGroup_out->poseCount && hierarchy_out && !hierarchy_out->numNodes && resourceFilePath && *resourceFilePath)
 	{
 		//a3fileStreamOpenRead(, resourceFilePath);
-		//FILE* file = fopen(resourceFilePath + "egnaro_skel_anim.htr", "r");
 
 		//poseGroup_out = 
 		//hierarchy_out = 
@@ -141,7 +139,7 @@ a3i32 a3hierarchyPoseGroupLoadBVH(a3_HierarchyPoseGroup* poseGroup_out, a3_Hiera
 	if (poseGroup_out && !poseGroup_out->poseCount && hierarchy_out && !hierarchy_out->numNodes && resourceFilePath && *resourceFilePath)
 	{
 		//a3fileStreamOpenRead(, resourceFilePath);
-		//FILE* file = fopen(resourceFilePath + , "r");
+		//FILE* file;
 
 		//poseGroup_out = 
 		//hierarchy_out = 
