@@ -36,9 +36,9 @@ inline a3i32 a3spatialPoseSetRotation(a3_SpatialPose* spatialPose, const a3f32 r
 {
 	if (spatialPose)
 	{
-		spatialPose->rotate.x = rx_degrees;
-		spatialPose->rotate.y = ry_degrees;
-		spatialPose->rotate.z = rz_degrees;
+		spatialPose->rotate_euler.x = rx_degrees;
+		spatialPose->rotate_euler.y = ry_degrees;
+		spatialPose->rotate_euler.z = rz_degrees;
 
 		return 1;
 	}
@@ -85,7 +85,8 @@ inline a3i32 a3spatialPoseReset(a3_SpatialPose* spatialPose)
 	if (spatialPose)
 	{
 		spatialPose->transform = a3mat4_identity;
-		spatialPose->rotate = a3vec3_zero; //this and translate are 0 because it is addition based
+		spatialPose->rotate_quat =  
+		spatialPose->rotate_euler = a3vec3_zero; //this and translate are 0 because it is addition based
 		spatialPose->translate = a3vec3_zero;
 		spatialPose->scale = a3vec3_one; //this is one cause it is multiplication based (also transform is multiply based)
 
@@ -149,14 +150,23 @@ inline a3i32 a3spatialPoseCopy(a3_SpatialPose* spatialPose_out, a3_SpatialPose* 
 }
 
 //concat/combine
-inline a3i32 a3spatialPoseConcat(a3_SpatialPose* spatialPose_out, const a3_SpatialPose* spatialPose_lh, const a3_SpatialPose* spatialPose_rh)
+inline a3i32 a3spatialPoseConcat(a3_SpatialPose* spatialPose_out, const a3_SpatialPose* spatialPose_lh, const a3_SpatialPose* spatialPose_rh, const a3boolean usingQuaternions)
 {
 	//concat means ______
 
 	if (spatialPose_out && spatialPose_lh && spatialPose_rh)
 	{
+		if (usingQuaternions) //then put quaternions to use
+		{
+			spatialPose_out->rotate_quat; //Quat - (lh * rh) = (w_l + v_l)(w_r + v_r)
+										// = (w_l * w_r - v_l . v_r) + (w_l * v_r + w_r * v_l + v_l x v_r) //the x is cross
+		}
+		else //and this is the euler info
+		{
+			spatialPose_out->rotate_euler; // Euler - validate(lh + rh) (constrain sum to rotational domain)
+		}
+		
 		//spatialPose_out->transform; //no need to do transform no data is there yet (comes at later step in full process)
-		spatialPose_out->rotate; // Euler - validate(lh + rh) (constrain sum to rotational domain)
 
 		//this seems like the best way to do component wise since the system does not like me making an a3vec3
 		spatialPose_out->scale.x = spatialPose_lh->scale.x * spatialPose_rh->scale.x;
@@ -174,21 +184,32 @@ inline a3i32 a3spatialPoseConcat(a3_SpatialPose* spatialPose_out, const a3_Spati
 	return -1;
 }
 
-inline a3i32 a3spatialPoseLerp(a3_SpatialPose* spatialPose_out, const a3_SpatialPose* spatialPose0, const a3_SpatialPose* spatialPose1, const a3real u)
+inline a3i32 a3spatialPoseLerp(a3_SpatialPose* spatialPose_out, const a3_SpatialPose* spatialPose0, const a3_SpatialPose* spatialPose1, const a3real u, const a3boolean usingQuaternions)
 {
 	//could I perhaps have to make a lerp but with vectors?
 	if (spatialPose_out && spatialPose0 && spatialPose1) //these if statements are not needed forever
 	{
-		//spatialPose_out->transform; //no again because interpolations just full transform creates issues with object
-		spatialPose_out->scale; // exp() //exponential equation for lerp (p1(po^-1))^u * p0 (this equation here may be a bit off)
+		if (usingQuaternions) //then put quaternions to use
+		{
+			spatialPose_out->rotate_quat; //Quat = slerp(q0, q1, u)
+											// = (sin([1 - t]y)q0 + sin([t]y)q1) / sin(y)
+											// y = acos(q0 . q1)
+										// 2: lerp = non-unit-length -> uniform scale
+											// s = |q|^2
+										// 3: nlerp = normalize(lerp) 
+		}
+		else //and this is the euler info
+		{
+			//rotate lerp functions with euler
+			spatialPose_out->rotate_euler.x = a3lerpFunc(spatialPose0->rotate_euler.x, spatialPose1->rotate_euler.x, u);
+			spatialPose_out->rotate_euler.y = a3lerpFunc(spatialPose0->rotate_euler.y, spatialPose1->rotate_euler.y, u);
+			spatialPose_out->rotate_euler.z = a3lerpFunc(spatialPose0->rotate_euler.z, spatialPose1->rotate_euler.z, u);
+		}
 
-		//rotate lerp functions
-		spatialPose_out->rotate.x = a3lerpFunc(spatialPose0->rotate.x, spatialPose1->rotate.x, u);
-		spatialPose_out->rotate.y = a3lerpFunc(spatialPose0->rotate.y, spatialPose1->rotate.y, u);
-		spatialPose_out->rotate.z = a3lerpFunc(spatialPose0->rotate.z, spatialPose1->rotate.z, u);
+		//spatialPose_out->transform; //no again because interpolations just full transform creates issues with object
 
 		//scale lerp functions (what will become the exponential part?)
-		
+		spatialPose_out->scale; // exp() //exponential equation for lerp (p1(po^-1))^u * p0 (this equation here may be a bit off)
 
 		//hopefully this should lerp for translate
 		spatialPose_out->translate.x = a3lerpFunc(spatialPose0->translate.x, spatialPose1->translate.x, u);
