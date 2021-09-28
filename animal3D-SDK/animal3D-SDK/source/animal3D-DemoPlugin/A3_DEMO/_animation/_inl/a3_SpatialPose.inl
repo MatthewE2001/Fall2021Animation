@@ -102,27 +102,29 @@ inline a3i32 a3spatialPoseConvert(a3mat4* mat_out, const a3_SpatialPose* spatial
 {
 	if (mat_out && spatialPose_in)
 	{
+		a3mat4 m;
 		//order of rotations depends on the order passed in from the parameter spatialPoseEulerOrder
 		// M = T * ((R * R * R) * S)
 
 		//a3mat4 M = (_ _ _ tx
 				//_ RS _ ty
 				//_ _ _ tz
-				//0 0 0 1
+				//0 0 0 1)
 
-		//a3mat3 S =  a3mat3 (spatialPose_in->scale.x, 0, 0,
+		a3mat3 scale; // =  a3mat3 (spatialPose_in->scale.x, 0, 0,
 					//0, spatialPose_in->scale.y, 0,
 					//0, 0, spatialPose_in->scale.z);
+		a3real3x3Set(scale.m, spatialPose_in->scale.x, 0, 0, 0, spatialPose_in->scale.y, 0, 0, 0, spatialPose_in->scale.z);
 
-		//a3mat3 Rx = a3mat3 (1, 0, 0
-					//0, cos(spatialPose_in->rotate.x) -sin(spatialPose_in->rotate.x)
-					//0 +sin(spatialPose_in->rotate.x) cos(spatialPose_in->rotate.x));
+		//maybe should not be euler come back to check this
+		a3mat3 rotateX;
+		a3real3x3Set(rotateX.m, 1, 0, 0, 0, cos(spatialPose_in->rotate_euler.x), -sin(spatialPose_in->rotate_euler.x), 0, sin(spatialPose_in->rotate_euler.x), cos(spatialPose_in->rotate_euler.x));
 							 
-		//a3mat3 Ry = a3mat3 (cos(spatialPose_in->rotate.y) 0 +sin(spatialPose_in->rotate.y) 
+		a3mat3 rotateY; // = a3mat3 (cos(spatialPose_in->rotate.y) 0 +sin(spatialPose_in->rotate.y) 
 					//0 1 0	 
 					//-sin(spatialPose_in->rotate.y) 0 cos(spatialPose_in->rotate.y));
 							 
-		//a3mat3 Rz = a3mat3 (cos(spatialPose_in->rotate.z) -sin(spatialPose_in->rotate.z) 0 
+		a3mat3 rotateZ; // = a3mat3 (cos(spatialPose_in->rotate.z) -sin(spatialPose_in->rotate.z) 0 
 					//+sin(spatialPose_in->rotate.z) cos(spatialPose_in->rotate.z) 0 
 					//0 0 1);
 
@@ -152,8 +154,6 @@ inline a3i32 a3spatialPoseCopy(a3_SpatialPose* spatialPose_out, a3_SpatialPose* 
 //concat/combine
 inline a3i32 a3spatialPoseConcat(a3_SpatialPose* spatialPose_out, const a3_SpatialPose* spatialPose_lh, const a3_SpatialPose* spatialPose_rh, const a3boolean usingQuaternions)
 {
-	//concat means ______
-
 	if (spatialPose_out && spatialPose_lh && spatialPose_rh)
 	{
 		if (usingQuaternions) //then put quaternions to use
