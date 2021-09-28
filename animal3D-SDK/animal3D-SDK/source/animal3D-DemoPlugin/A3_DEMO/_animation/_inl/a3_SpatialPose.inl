@@ -110,27 +110,50 @@ inline a3i32 a3spatialPoseConvert(a3mat4* mat_out, const a3_SpatialPose* spatial
 				//_ RS _ ty
 				//_ _ _ tz
 				//0 0 0 1)
+		
+		a3mat4 transform = spatialPose_in->transform;
 
-		a3mat3 scale; // =  a3mat3 (spatialPose_in->scale.x, 0, 0,
-					//0, spatialPose_in->scale.y, 0,
-					//0, 0, spatialPose_in->scale.z);
+		//if I need to make any of these mat4s I will do 0, 0, 0, 1 for the last 4 vals
+		a3mat3 scale;
 		a3real3x3Set(scale.m, spatialPose_in->scale.x, 0, 0, 0, spatialPose_in->scale.y, 0, 0, 0, spatialPose_in->scale.z);
 
 		//maybe should not be euler come back to check this
 		a3mat3 rotateX;
 		a3real3x3Set(rotateX.m, 1, 0, 0, 0, cos(spatialPose_in->rotate_euler.x), -sin(spatialPose_in->rotate_euler.x), 0, sin(spatialPose_in->rotate_euler.x), cos(spatialPose_in->rotate_euler.x));
 							 
-		a3mat3 rotateY; // = a3mat3 (cos(spatialPose_in->rotate.y) 0 +sin(spatialPose_in->rotate.y) 
-					//0 1 0	 
-					//-sin(spatialPose_in->rotate.y) 0 cos(spatialPose_in->rotate.y));
+		a3mat3 rotateY;
+		a3real3x3Set(rotateY.m, cos(spatialPose_in->rotate_euler.y), 0, sin(spatialPose_in->rotate_euler.y), 0, 1, 0, -sin(spatialPose_in->rotate_euler.y), 0, cos(spatialPose_in->rotate_euler.y));
 							 
-		a3mat3 rotateZ; // = a3mat3 (cos(spatialPose_in->rotate.z) -sin(spatialPose_in->rotate.z) 0 
-					//+sin(spatialPose_in->rotate.z) cos(spatialPose_in->rotate.z) 0 
-					//0 0 1);
+		a3mat3 rotateZ;
+		a3real3x3Set(rotateZ.m, cos(spatialPose_in->rotate_euler.z), -sin(spatialPose_in->rotate_euler.z), 0, sin(spatialPose_in->rotate_euler.z), cos(spatialPose_in->rotate_euler.z), 0, 0, 0, 1);
 
-		//M = T * (Rx + Ry * Rz) * S
+		//setting up the correct formula for each possible order
+		if (order == a3poseEulerOrder_xyz)
+		{
+			//m = transform.m * (rotateX.m * rotateY.m * rotateZ.m) * scale.m;
+		}
+		else if (order == a3poseEulerOrder_yzx)
+		{
+			//m = transform.m * (rotateY.m * rotateZ.m * rotateX.m) * scale.m;
+		}
+		else if (order == a3poseEulerOrder_zxy)
+		{
+			//m = transform.m * (rotateZ.m * rotateX.m * rotateY.m) * scale.m;
+		}
+		else if (order == a3poseEulerOrder_yxz)
+		{
+			//m = transform.m * (rotateY.m * rotateX.m * rotateZ.m) * scale.m;
+		}
+		else if (order == a3poseEulerOrder_xzy)
+		{
+			//m = transform.m * (rotateX.m * rotateZ.m * rotateY.m) * scale.m;
+		}
+		else if (order == a3poseEulerOrder_zyx)
+		{
+			//m = transform.m * (rotateZ.m * rotateY.m * rotateX.m) * scale.m;
+		}
 
-		// mat_out = M  // (I assume this is the case)
+		mat_out = &m;  //(I assume this is the case)
 	}
 
 	return -1;
