@@ -91,7 +91,7 @@ inline a3i32 a3spatialPoseReset(a3_SpatialPose* spatialPose)
 		spatialPose->scale = a3vec3_one; //this is one cause it is multiplication based (also transform is multiply based)
 
 		//finished
-		return 0;
+		return 1;
 	}
 
 	return -1;
@@ -104,8 +104,8 @@ inline a3i32 a3spatialPoseConvert(a3mat4* mat_out, const a3_SpatialPose* spatial
 	{
 		a3mat4 m;
 		//order of rotations depends on the order passed in from the parameter spatialPoseEulerOrder
-		// M = T * ((R * R * R) * S)
 
+		//do I even need to fill out m? probably I assume
 		//a3mat4 M = (_ _ _ tx
 				//_ RS _ ty
 				//_ _ _ tz
@@ -130,19 +130,65 @@ inline a3i32 a3spatialPoseConvert(a3mat4* mat_out, const a3_SpatialPose* spatial
 		//setting up the correct formula for each possible order
 		if (order == a3poseEulerOrder_xyz)
 		{
-			//m = transform.m * (rotateX.m * rotateY.m * rotateZ.m) * scale.m;
+			//this is the way to multiply everything in the order that is needed I believe
+			a3mat3 rotateXYZ; 
+			a3real3x3Product(rotateXYZ.m, rotateX.m, rotateY.m);
+			a3real3x3Product(rotateXYZ.m, rotateXYZ.m, rotateZ.m);
+			a3real3x3Product(rotateXYZ.m, rotateXYZ.m, transform.m);
+			a3real3x3Product(rotateXYZ.m, rotateXYZ.m, scale.m);
+
+			//I think this is the way I need to transfer this over into another mat4
+			a3mat4 combinedMat;
+			a3real4x4Set(combinedMat.m, rotateXYZ.m00, rotateXYZ.m01, rotateXYZ.m02, 0,
+				rotateXYZ.m10, rotateXYZ.m11, rotateXYZ.m12, 0, rotateXYZ.m20, rotateXYZ.m21, rotateXYZ.m22,
+				0, 0, 0, 0, 1);
+
+			m = combinedMat;
 		}
 		else if (order == a3poseEulerOrder_yzx)
 		{
-			//m = transform.m * (rotateY.m * rotateZ.m * rotateX.m) * scale.m;
+			a3mat3 rotateYZX;
+			a3real3x3Product(rotateYZX.m, rotateY.m, rotateZ.m);
+			a3real3x3Product(rotateYZX.m, rotateYZX.m, rotateX.m);
+			a3real3x3Product(rotateYZX.m, rotateYZX.m, transform.m);
+			a3real3x3Product(rotateYZX.m, rotateYZX.m, scale.m);
+
+			a3mat4 combinedMat;
+			a3real4x4Set(combinedMat.m, rotateYZX.m00, rotateYZX.m01, rotateYZX.m02, 0,
+				rotateYZX.m10, rotateYZX.m11, rotateYZX.m12, 0, rotateYZX.m20, rotateYZX.m21, rotateYZX.m22,
+				0, 0, 0, 0, 1);
+
+			m = combinedMat;
 		}
 		else if (order == a3poseEulerOrder_zxy)
 		{
-			//m = transform.m * (rotateZ.m * rotateX.m * rotateY.m) * scale.m;
+			a3mat3 rotateZXY;
+			a3real3x3Product(rotateZXY.m, rotateZ.m, rotateX.m);
+			a3real3x3Product(rotateZXY.m, rotateZXY.m, rotateY.m);
+			a3real3x3Product(rotateZXY.m, rotateZXY.m, transform.m);
+			a3real3x3Product(rotateZXY.m, rotateZXY.m, scale.m);
+
+			a3mat4 combinedMat;
+			a3real4x4Set(combinedMat.m, rotateZXY.m00, rotateZXY.m01, rotateZXY.m02, 0,
+				rotateZXY.m10, rotateZXY.m11, rotateZXY.m12, 0, rotateZXY.m20, rotateZXY.m21, rotateZXY.m22,
+				0, 0, 0, 0, 1);
+
+			m = combinedMat;
 		}
 		else if (order == a3poseEulerOrder_yxz)
 		{
-			//m = transform.m * (rotateY.m * rotateX.m * rotateZ.m) * scale.m;
+			a3mat3 rotateYXZ;
+			a3real3x3Product(rotateYXZ.m, rotateY.m, rotateX.m);
+			a3real3x3Product(rotateYXZ.m, rotateYXZ.m, rotateZ.m);
+			a3real3x3Product(rotateYXZ.m, rotateYXZ.m, transform.m);
+			a3real3x3Product(rotateYXZ.m, rotateYXZ.m, scale.m);
+
+			a3mat4 combinedMat;
+			a3real4x4Set(combinedMat.m, rotateYXZ.m00, rotateYXZ.m01, rotateYXZ.m02, 0,
+				rotateYXZ.m10, rotateYXZ.m11, rotateYXZ.m12, 0, rotateYXZ.m20, rotateYXZ.m21, rotateYXZ.m22,
+				0, 0, 0, 0, 1);
+
+			m = combinedMat;
 		}
 		else if (order == a3poseEulerOrder_xzy)
 		{
@@ -154,6 +200,8 @@ inline a3i32 a3spatialPoseConvert(a3mat4* mat_out, const a3_SpatialPose* spatial
 		}
 
 		mat_out = &m;  //(I assume this is the case)
+
+		return 1;
 	}
 
 	return -1;
@@ -164,9 +212,7 @@ inline a3i32 a3spatialPoseCopy(a3_SpatialPose* spatialPose_out, a3_SpatialPose* 
 {
 	if (spatialPose_out && spatialPose_in)
 	{
-		spatialPose_out = spatialPose_in; //I assume this is what I have to copy
-
-		//or maybe copy each part individually
+		spatialPose_out = spatialPose_in; //just copying the thing right over
 
 		return 1;
 	}
