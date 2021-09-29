@@ -143,7 +143,6 @@ inline a3i32 a3spatialPoseConvert(a3mat4* mat_out, const a3_SpatialPose* spatial
 			a3mat3 rotateXYZ; 
 			a3real3x3Product(rotateXYZ.m, rotateX.m, rotateY.m);
 			a3real3x3Product(rotateXYZ.m, rotateXYZ.m, rotateZ.m);
-			a3real3x3Product(rotateXYZ.m, rotateXYZ.m, transform.m);
 			a3real3x3Product(rotateXYZ.m, rotateXYZ.m, scale.m);
 
 			//I think this is the way I need to transfer this over into another mat4
@@ -152,6 +151,8 @@ inline a3i32 a3spatialPoseConvert(a3mat4* mat_out, const a3_SpatialPose* spatial
 				rotateXYZ.m10, rotateXYZ.m11, rotateXYZ.m12, 0, rotateXYZ.m20, rotateXYZ.m21, rotateXYZ.m22,
 				0, 0, 0, 0, 1);
 
+			a3real4x4Product(combinedMat.m, transform.m, combinedMat.m);
+
 			m = combinedMat;
 		}
 		else if (order == a3poseEulerOrder_yzx)
@@ -159,13 +160,14 @@ inline a3i32 a3spatialPoseConvert(a3mat4* mat_out, const a3_SpatialPose* spatial
 			a3mat3 rotateYZX;
 			a3real3x3Product(rotateYZX.m, rotateY.m, rotateZ.m);
 			a3real3x3Product(rotateYZX.m, rotateYZX.m, rotateX.m);
-			a3real3x3Product(rotateYZX.m, rotateYZX.m, transform.m);
 			a3real3x3Product(rotateYZX.m, rotateYZX.m, scale.m);
 
 			a3mat4 combinedMat;
 			a3real4x4Set(combinedMat.m, rotateYZX.m00, rotateYZX.m01, rotateYZX.m02, 0,
 				rotateYZX.m10, rotateYZX.m11, rotateYZX.m12, 0, rotateYZX.m20, rotateYZX.m21, rotateYZX.m22,
 				0, 0, 0, 0, 1);
+
+			a3real4x4Product(combinedMat.m, transform.m, combinedMat.m);
 
 			m = combinedMat;
 		}
@@ -174,13 +176,14 @@ inline a3i32 a3spatialPoseConvert(a3mat4* mat_out, const a3_SpatialPose* spatial
 			a3mat3 rotateZXY;
 			a3real3x3Product(rotateZXY.m, rotateZ.m, rotateX.m);
 			a3real3x3Product(rotateZXY.m, rotateZXY.m, rotateY.m);
-			a3real3x3Product(rotateZXY.m, rotateZXY.m, transform.m);
 			a3real3x3Product(rotateZXY.m, rotateZXY.m, scale.m);
 
 			a3mat4 combinedMat;
 			a3real4x4Set(combinedMat.m, rotateZXY.m00, rotateZXY.m01, rotateZXY.m02, 0,
 				rotateZXY.m10, rotateZXY.m11, rotateZXY.m12, 0, rotateZXY.m20, rotateZXY.m21, rotateZXY.m22,
 				0, 0, 0, 0, 1);
+
+			a3real4x4Product(combinedMat.m, transform.m, combinedMat.m);
 
 			m = combinedMat;
 		}
@@ -189,13 +192,14 @@ inline a3i32 a3spatialPoseConvert(a3mat4* mat_out, const a3_SpatialPose* spatial
 			a3mat3 rotateYXZ;
 			a3real3x3Product(rotateYXZ.m, rotateY.m, rotateX.m);
 			a3real3x3Product(rotateYXZ.m, rotateYXZ.m, rotateZ.m);
-			a3real3x3Product(rotateYXZ.m, rotateYXZ.m, transform.m);
 			a3real3x3Product(rotateYXZ.m, rotateYXZ.m, scale.m);
 
 			a3mat4 combinedMat;
 			a3real4x4Set(combinedMat.m, rotateYXZ.m00, rotateYXZ.m01, rotateYXZ.m02, 0,
 				rotateYXZ.m10, rotateYXZ.m11, rotateYXZ.m12, 0, rotateYXZ.m20, rotateYXZ.m21, rotateYXZ.m22,
 				0, 0, 0, 0, 1);
+
+			a3real4x4Product(combinedMat.m, transform.m, combinedMat.m);
 
 			m = combinedMat;
 		}
@@ -204,7 +208,6 @@ inline a3i32 a3spatialPoseConvert(a3mat4* mat_out, const a3_SpatialPose* spatial
 			a3mat3 rotateXZY;
 			a3real3x3Product(rotateXZY.m, rotateX.m, rotateZ.m);
 			a3real3x3Product(rotateXZY.m, rotateXZY.m, rotateY.m);
-			a3real3x3Product(rotateXZY.m, rotateXZY.m, transform.m);
 			a3real3x3Product(rotateXZY.m, rotateXZY.m, scale.m);
 
 			//I think this is the way I need to transfer this over into another mat4
@@ -213,6 +216,8 @@ inline a3i32 a3spatialPoseConvert(a3mat4* mat_out, const a3_SpatialPose* spatial
 				rotateXZY.m10, rotateXZY.m11, rotateXZY.m12, 0, rotateXZY.m20, rotateXZY.m21, rotateXZY.m22,
 				0, 0, 0, 0, 1);
 
+			a3real4x4Product(combinedMat.m, transform.m, combinedMat.m);
+
 			m = combinedMat;
 		}
 		else if (order == a3poseEulerOrder_zyx)
@@ -220,13 +225,14 @@ inline a3i32 a3spatialPoseConvert(a3mat4* mat_out, const a3_SpatialPose* spatial
 			a3mat3 rotateZYX;
 			a3real3x3Product(rotateZYX.m, rotateZ.m, rotateY.m);
 			a3real3x3Product(rotateZYX.m, rotateZYX.m, rotateX.m);
-			a3real3x3Product(rotateZYX.m, rotateZYX.m, transform.m);
 			a3real3x3Product(rotateZYX.m, rotateZYX.m, scale.m);
 
 			a3mat4 combinedMat;
 			a3real4x4Set(combinedMat.m, rotateZYX.m00, rotateZYX.m01, rotateZYX.m02, 0,
 				rotateZYX.m10, rotateZYX.m11, rotateZYX.m12, 0, rotateZYX.m20, rotateZYX.m21, rotateZYX.m22,
 				0, 0, 0, 0, 1);
+
+			a3real4x4Product(combinedMat.m, transform.m, combinedMat.m);
 
 			m = combinedMat;
 		}
