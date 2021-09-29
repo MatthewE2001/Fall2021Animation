@@ -119,13 +119,22 @@ inline a3i32 a3spatialPoseConvert(a3mat4* mat_out, const a3_SpatialPose* spatial
 
 		//maybe should not be euler come back to check this
 		a3mat3 rotateX;
-		a3real3x3Set(rotateX.m, 1, 0, 0, 0, cos(spatialPose_in->rotate_euler.x), -sin(spatialPose_in->rotate_euler.x), 0, sin(spatialPose_in->rotate_euler.x), cos(spatialPose_in->rotate_euler.x));
+		a3real cosEulerX = a3cosr(spatialPose_in->rotate_euler.x);
+		a3real negSinEulerX = -a3trigValid_sinr(spatialPose_in->rotate_euler.x);
+		a3real sinEulerX = a3trigValid_sinr(spatialPose_in->rotate_euler.x);
+		a3real3x3Set(rotateX.m, 1, 0, 0, 0, cosEulerX, negSinEulerX, 0, sinEulerX, cosEulerX);
 							 
 		a3mat3 rotateY;
-		a3real3x3Set(rotateY.m, cos(spatialPose_in->rotate_euler.y), 0, sin(spatialPose_in->rotate_euler.y), 0, 1, 0, -sin(spatialPose_in->rotate_euler.y), 0, cos(spatialPose_in->rotate_euler.y));
+		a3real cosEulerY = a3cosr(spatialPose_in->rotate_euler.y);
+		a3real negSinEulerY = -a3trigValid_sinr(spatialPose_in->rotate_euler.y);
+		a3real sinEulerY = a3trigValid_sinr(spatialPose_in->rotate_euler.y);
+		a3real3x3Set(rotateY.m, cosEulerY, 0, sinEulerY, 0, 1, 0, negSinEulerY, 0, cosEulerY);
 							 
 		a3mat3 rotateZ;
-		a3real3x3Set(rotateZ.m, cos(spatialPose_in->rotate_euler.z), -sin(spatialPose_in->rotate_euler.z), 0, sin(spatialPose_in->rotate_euler.z), cos(spatialPose_in->rotate_euler.z), 0, 0, 0, 1);
+		a3real cosEulerZ = a3cosr(spatialPose_in->rotate_euler.z);
+		a3real negSinEulerZ = -a3trigValid_sinr(spatialPose_in->rotate_euler.z);
+		a3real sinEulerZ = a3trigValid_sinr(spatialPose_in->rotate_euler.z);
+		a3real3x3Set(rotateZ.m, cosEulerZ, negSinEulerZ, 0, sinEulerZ, cosEulerZ, 0, 0, 0, 1);
 
 		//setting up the correct formula for each possible order
 		if (order == a3poseEulerOrder_xyz)
@@ -192,11 +201,34 @@ inline a3i32 a3spatialPoseConvert(a3mat4* mat_out, const a3_SpatialPose* spatial
 		}
 		else if (order == a3poseEulerOrder_xzy)
 		{
-			//m = transform.m * (rotateX.m * rotateZ.m * rotateY.m) * scale.m;
+			a3mat3 rotateXZY;
+			a3real3x3Product(rotateXZY.m, rotateX.m, rotateZ.m);
+			a3real3x3Product(rotateXZY.m, rotateXZY.m, rotateY.m);
+			a3real3x3Product(rotateXZY.m, rotateXZY.m, transform.m);
+			a3real3x3Product(rotateXZY.m, rotateXZY.m, scale.m);
+
+			//I think this is the way I need to transfer this over into another mat4
+			a3mat4 combinedMat;
+			a3real4x4Set(combinedMat.m, rotateXZY.m00, rotateXZY.m01, rotateXZY.m02, 0,
+				rotateXZY.m10, rotateXZY.m11, rotateXZY.m12, 0, rotateXZY.m20, rotateXZY.m21, rotateXZY.m22,
+				0, 0, 0, 0, 1);
+
+			m = combinedMat;
 		}
 		else if (order == a3poseEulerOrder_zyx)
 		{
-			//m = transform.m * (rotateZ.m * rotateY.m * rotateX.m) * scale.m;
+			a3mat3 rotateZYX;
+			a3real3x3Product(rotateZYX.m, rotateZ.m, rotateY.m);
+			a3real3x3Product(rotateZYX.m, rotateZYX.m, rotateX.m);
+			a3real3x3Product(rotateZYX.m, rotateZYX.m, transform.m);
+			a3real3x3Product(rotateZYX.m, rotateZYX.m, scale.m);
+
+			a3mat4 combinedMat;
+			a3real4x4Set(combinedMat.m, rotateZYX.m00, rotateZYX.m01, rotateZYX.m02, 0,
+				rotateZYX.m10, rotateZYX.m11, rotateZYX.m12, 0, rotateZYX.m20, rotateZYX.m21, rotateZYX.m22,
+				0, 0, 0, 0, 1);
+
+			m = combinedMat;
 		}
 
 		mat_out = &m;  //(I assume this is the case)
