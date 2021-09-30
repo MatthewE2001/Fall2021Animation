@@ -270,7 +270,10 @@ inline a3i32 a3spatialPoseConcat(a3_SpatialPose* spatialPose_out, const a3_Spati
 		}
 		else //and this is the euler info
 		{
-			spatialPose_out->rotate_euler; // Euler - validate(lh + rh) (constrain sum to rotational domain)
+			// Euler - validate(lh + rh) (constrain sum to rotational domain)
+			spatialPose_out->rotate_euler.x = a3trigValid_sind(spatialPose_lh->rotate_euler.x + spatialPose_rh->rotate_euler.x);
+			spatialPose_out->rotate_euler.y = a3trigValid_sind(spatialPose_lh->rotate_euler.y + spatialPose_rh->rotate_euler.y);
+			spatialPose_out->rotate_euler.z = a3trigValid_sind(spatialPose_lh->rotate_euler.z + spatialPose_rh->rotate_euler.z);
 		}
 		
 		//spatialPose_out->transform; //no need to do transform no data is there yet (comes at later step in full process)
