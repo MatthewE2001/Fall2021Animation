@@ -265,7 +265,7 @@ inline a3i32 a3spatialPoseConcat(a3_SpatialPose* spatialPose_out, const a3_Spati
 	{
 		if (usingQuaternions) //then put quaternions to use
 		{
-			spatialPose_out->rotate_quat; //Quat - (lh * rh) = (w_l + v_l)(w_r + v_r)
+			spatialPose_out->rotate_quat; //Quat: (lh * rh) = (w_l + v_l)(w_r + v_r)
 										// = (w_l * w_r - v_l . v_r) + (w_l * v_r + w_r * v_l + v_l x v_r) //the x is cross
 		}
 		else //and this is the euler info
