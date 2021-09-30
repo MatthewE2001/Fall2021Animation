@@ -301,12 +301,15 @@ inline a3i32 a3spatialPoseLerp(a3_SpatialPose* spatialPose_out, const a3_Spatial
 	{
 		if (usingQuaternions) //then put quaternions to use
 		{
-			spatialPose_out->rotate_quat; //Quat = slerp(q0, q1, u)
+			//Quat = slerp(q0, q1, u)
+			a3quatSlerp(spatialPose_out->rotate_quat.v, spatialPose0->rotate_quat.v, spatialPose1->rotate_quat.v, u); 
 											// = (sin([1 - t]y)q0 + sin([t]y)q1) / sin(y)
 											// y = acos(q0 . q1)
-										// 2: lerp = non-unit-length -> uniform scale
+			// 2: lerp = non-unit-length -> uniform scale
+			//a3lerpFunc()
 											// s = |q|^2
-										// 3: nlerp = normalize(lerp) 
+			// 3: nlerp = normalize(lerp) 
+			//a3real4Normalize();
 		}
 		else //and this is the euler info
 		{
