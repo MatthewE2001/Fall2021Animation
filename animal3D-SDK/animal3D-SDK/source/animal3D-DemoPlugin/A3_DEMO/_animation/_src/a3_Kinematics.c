@@ -81,6 +81,16 @@ a3i32 a3kinematicsSolveInversePartial(const a3_HierarchyState *hierarchyState, c
 		//			- local matrix = inverse parent object matrix * object matrix
 		//		- else
 		//			- copy object matrix to local matrix
+
+		for (a3ui32 i = firstIndex; i < hierarchyState->hierarchy->numNodes; i++) //start at 0?
+		{
+			if (hierarchyState->hierarchy->nodes[i].parentIndex != -1) //this means it is the root
+			{
+
+			}
+
+			// else 
+		}
 	}
 	return -1;
 }
