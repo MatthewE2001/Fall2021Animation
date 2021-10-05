@@ -267,6 +267,10 @@ inline a3i32 a3spatialPoseConcat(a3_SpatialPose* spatialPose_out, const a3_Spati
 		{
 			spatialPose_out->rotate_quat; //Quat: (lh * rh) = (w_l + v_l)(w_r + v_r)
 										// = (w_l * w_r - v_l . v_r) + (w_l * v_r + w_r * v_l + v_l x v_r) //the x is cross
+			//w is left side
+			//v is right side
+			//l is w
+			//r is xyz
 		}
 		else //and this is the euler info
 		{
