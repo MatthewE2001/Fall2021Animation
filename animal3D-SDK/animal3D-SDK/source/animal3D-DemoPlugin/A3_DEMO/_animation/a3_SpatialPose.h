@@ -103,7 +103,8 @@ enum a3_SpatialPoseChannel
 struct a3_SpatialPose
 {
 	a3mat4 transform;
-	a3vec3 rotate_quat, rotate_euler, scale, translate; //some necessary raw data
+	a3vec3 rotate_euler, scale, translate; //some necessary raw data
+	a3vec4 rotate_quat;
 
 	//quat rotate: encoded angle and axis
 	//q = cos (x / 2) + sin (x / 2)n

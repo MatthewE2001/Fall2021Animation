@@ -85,7 +85,7 @@ inline a3i32 a3spatialPoseReset(a3_SpatialPose* spatialPose)
 	if (spatialPose)
 	{
 		spatialPose->transform = a3mat4_identity;
-		spatialPose->rotate_quat =  
+		spatialPose->rotate_quat = a3vec4_zero;
 		spatialPose->rotate_euler = a3vec3_zero; //this and translate are 0 because it is addition based
 		spatialPose->translate = a3vec3_zero;
 		spatialPose->scale = a3vec3_one; //this is one cause it is multiplication based (also transform is multiply based)
@@ -265,12 +265,20 @@ inline a3i32 a3spatialPoseConcat(a3_SpatialPose* spatialPose_out, const a3_Spati
 	{
 		if (usingQuaternions) //then put quaternions to use
 		{
-			spatialPose_out->rotate_quat; //Quat: (lh * rh) = (w_l + v_l)(w_r + v_r)
-										// = (w_l * w_r - v_l . v_r) + (w_l * v_r + w_r * v_l + v_l x v_r) //the x is cross
+			 //Quat: (lh * rh) = (w_l + v_l)(w_r + v_r)
+					// = (w_l * w_r - v_l . v_r) + (w_l * v_r + w_r * v_l + v_l x v_r) //the x is cross product
 			//w is left side
 			//v is right side
 			//l is w
 			//r is xyz
+			a3vec4 tmp;
+
+			tmp.w = (spatialPose_lh->rotate_quat.w + spatialPose_rh->rotate_quat.w);
+			tmp.x = (spatialPose_lh->rotate_quat.x + spatialPose_rh->rotate_quat.x);
+			tmp.y = (spatialPose_lh->rotate_quat.y + spatialPose_rh->rotate_quat.y);
+			tmp.z = (spatialPose_lh->rotate_quat.z + spatialPose_rh->rotate_quat.z);
+
+			spatialPose_out->rotate_quat = tmp;
 		}
 		else //and this is the euler info
 		{
