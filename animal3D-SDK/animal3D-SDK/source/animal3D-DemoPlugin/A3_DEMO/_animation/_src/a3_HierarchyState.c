@@ -58,6 +58,7 @@ a3i32 a3hierarchyPoseGroupCreate(a3_HierarchyPoseGroup *poseGroup_out, const a3_
 		// done
 		return 1;
 	}
+
 	printf("IF DOES NOT WORKS");
 	return -1;
 }
