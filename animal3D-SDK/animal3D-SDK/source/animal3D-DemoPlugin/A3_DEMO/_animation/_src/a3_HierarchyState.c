@@ -48,30 +48,12 @@ a3i32 a3hierarchyPoseGroupCreate(a3_HierarchyPoseGroup *poseGroup_out, const a3_
 		//printf("%i", poseGroup_out->hierarchy->numNodes);
 		// reset all data (what do I need to do to reset all data)
 
-		//this will probably need to change in the future
-		poseGroup_out->hpose[0] = malloc(sizeof(a3_HierarchyPose));
-		poseGroup_out->hpose[0]->spatialPose = malloc(sizeof(a3_SpatialPose));
-		a3spatialPoseSetTranslation(poseGroup_out->hpose[0]->spatialPose, 0.0, 0.0, 0.0);
-		a3spatialPoseSetRotation(poseGroup_out->hpose[0]->spatialPose, 0.0, 0.0, 0.0);
-		a3spatialPoseSetScale(poseGroup_out->hpose[0]->spatialPose, 0.0, 0.0, 0.0);
+		poseGroup_out->poseCount = poseCount;
 
-		poseGroup_out->hpose[1] = malloc(sizeof(a3_HierarchyPose));
-		poseGroup_out->hpose[1]->spatialPose = malloc(sizeof(a3_SpatialPose));
-		a3spatialPoseSetTranslation(poseGroup_out->hpose[1]->spatialPose, 0.0, 0.0, 0.0);
-		a3spatialPoseSetRotation(poseGroup_out->hpose[1]->spatialPose, 0.0, 0.0, 0.0);
-		a3spatialPoseSetScale(poseGroup_out->hpose[1]->spatialPose, 0.0, 0.0, 0.0);
-
-		poseGroup_out->hpose[2] = malloc(sizeof(a3_HierarchyPose));
-		poseGroup_out->hpose[2]->spatialPose = malloc(sizeof(a3_SpatialPose));
-		a3spatialPoseSetTranslation(poseGroup_out->hpose[2]->spatialPose, 0.0, 0.0, 0.0);
-		a3spatialPoseSetRotation(poseGroup_out->hpose[2]->spatialPose, 0.0, 0.0, 0.0);
-		a3spatialPoseSetScale(poseGroup_out->hpose[2]->spatialPose, 0.0, 0.0, 0.0);
-
-		poseGroup_out->hpose[3] = malloc(sizeof(a3_HierarchyPose));
-		poseGroup_out->hpose[3]->spatialPose = malloc(sizeof(a3_SpatialPose));
-		a3spatialPoseSetTranslation(poseGroup_out->hpose[3]->spatialPose, 0.0, 0.0, 0.0);
-		a3spatialPoseSetRotation(poseGroup_out->hpose[3]->spatialPose, 0.0, 0.0, 0.0);
-		a3spatialPoseSetScale(poseGroup_out->hpose[3]->spatialPose, 0.0, 0.0, 0.0);
+		for (a3ui32 i = 0; i < poseCount; i++) //maybe need to change this from pose count
+		{
+			a3spatialPoseReset(poseGroup_out->hpose[i]->spatialPose);
+		}
 
 		// done
 		return 1;
