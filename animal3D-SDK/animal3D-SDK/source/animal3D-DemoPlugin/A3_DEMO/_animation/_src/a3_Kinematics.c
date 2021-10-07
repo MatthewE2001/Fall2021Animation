@@ -49,7 +49,6 @@ a3i32 a3kinematicsSolveForwardPartial(const a3_HierarchyState *hierarchyState, c
 			if (hierarchyState->hierarchy->nodes[i].parentIndex != -1)
 			{
 				// Object matrix = parent object matrix * local matrix
-				a3mat4 tmpMat; //might need this for assigning values
 				//I just need to figure out how to put the parent in here
 				hierarchyState->objectSpacePose->spatialPose->transform; // * hierarchyState->localSpacePose->spatialPose->transform;
 

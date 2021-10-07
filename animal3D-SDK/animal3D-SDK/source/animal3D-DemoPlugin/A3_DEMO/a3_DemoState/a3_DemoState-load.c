@@ -916,7 +916,7 @@ void a3demo_loadHierarchy(a3_DemoState* demoState)
 	
 	hierarchy = demoState->hierarchy_skel;
 	hierarchyPoseGroup = demoState->hierarchyPoseGroup_skel;
-	hierarchyPoseGroup->hierarchy = 0;
+	hierarchyPoseGroup->hierarchy = 0; //possible test swap to hierarchy
 	a3hierarchyPoseGroupCreate(hierarchyPoseGroup, hierarchy, 4);
 	printf("%i", hierarchyPoseGroup->hierarchy->numNodes);
 
