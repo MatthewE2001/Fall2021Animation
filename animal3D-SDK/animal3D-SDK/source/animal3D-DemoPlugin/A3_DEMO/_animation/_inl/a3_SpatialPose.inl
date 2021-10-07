@@ -279,6 +279,18 @@ inline a3i32 a3spatialPoseConcat(a3_SpatialPose* spatialPose_out, const a3_Spati
 			tmp.z = (spatialPose_lh->rotate_quat.z + spatialPose_rh->rotate_quat.z);
 
 			spatialPose_out->rotate_quat = tmp;
+
+			a3real realTmp, realTmp2, realTmp3;
+			realTmp = spatialPose_lh->rotate_quat.w * (spatialPose_lh->rotate_quat.x * spatialPose_lh->rotate_quat.y * spatialPose_lh->rotate_quat.z);
+			realTmp2 = a3real4LengthSquared(spatialPose_rh->rotate_quat.v);
+			realTmp -= realTmp2;
+
+			realTmp2 = spatialPose_lh->rotate_quat.w * (spatialPose_lh->rotate_quat.x * spatialPose_lh->rotate_quat.y * spatialPose_lh->rotate_quat.z);
+			realTmp2 += spatialPose_lh->rotate_quat.x;
+			realTmp2 += spatialPose_lh->rotate_quat.y;
+			realTmp2 += spatialPose_lh->rotate_quat.z;
+
+			//realTmp3 = 
 		}
 		else //and this is the euler info
 		{
