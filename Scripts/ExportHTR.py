@@ -1,5 +1,5 @@
 import maya.cmds as cmds
-import os.path
+from math import pow, sqrt
 
 debug = True
 
@@ -128,7 +128,7 @@ def main():
     else:
         # Default to mm
         calibrationUnits = "mm"
-    # Write the unit data to the HTR header
+    # Write the transformation unit data to the HTR header
     htrFile.write("CalibrationUnits\t" + calibrationUnits + "\n")
 
     rawRotationUnits = cmds.currentUnit(query=True, angle=True)
@@ -137,7 +137,22 @@ def main():
     else:
         # Default to degrees
         rotationUnits = "Degrees"
+    # Write the rotation unit data to the HTR header
+    htrFile.write("RotationUnits\t" + rotationUnits + "\n")
 
+    # Write the gravity axis data to the HTR header
+    # Y is the constant axis
+    htrFile.write("GlobalAxisOfGravity\tY\n")
+
+    # Write the bone length axis data to the HTR header
+    # Y is the constant axis
+    htrFile.write("BoneLengthAxis\tY\n")
+
+    # Write the scale factor data to the HTR header
+    # 1.00 is the constant axis
+    htrFile.write("ScaleFactor\t1.00\n")
+
+    # Write the segment hierarchy data
     htrFile.write("[SegmentNames&Hierarchy]\n")
     for segment in segments:
         # If the parent is the root, the parent is written as GLOBAL
@@ -149,7 +164,28 @@ def main():
 
     htrFile.write("[BasePosition]\n")
     for segment in segments:
-        htrFile.write(str(segment) + "\t0.000000\t0.000000\t0.000000\t0.000000\t0.000000\t0.000000\t0.000000\n")
+        # Write Segment Name Tx, Ty, Tz, Rx, Ry, Rz, BoneLength
+        # Set the current time to frame 0 (base pose)
+        cmds.currentTime(0)
+
+        # Get the values for writing (relative to the parent)
+        segmentName = str(segment)
+        tx, ty, tz = cmds.xform(segment, query=True, t=True)
+        rx, ry, rz = cmds.xform(segment, query=True, ro=True)
+
+        parent_tx, parent_ty, parent_tz = cmds.xform(cmds.listRelatives(segment, p=True), query=True, t=True)
+
+        # Get the bone length using the distance formula between the child and parent
+        boneLength = sqrt(pow(tx - parent_tx, 2) + pow(ty - parent_ty, 2) + pow(tz - parent_tz, 2))
+
+        htrFile.write(segmentName + "\t" +
+                      "{:.6f}".format(tx) + "\t" +
+                      "{:.6f}".format(ty) + "\t" +
+                      "{:.6f}".format(tz) + "\t" +
+                      "{:.6f}".format(rx) + "\t" +
+                      "{:.6f}".format(ry) + "\t" +
+                      "{:.6f}".format(rz) + "\t" +
+                      "{:.6f}".format(boneLength) + "\n")
 
     for segment in segments:
         htrFile.write("[" + str(segment) + "]\n")
