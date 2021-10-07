@@ -297,6 +297,8 @@ inline a3i32 a3spatialPoseConcat(a3_SpatialPose* spatialPose_out, const a3_Spati
 			realTmp2 *= realTmp3;
 
 			realTmp += realTmp2;
+
+			spatialPose_out->rotate_quat.w = realTmp;
 		}
 		else //and this is the euler info
 		{
