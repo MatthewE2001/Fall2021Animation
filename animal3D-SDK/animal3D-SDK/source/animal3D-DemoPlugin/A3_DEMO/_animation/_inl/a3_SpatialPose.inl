@@ -290,7 +290,13 @@ inline a3i32 a3spatialPoseConcat(a3_SpatialPose* spatialPose_out, const a3_Spati
 			realTmp2 += spatialPose_lh->rotate_quat.y;
 			realTmp2 += spatialPose_lh->rotate_quat.z;
 
-			//realTmp3 = 
+			a3real3Cross(tmp.v, spatialPose_lh->rotate_quat.v, spatialPose_rh->rotate_quat.v);
+			realTmp3 = spatialPose_lh->rotate_quat.w;
+			realTmp3 += tmp.w;
+
+			realTmp2 *= realTmp3;
+
+			realTmp += realTmp2;
 		}
 		else //and this is the euler info
 		{
