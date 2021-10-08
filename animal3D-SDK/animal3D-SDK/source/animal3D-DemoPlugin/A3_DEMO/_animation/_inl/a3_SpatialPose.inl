@@ -375,6 +375,14 @@ inline a3i32 a3spatialPoseStep(a3_SpatialPose* spatialPose_out, const a3_Spatial
 {
 	//for step/nearest 
 		//nothing special occurs (same as Lab1)
+	if (usingQuaternions)
+	{
+
+	}
+	else
+	{
+
+	}
 
 	return -1;
 }
@@ -383,6 +391,14 @@ inline a3i32 a3spatialPoseNearest(a3_SpatialPose* spatialPose_out, const a3_Spat
 {
 	//1 - nearest
 		// if (u < 0.5) then k0, else k1 (u param, k0 value and k1 value)
+	if (usingQuaternions)
+	{
+
+	}
+	else
+	{
+
+	}
 
 	return -1;
 }
@@ -390,6 +406,14 @@ inline a3i32 a3spatialPoseNearest(a3_SpatialPose* spatialPose_out, const a3_Spat
 inline a3i32 a3spatialPoseSmoothStep(a3_SpatialPose* spatialPose_out, const a3_SpatialPose* spatialPose0, const a3_SpatialPose* spatialPose1, const a3boolean usingQuaternions)
 {
 	//for smoothstep:
+	if (usingQuaternions)
+	{
+
+	}
+	else
+	{
+
+	}
 
 	return -1;
 }
