@@ -140,6 +140,14 @@ a3i32 a3spatialPoseConcat(a3_SpatialPose* spatialPose_out, const a3_SpatialPose*
 //lerp
 a3i32 a3spatialPoseLerp(a3_SpatialPose* spatialPose_out, const a3_SpatialPose* spatialPose0, const a3_SpatialPose* spatialPose1, const a3real u, const a3boolean usingQuaternions);
 
+//step
+a3i32 a3spatialPoseStep(a3_SpatialPose* spatialPose_out, const a3_SpatialPose* spatialPose0, const a3_SpatialPose* spatialPose1, const a3boolean usingQuaternions);
+
+//nearest
+a3i32 a3spatialPoseNearest(a3_SpatialPose* spatialPose_out, const a3_SpatialPose* spatialPose0, const a3_SpatialPose* spatialPose1, const a3real u, const a3boolean usingQuaternions);
+
+//smoothstep
+a3i32 a3spatialPoseSmoothStep(a3_SpatialPose* spatialPose_out, const a3_SpatialPose* spatialPose0, const a3_SpatialPose* spatialPose1, const a3boolean usingQuaternions);
 
 //-----------------------------------------------------------------------------
 

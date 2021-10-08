@@ -510,7 +510,7 @@ void a3animation_render(a3_DemoState const* demoState, a3_DemoMode1_Animation co
 				a3shaderUniformSendInt(a3unif_single, currentDemoProgram->uFlag, 1, flag);
 
 				// draw skeleton joint bases
-
+				demoState->ubo_transformLMVP_bone;
 			}
 
 			// display color target with scene overlays

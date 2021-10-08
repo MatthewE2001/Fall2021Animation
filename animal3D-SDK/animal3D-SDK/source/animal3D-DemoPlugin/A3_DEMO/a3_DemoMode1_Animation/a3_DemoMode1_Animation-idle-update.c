@@ -84,14 +84,22 @@ void a3animation_update(a3_DemoState* demoState, a3_DemoMode1_Animation* demoMod
 			demoMode->object_scene[i].modelMat.m, a3mat4_identity.m);
 	}
 
+	//currently filler values while I test 
 	//resolve 4 animation steps here
 		//interpolate (between deltas)
+	a3spatialPoseLerp(demoMode->hierarchyState_skel->samplePose, demoMode->hierarchyState_skel->localSpacePose, demoMode->hierarchyState_skel->objectSpacePose, dt, false);
 		//concatenate (with base)
+	a3spatialPoseConcat(demoMode->hierarchyState_skel->samplePose, demoMode->hierarchyState_skel->localSpacePose, demoMode->hierarchyState_skel->objectSpacePose, false);
 		//convert
+	a3mat4 newMat;
+	a3spatialPoseConvert(&newMat, demoMode->hierarchyState_skel->samplePose, a3poseChannel_orient_xyz, a3poseEulerOrder_xyz);
 		//FK (forward kinematics)
+	//I cannot seem to call the forward kinematics function here for some reason
 
 	//resolve graphics
 		//upload results of FK to UBO (uniform buffer object?)
+	//a3bufferAppend();
+
 }
 
 
