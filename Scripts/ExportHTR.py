@@ -192,11 +192,9 @@ def main():
 
         # Get the values for writing (relative to the parent)
         segmentName = str(segment)
-        print(segment)
         tx, ty, tz = cmds.xform(segment, query=True, t=True)
         rx, ry, rz = cmds.xform(segment, query=True, ro=True)
         matrix = cmds.xform(segment, q=True, m=True)
-        print matrix
 
         # Use the transformation to get the proper rotation values
         m = om.MMatrix(matrix)
