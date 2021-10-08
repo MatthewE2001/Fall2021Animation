@@ -338,10 +338,13 @@ inline a3i32 a3spatialPoseLerp(a3_SpatialPose* spatialPose_out, const a3_Spatial
 											// = (sin([1 - t]y)q0 + sin([t]y)q1) / sin(y)
 											// y = acos(q0 . q1)
 			// 2: lerp = non-unit-length -> uniform scale
-			//a3lerpFunc()
+			spatialPose_out->rotate_quat.x = a3lerpFunc(spatialPose0->rotate_quat.x, spatialPose1->rotate_quat.x, u);
+			spatialPose_out->rotate_quat.y = a3lerpFunc(spatialPose0->rotate_quat.y, spatialPose1->rotate_quat.y, u);
+			spatialPose_out->rotate_quat.z = a3lerpFunc(spatialPose0->rotate_quat.z, spatialPose1->rotate_quat.z, u);
 											// s = |q|^2
 			// 3: nlerp = normalize(lerp) 
-			//a3real4Normalize();
+			a3real2Normalize(spatialPose_out->rotate_quat.v);
+			
 		}
 		else //and this is the euler info
 		{
@@ -355,6 +358,7 @@ inline a3i32 a3spatialPoseLerp(a3_SpatialPose* spatialPose_out, const a3_Spatial
 
 		//scale lerp functions (what will become the exponential part?)
 		spatialPose_out->scale; // exp() //exponential equation for lerp (p1(po^-1))^u * p0 (this equation here may be a bit off)
+		
 
 		//hopefully this should lerp for translate
 		spatialPose_out->translate.x = a3lerpFunc(spatialPose0->translate.x, spatialPose1->translate.x, u);
