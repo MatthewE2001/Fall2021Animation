@@ -1,3 +1,4 @@
+#include "..\a3_HierarchyStateBlend.h"
 /*
 	Copyright 2011-2020 Daniel S. Buckstein
 
@@ -85,6 +86,36 @@ inline a3_HierarchyPose* a3hierarchyPoseOpLERP(a3_HierarchyPose* pose_out, a3_Hi
 
 	// done
 	return pose_out;
+}
+
+inline a3_SpatialPose* a3SpatialPoseSetConstruct()
+{
+	a3_SpatialPose* newPose;
+
+	//newPose->angles = 
+	//newPose->scale = 
+	//newPose->translation = 
+
+	return newPose;
+}
+
+inline a3_SpatialPose* a3SpatialPoseReturnCopy()
+{
+	a3_SpatialPose* copy;
+
+	//copy = copyPose;
+
+	return copy;
+}
+
+inline a3_SpatialPose* a3SpatialPoseFindInverse()
+{
+	a3_SpatialPose* inverse;
+
+	//either inverse = ;
+	//or inverse->scale = ; //and so on with translate, rotate, etc
+
+	return inverse;
 }
 
 
