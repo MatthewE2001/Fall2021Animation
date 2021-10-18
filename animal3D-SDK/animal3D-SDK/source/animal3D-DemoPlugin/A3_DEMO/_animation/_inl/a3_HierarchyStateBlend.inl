@@ -118,6 +118,15 @@ inline a3_SpatialPose* a3SpatialPoseFindInverse()
 	return inverse;
 }
 
+inline a3_SpatialPose* a3SpatialPoseConcatenate()
+{
+	a3_SpatialPose* concat;
+
+
+
+	return concat;
+}
+
 
 //-----------------------------------------------------------------------------
 

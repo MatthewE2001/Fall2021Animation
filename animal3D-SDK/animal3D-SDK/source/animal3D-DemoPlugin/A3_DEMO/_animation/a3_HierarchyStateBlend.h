@@ -126,6 +126,11 @@ a3_SpatialPose* a3SpatialPoseReturnCopy();
 
 a3_SpatialPose* a3SpatialPoseFindInverse();
 
+a3_SpatialPose* a3SpatialPoseConcatenate();
+
+a3_SpatialPose* a3SpatialPoseNearest(a3real blendParam);
+
+a3_SpatialPose* a3SpatialPoseLerp(a3real blendParam);
 
 #ifdef __cplusplus
 }
