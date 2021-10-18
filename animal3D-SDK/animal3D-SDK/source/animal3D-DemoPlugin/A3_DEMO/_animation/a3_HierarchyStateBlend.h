@@ -52,7 +52,7 @@ typedef struct a3_SpatialPoseBlendOpLerp
 //Possibly could have been done elsewhere but here works
 	//probably would just move to hierarchy state blend.inl if it does move
 
-// Linear interpolate
+// Linear Interpolation
 // Formats: a3vec4Lerp(v0, v1, u)
 // Return: linear blend between values
 // Controls (2): initial (v0) and terminal (v1) a3vec4s
@@ -68,14 +68,17 @@ inline a3vec4 a3vec4Lerp(a3vec4 const v0, a3vec4 const v1, a3real const u)
 		return v1;
 
 	// if blend parameter is greater than 0 and less than one, return a linear blend of the a3vec4
-	return [(1.0 - u) * v0.x + t * v1.x,
-			(1.0 - u) * v0.y + t * v1.y,
-			(1.0 - u) * v0.z + t * v1.z,
-			(1.0 - u) * v0.w + t * v1.w]
+	return [((1.0 - u) * v0.x) + (t * v1.x),
+			((1.0 - u) * v0.y) + (t * v1.y),
+			((1.0 - u) * v0.z) + (t * v1.z),
+			((1.0 - u) * v0.w) + (t * v1.w)]
 }
 
-// Logarithmic interpolate
-// Formats: 
+// Logarithmic Linear Interpolation
+// Formats: a3vec4LogLerp(v0, v1, u)
+// Return: logarithmic linear blend between values
+// Controls (2): initial (v0) and terminal (v1) a3vec4s
+// Inputs (1): blend parameter (u)
 inline a3vec4 a3vec4LogLerp(a3vec4 const v0, a3vec4 const v1, a3real const u)
 {
 	//implement logarithmic interpolation
@@ -83,19 +86,31 @@ inline a3vec4 a3vec4LogLerp(a3vec4 const v0, a3vec4 const v1, a3real const u)
 	return v0;
 }
 
+// Spherical Linear Interpolation
+// Formats: a3vec4Slerp(v0, v1, u)
+// Return: spherical linear blend between values
+// Controls (2): initial (v0) and terminal (v1) a3vec4s
+// Inputs (1): blend parameter (u)
 inline a3vec4 a3vec4Slerp(a3vec4 const v0, a3vec4 const v1, a3real const u)
 {
 	//implement spherical linear interpolation
 	
+	
 	return v0;
 }
 
+// Normalized Linear Interpolation
+// Formats: a3vec4NLerp(v0, v1, u)
+// Return: normalized linear blend between values
+// Controls (2): initial (v0) and terminal (v1) a3vec4s
+// Inputs (1): blend parameter (u)
 inline a3vec4 a3vec4Nlerp(a3vec4 const v0, a3vec4 const v1, a3real const u)
 {
 	//implement normalized linear interpolation
 
 	return v0;
 }
+
 
 //-----------------------------------------------------------------------------
 
