@@ -88,32 +88,43 @@ inline a3_HierarchyPose* a3hierarchyPoseOpLERP(a3_HierarchyPose* pose_out, a3_Hi
 	return pose_out;
 }
 
-inline a3_SpatialPose* a3SpatialPoseSetConstruct()
+inline a3_SpatialPose* a3SpatialPoseSetConstruct(a3vec4 const angles, a3vec4 const scale, a3vec4 const translate)
 {
 	a3_SpatialPose* newPose;
 
-	//newPose->angles = 
-	//newPose->scale = 
-	//newPose->translation = 
+	//do I need to initialize memory here potentially
+	//newPose = memsize(sizeof(a3_SpatialPose)); //memsize is prob wrong
+
+	newPose->angles = angles;
+	newPose->scale = scale;
+	newPose->translation = translate;
 
 	return newPose;
 }
 
-inline a3_SpatialPose* a3SpatialPoseReturnCopy()
+inline a3_SpatialPose* a3SpatialPoseReturnCopy(a3_SpatialPose* const copyPose)
 {
 	a3_SpatialPose* copy;
 
-	//copy = copyPose;
+	copy = copyPose;
 
 	return copy;
 }
 
-inline a3_SpatialPose* a3SpatialPoseFindInverse()
+inline a3_SpatialPose* a3SpatialPoseFindInverse(a3_SpatialPose* const invPose)
 {
 	a3_SpatialPose* inverse;
 
-	//either inverse = ;
-	//or inverse->scale = ; //and so on with translate, rotate, etc
+	//allocate new memory for inverse here
+
+	//negation here or not?
+	inverse->angles.x = -invPose->angles.x;
+	inverse->angles.y = -invPose->angles.y;
+	inverse->angles.z = -invPose->angles.z;
+
+	inverse->scale.x = invPose->scale.x;
+	inverse->scale.y = invPose->scale.y;
+	inverse->scale.z = invPose->scale.z;
 
 	return inverse;
 }

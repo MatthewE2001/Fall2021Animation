@@ -108,23 +108,11 @@ a3_HierarchyPose* a3hierarchyPoseOpLERP(a3_HierarchyPose* pose_out, a3_Hierarchy
 
 //-----------------------------------------------------------------------------
 
-typedef struct a3_SpatialPoseConstruct
-{
-	a3vec4 constructAngles, constructScale, constructTranslate;
-} a3_SpatialPoseConstruct;
+a3_SpatialPose* a3SpatialPoseSetConstruct(a3vec4 const angles, a3vec4 const scale, a3vec4 const translate);
 
-a3_SpatialPose* a3SpatialPoseSetConstruct();
+a3_SpatialPose* a3SpatialPoseReturnCopy(a3_SpatialPose* const copyPose);
 
-struct a3_SpatialPoseCopy //should this be typedef struct
-{
-	a3_SpatialPose* copyPose;
-}; //a3_SpatialPoseCopy;
-
-a3_SpatialPose* a3SpatialPoseReturnCopy();
-
-//do I need to make a struct for inverse here as well
-
-a3_SpatialPose* a3SpatialPoseFindInverse();
+a3_SpatialPose* a3SpatialPoseFindInverse(a3_SpatialPose* const invPose);
 
 a3_SpatialPose* a3SpatialPoseConcatenate();
 
