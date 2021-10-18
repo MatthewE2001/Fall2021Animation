@@ -103,10 +103,14 @@ inline a3vec4 a3vec4LogLerp(a3vec4 const v0, a3vec4 const v1, a3real const u)
 // Inputs (1): blend parameter (u)
 inline a3vec4 a3vec4Slerp(a3vec4 const v0, a3vec4 const v1, a3real const u)
 {
-	//y = acos(v0.v1);
+	a3vec4 out = { 0.0, 0.0, 0.0, 0.0 };
+	out.x = v0.x * (a3real)pow(((a3real)pow(v0.x, (a3real)-1.0) * v1.x), u);
+	out.y = v0.y * (a3real)pow(((a3real)pow(v0.y, (a3real)-1.0) * v1.y), u);
+	out.z = v0.z * (a3real)pow(((a3real)pow(v0.z, (a3real)-1.0) * v1.z), u);
+	out.w = v0.w * (a3real)pow(((a3real)pow(v0.w, (a3real)-1.0) * v1.w), u);
 
 	
-	return v0;
+	return out;
 }
 
 // Normalized Linear Interpolation
