@@ -51,13 +51,31 @@ typedef struct a3_SpatialPoseBlendOpLerp
 
 //Possibly could have been done elsewhere but here works
 	//probably would just move to hierarchy state blend.inl if it does move
+
+// Linear interpolate
+// Formats: a3vec4Lerp(v0, v1, u)
+// Return: linear blend between values
+// Controls (2): initial (v0) and terminal (v1) a3vec4s
+// Inputs (1): blend parameter (u)
 inline a3vec4 a3vec4Lerp(a3vec4 const v0, a3vec4 const v1, a3real const u)
 {
-	//implement linear interpolation
+	// if blend parameter is 0 (or less), return the initial a3vec4
+	if (u <= 0.0):
+		return v0;
 
-	return v0;
+	// if blend parameter is 1 (or greater), return the terminal a3vec4
+	if (u >= 1.0) :
+		return v1;
+
+	// if blend parameter is greater than 0 and less than one, return a linear blend of the a3vec4
+	return [(1.0 - u) * v0.x + t * v1.x,
+			(1.0 - u) * v0.y + t * v1.y,
+			(1.0 - u) * v0.z + t * v1.z,
+			(1.0 - u) * v0.w + t * v1.w]
 }
 
+// Logarithmic interpolate
+// Formats: 
 inline a3vec4 a3vec4LogLerp(a3vec4 const v0, a3vec4 const v1, a3real const u)
 {
 	//implement logarithmic interpolation
@@ -68,7 +86,7 @@ inline a3vec4 a3vec4LogLerp(a3vec4 const v0, a3vec4 const v1, a3real const u)
 inline a3vec4 a3vec4Slerp(a3vec4 const v0, a3vec4 const v1, a3real const u)
 {
 	//implement spherical linear interpolation
-
+	
 	return v0;
 }
 
