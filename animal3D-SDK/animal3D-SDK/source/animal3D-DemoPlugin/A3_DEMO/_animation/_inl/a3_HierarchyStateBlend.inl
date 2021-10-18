@@ -127,6 +127,27 @@ inline a3_SpatialPose* a3SpatialPoseConcatenate()
 	return concat;
 }
 
+inline a3_SpatialPose* a3SpatialPoseNearest(a3real blendParam)
+{
+	a3_SpatialPose* nearest;
+
+	return nearest;
+}
+
+inline a3_SpatialPose* a3SpatialPoseLerp(a3real blendParam)
+{
+	a3_SpatialPose* lerp;
+
+	return lerp;
+}
+
+inline a3_SpatialPose* a3SpatialPoseCubic(a3real blendParam)
+{
+	a3_SpatialPose* cubic;
+
+	return cubic;
+}
+
 
 //-----------------------------------------------------------------------------
 

@@ -150,6 +150,8 @@ a3_SpatialPose* a3SpatialPoseNearest(a3real blendParam);
 
 a3_SpatialPose* a3SpatialPoseLerp(a3real blendParam);
 
+a3_SpatialPose* a3SpatialPoseCubic(a3real blendParam);
+
 #ifdef __cplusplus
 }
 #endif	// __cplusplus
