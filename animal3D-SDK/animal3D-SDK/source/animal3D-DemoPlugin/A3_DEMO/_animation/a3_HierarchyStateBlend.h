@@ -30,6 +30,9 @@
 
 #include "a3_Kinematics.h"
 
+#include <stdio.h>
+#include <math.h>
+
 
 #ifdef __cplusplus
 extern "C"
@@ -51,13 +54,41 @@ typedef struct a3_SpatialPoseBlendOpLerp
 
 //Possibly could have been done elsewhere but here works
 	//probably would just move to hierarchy state blend.inl if it does move
+
+// Linear Interpolation
+// Formats: a3vec4Lerp(v0, v1, u)
+// Return: linear blend between values
+// Controls (2): initial (v0) and terminal (v1) a3vec4s
+// Inputs (1): blend parameter (u)
 inline a3vec4 a3vec4Lerp(a3vec4 const v0, a3vec4 const v1, a3real const u)
 {
-	//implement linear interpolation
+	// if blend parameter is 0 (or less), return the initial a3vec4
+	if (u <= 0.0)
+	{
+		return v0;
+	}
 
-	return v0;
+	// if blend parameter is 1 (or greater), return the terminal a3vec4
+	if (u >= 1.0)
+	{
+		return v1;
+	}
+
+	// if blend parameter is greater than 0 and less than one, return a linear blend of the a3vec4
+	a3vec4 out = { 0.0, 0.0, 0.0, 0.0 };
+	out.x = (((a3real)1.0 - u) * v0.x) + (u * v1.x);
+	out.y = (((a3real)1.0 - u) * v0.y) + (u * v1.y);
+	out.z = (((a3real)1.0 - u) * v0.z) + (u * v1.z);
+	out.w = (((a3real)1.0 - u) * v0.w) + (u * v1.w);
+
+	return out;
 }
 
+// Logarithmic Linear Interpolation
+// Formats: a3vec4LogLerp(v0, v1, u)
+// Return: logarithmic linear blend between values
+// Controls (2): initial (v0) and terminal (v1) a3vec4s
+// Inputs (1): blend parameter (u)
 inline a3vec4 a3vec4LogLerp(a3vec4 const v0, a3vec4 const v1, a3real const u)
 {
 	//implement logarithmic interpolation
@@ -65,19 +96,35 @@ inline a3vec4 a3vec4LogLerp(a3vec4 const v0, a3vec4 const v1, a3real const u)
 	return v0;
 }
 
+// Spherical Linear Interpolation
+// Formats: a3vec4Slerp(v0, v1, u)
+// Return: spherical linear blend between values
+// Controls (2): initial (v0) and terminal (v1) a3vec4s
+// Inputs (1): blend parameter (u)
 inline a3vec4 a3vec4Slerp(a3vec4 const v0, a3vec4 const v1, a3real const u)
 {
-	//implement spherical linear interpolation
+	a3vec4 out = { 0.0, 0.0, 0.0, 0.0 };
+	out.x = v0.x * (a3real)pow(((a3real)pow(v0.x, (a3real)-1.0) * v1.x), u);
+	out.y = v0.y * (a3real)pow(((a3real)pow(v0.y, (a3real)-1.0) * v1.y), u);
+	out.z = v0.z * (a3real)pow(((a3real)pow(v0.z, (a3real)-1.0) * v1.z), u);
+	out.w = v0.w * (a3real)pow(((a3real)pow(v0.w, (a3real)-1.0) * v1.w), u);
 
-	return v0;
+	
+	return out;
 }
 
+// Normalized Linear Interpolation
+// Formats: a3vec4NLerp(v0, v1, u)
+// Return: normalized linear blend between values
+// Controls (2): initial (v0) and terminal (v1) a3vec4s
+// Inputs (1): blend parameter (u)
 inline a3vec4 a3vec4Nlerp(a3vec4 const v0, a3vec4 const v1, a3real const u)
 {
 	//implement normalized linear interpolation
 
 	return v0;
 }
+
 
 //-----------------------------------------------------------------------------
 
