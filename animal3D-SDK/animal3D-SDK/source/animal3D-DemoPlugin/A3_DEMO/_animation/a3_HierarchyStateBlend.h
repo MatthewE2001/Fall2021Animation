@@ -30,6 +30,9 @@
 
 #include "a3_Kinematics.h"
 
+#include <stdio.h>
+#include <math.h>
+
 
 #ifdef __cplusplus
 extern "C"
@@ -60,18 +63,25 @@ typedef struct a3_SpatialPoseBlendOpLerp
 inline a3vec4 a3vec4Lerp(a3vec4 const v0, a3vec4 const v1, a3real const u)
 {
 	// if blend parameter is 0 (or less), return the initial a3vec4
-	if (u <= 0.0):
+	if (u <= 0.0)
+	{
 		return v0;
+	}
 
 	// if blend parameter is 1 (or greater), return the terminal a3vec4
-	if (u >= 1.0) :
+	if (u >= 1.0)
+	{
 		return v1;
+	}
 
 	// if blend parameter is greater than 0 and less than one, return a linear blend of the a3vec4
-	return [((1.0 - u) * v0.x) + (t * v1.x),
-			((1.0 - u) * v0.y) + (t * v1.y),
-			((1.0 - u) * v0.z) + (t * v1.z),
-			((1.0 - u) * v0.w) + (t * v1.w)]
+	a3vec4 out = { 0.0, 0.0, 0.0, 0.0 };
+	out.x = (((a3real)1.0 - u) * v0.x) + (u * v1.x);
+	out.y = (((a3real)1.0 - u) * v0.y) + (u * v1.y);
+	out.z = (((a3real)1.0 - u) * v0.z) + (u * v1.z);
+	out.w = (((a3real)1.0 - u) * v0.w) + (u * v1.w);
+
+	return out;
 }
 
 // Logarithmic Linear Interpolation
@@ -93,8 +103,8 @@ inline a3vec4 a3vec4LogLerp(a3vec4 const v0, a3vec4 const v1, a3real const u)
 // Inputs (1): blend parameter (u)
 inline a3vec4 a3vec4Slerp(a3vec4 const v0, a3vec4 const v1, a3real const u)
 {
-	//implement spherical linear interpolation
-	
+	//y = acos(v0.v1);
+
 	
 	return v0;
 }
