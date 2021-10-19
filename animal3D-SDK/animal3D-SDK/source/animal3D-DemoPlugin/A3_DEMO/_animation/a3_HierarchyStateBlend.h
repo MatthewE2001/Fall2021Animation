@@ -171,6 +171,10 @@ a3_SpatialPose* a3SpatialPoseCubic(a3_SpatialPose* const prevPose, a3_SpatialPos
 
 a3_SpatialPose* a3SpatialPoseDeConcat(a3_SpatialPose* const pose_lh, a3_SpatialPose* const pose_rh);
 
+a3_SpatialPose* a3SpatialPoseCalcScale(a3real blendParam, a3_SpatialPose* const poseIn);
+
+a3_SpatialPose* a3SpatialPoseTriangular(a3_SpatialPose* const pose0, a3_SpatialPose* const pose1, a3_SpatialPose* const pose2, a3real scaleParam1, a3real scaleParam2);
+
 #ifdef __cplusplus
 }
 #endif	// __cplusplus

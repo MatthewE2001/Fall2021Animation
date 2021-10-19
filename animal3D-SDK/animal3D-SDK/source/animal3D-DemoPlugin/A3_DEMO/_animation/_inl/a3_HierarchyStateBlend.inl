@@ -220,6 +220,37 @@ inline a3_SpatialPose* a3SpatialPoseDeConcat(a3_SpatialPose* const pose_lh, a3_S
 	return deconcat;
 }
 
+inline a3_SpatialPose* a3SpatialPoseCalcScale(a3real blendParam, a3_SpatialPose* const poseIn)
+{
+	a3_SpatialPose* scale;
+
+	if (blendParam == 0)
+	{
+		//scale is identity pose
+		a3spatialPoseReset(scale);
+	}
+	else if (blendParam == 1)
+	{
+		scale = poseIn;
+	}
+	else
+	{
+		//have it set to gradient of sorts between the control and identity poses
+		scale->scale.x = 1 * blendParam + poseIn->scale.x * (1 - blendParam);
+		scale->scale.y = 1 * blendParam + poseIn->scale.y * (1 - blendParam);
+		scale->scale.z = 1 * blendParam + poseIn->scale.z * (1 - blendParam);
+	}
+
+	return scale;
+}
+
+inline a3_SpatialPose* a3SpatialPoseTriangular(a3_SpatialPose* const pose0, a3_SpatialPose* const pose1, a3_SpatialPose* const pose2, a3real scaleParam1, a3real scaleParam2)
+{
+
+
+	return NULL;
+}
+
 
 //-----------------------------------------------------------------------------
 
