@@ -126,35 +126,77 @@ inline a3_SpatialPose* a3SpatialPoseFindInverse(a3_SpatialPose* const invPose)
 	inverse->scale.y = invPose->scale.y;
 	inverse->scale.z = invPose->scale.z;
 
+	inverse->translation.x = -invPose->translation.x;
+	inverse->translation.y = -invPose->translation.y;
+	inverse->translation.z = -invPose->translation.z;
+
 	return inverse;
 }
 
-inline a3_SpatialPose* a3SpatialPoseConcatenate()
+inline a3_SpatialPose* a3SpatialPoseConcatenate(a3_SpatialPose* const pose_lh, a3_SpatialPose* const pose_rh)
 {
 	a3_SpatialPose* concat;
 
+	//a3spatialPoseOpIdentity(concat);
 
+	//initialize concat memory here
+	//also could recreate the concatenation step here
+
+	a3spatialPoseConcat(concat, pose_lh, pose_rh);
 
 	return concat;
 }
 
-inline a3_SpatialPose* a3SpatialPoseNearest(a3real blendParam)
+inline a3_SpatialPose* a3SpatialPoseNearest(a3_SpatialPose* const p0, a3_SpatialPose* const p1, a3real blendParam)
 {
 	a3_SpatialPose* nearest;
+
+	if (blendParam < 0.5)
+	{
+		nearest = p0;
+	}
+	else if (blendParam >= 0.5)
+	{
+		nearest = p1;
+	}
 
 	return nearest;
 }
 
-inline a3_SpatialPose* a3SpatialPoseLerp(a3real blendParam)
+inline a3_SpatialPose* a3SpatialPoseBlendLerp(a3_SpatialPose* const p0, a3_SpatialPose* const p1, a3real blendParam)
 {
 	a3_SpatialPose* lerp;
+
+	//a3spatialPoseReset(lerp);
+	//initialize lerp pose memory
+
+	a3spatialPoseLerp(lerp, p0, p1, blendParam);
 
 	return lerp;
 }
 
-inline a3_SpatialPose* a3SpatialPoseCubic(a3real blendParam)
+inline a3_SpatialPose* a3SpatialPoseCubic(a3_SpatialPose* const prevPose, a3_SpatialPose* const pose0, a3_SpatialPose* const pose1, 
+	a3_SpatialPose* const poseNext, a3real blendParam)
 {
 	a3_SpatialPose* cubic;
+
+	//give cubic memory size
+
+	//catmull rom interpolation
+	cubic->translation.x = (a3real)0.5 * ((-blendParam + 2 * (blendParam * blendParam) - (blendParam * blendParam * blendParam)) * prevPose->translation.x
+		+ (2 - 5 * (blendParam * blendParam) + 3 * (blendParam * blendParam * blendParam)) * pose0->translation.x
+		+ (blendParam + 4 * (blendParam * blendParam) - 3 * (blendParam * blendParam * blendParam)) * pose1->translation.x
+		+ (-(blendParam * blendParam) + (blendParam * blendParam * blendParam))) * poseNext->translation.x;
+
+	cubic->translation.y = (a3real)0.5 * ((-blendParam + 2 * (blendParam * blendParam) - (blendParam * blendParam * blendParam)) * prevPose->translation.y
+		+ (2 - 5 * (blendParam * blendParam) + 3 * (blendParam * blendParam * blendParam)) * pose0->translation.y
+		+ (blendParam + 4 * (blendParam * blendParam) - 3 * (blendParam * blendParam * blendParam)) * pose1->translation.y
+		+ (-(blendParam * blendParam) + (blendParam * blendParam * blendParam))) * poseNext->translation.y;
+
+	cubic->translation.z = (a3real)0.5 * ((-blendParam + 2 * (blendParam * blendParam) - (blendParam * blendParam * blendParam)) * prevPose->translation.z
+		+ (2 - 5 * (blendParam * blendParam) + 3 * (blendParam * blendParam * blendParam)) * pose0->translation.z
+		+ (blendParam + 4 * (blendParam * blendParam) - 3 * (blendParam * blendParam * blendParam)) * pose1->translation.z
+		+ (-(blendParam * blendParam) + (blendParam * blendParam * blendParam))) * poseNext->translation.z;
 
 	return cubic;
 }
