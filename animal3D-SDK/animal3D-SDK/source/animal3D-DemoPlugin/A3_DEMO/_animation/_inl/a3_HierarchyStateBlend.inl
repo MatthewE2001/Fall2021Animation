@@ -75,8 +75,8 @@ inline a3_SpatialPose a3spatialPoseDOpLERP(a3_SpatialPose const pose0, a3_Spatia
 // pointer-based reset/identity operation for hierarchical pose
 inline a3_HierarchyPose* a3hierarchyPoseOpIdentity(a3_HierarchyPose* pose_out)
 {
-
-	// done
+	// set pose-out to the identity matrix
+	pose_out->pose->transform = a3mat4_identity;
 	return pose_out;
 }
 
