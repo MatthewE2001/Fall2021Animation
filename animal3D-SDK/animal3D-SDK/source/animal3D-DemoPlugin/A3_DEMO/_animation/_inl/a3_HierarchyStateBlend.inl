@@ -45,6 +45,10 @@ inline a3_SpatialPose* a3spatialPoseOpIdentity(a3_SpatialPose* pose_out)
 inline a3_SpatialPose* a3spatialPoseOpLERP(a3_SpatialPose* pose_out, a3_SpatialPose const* pose0, a3_SpatialPose const* pose1, a3real const u)
 {
 
+	pose_out->translation = a3vec4Lerp(pose0->translation, pose1->translation, u);
+	pose_out->angles = a3vec4Lerp(pose0->angles, pose1->angles, u);
+	pose_out->scale = a3vec4Lerp(pose0->scale, pose1->scale, u);
+
 	// done
 	return pose_out;
 }
@@ -75,8 +79,8 @@ inline a3_SpatialPose a3spatialPoseDOpLERP(a3_SpatialPose const pose0, a3_Spatia
 // pointer-based reset/identity operation for hierarchical pose
 inline a3_HierarchyPose* a3hierarchyPoseOpIdentity(a3_HierarchyPose* pose_out)
 {
-
-	// done
+	// set pose-out to the identity matrix
+	pose_out->pose->transform = a3mat4_identity;
 	return pose_out;
 }
 
