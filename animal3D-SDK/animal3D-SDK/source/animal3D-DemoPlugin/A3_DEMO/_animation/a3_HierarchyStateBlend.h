@@ -175,6 +175,9 @@ a3_SpatialPose* a3SpatialPoseCalcScale(a3real blendParam, a3_SpatialPose* const 
 
 a3_SpatialPose* a3SpatialPoseTriangular(a3_SpatialPose* const pose0, a3_SpatialPose* const pose1, a3_SpatialPose* const pose2, a3real scaleParam1, a3real scaleParam2);
 
+a3real a3SpatialPoseBiNearest(a3_SpatialPose* const pose_out, a3_SpatialPose* const initPose0, a3_SpatialPose* const initPose1, 
+	a3_SpatialPose* const termPose0, a3_SpatialPose* const termPose1, a3real blendParam1, a3real blendParam2, a3real blendParam3);
+
 #ifdef __cplusplus
 }
 #endif	// __cplusplus

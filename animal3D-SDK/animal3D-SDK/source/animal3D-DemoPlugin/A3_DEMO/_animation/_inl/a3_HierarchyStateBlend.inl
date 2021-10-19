@@ -250,11 +250,20 @@ inline a3_SpatialPose* a3SpatialPoseCalcScale(a3real blendParam, a3_SpatialPose*
 
 inline a3_SpatialPose* a3SpatialPoseTriangular(a3_SpatialPose* const pose0, a3_SpatialPose* const pose1, a3_SpatialPose* const pose2, a3real scaleParam1, a3real scaleParam2)
 {
+	//interpolate to find pose within triangle of three control poses
+	//then scale the initial pose to that interpolation I believe
 
+	//a3vec4 tmpTranslate, tmpScale;
+
+	//a3real4Trilerp(tmpTranslate.v, pose0->translation.v, pose1->translation.v, pos)
 
 	return NULL;
 }
 
+inline a3real a3SpatialPoseBiNearest(a3_SpatialPose* const pose_out, a3_SpatialPose* const initPose0, a3_SpatialPose* const initPose1, a3_SpatialPose* const termPose0, a3_SpatialPose* const termPose1, a3real blendParam1, a3real blendParam2, a3real blendParam3)
+{
+	return -1;
+}
 
 //-----------------------------------------------------------------------------
 
