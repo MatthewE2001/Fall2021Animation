@@ -176,17 +176,17 @@ a3_SpatialPose* a3SpatialPoseCalcScale(a3real blendParam, a3_SpatialPose* const 
 
 a3_SpatialPose* a3SpatialPoseTriangular(a3_SpatialPose* const pose0, a3_SpatialPose* const pose1, a3_SpatialPose* const pose2, a3real scaleParam1, a3real scaleParam2);
 
-a3real a3SpatialPoseBiNearest(a3_SpatialPose* pose_out, a3_SpatialPose* const initPose0, a3_SpatialPose* const initPose1, 
+a3_SpatialPose* a3SpatialPoseBiNearest(a3_SpatialPose* pose_out, a3_SpatialPose* const initPose0, a3_SpatialPose* const initPose1,
 	a3_SpatialPose* const termPose0, a3_SpatialPose* const termPose1, a3real blendParam1, a3real blendParam2, a3real blendParam3);
 
-a3real a3SpatialPoseBiLerp(a3_SpatialPose* pose_out, a3_SpatialPose* const initPose0, a3_SpatialPose* const initPose1,
+a3_SpatialPose* a3SpatialPoseBiLerp(a3_SpatialPose* pose_out, a3_SpatialPose* const initPose0, a3_SpatialPose* const initPose1,
 	a3_SpatialPose* const termPose0, a3_SpatialPose* const termPose1, a3real blendParam1, a3real blendParam2, a3real blendParam3);
 
-a3real a3SpatialPoseBiCubic(a3_SpatialPose* pose_out, a3_SpatialPose* const pose0, a3_SpatialPose* const pose1, a3_SpatialPose* const pose2,
+a3_SpatialPose* a3SpatialPoseBiCubic(a3_SpatialPose* pose_out, a3_SpatialPose* const pose0, a3_SpatialPose* const pose1, a3_SpatialPose* const pose2,
 	a3_SpatialPose* const pose3, a3_SpatialPose* const pose4, a3_SpatialPose* const pose5, a3_SpatialPose* const pose6, 
 	a3_SpatialPose* const pose7, a3_SpatialPose* const pose8, a3_SpatialPose* const pose9, a3_SpatialPose* const pose10, a3_SpatialPose* const pose11,
 	a3_SpatialPose* const pose12, a3_SpatialPose* const pose13, a3_SpatialPose* const pose14, a3_SpatialPose* const pose15,
-	a3_SpatialPose* const pose16);
+	a3real blendParam1, a3real blendParam2, a3real blendParam3, a3real blendParam4, a3real blendParam5);
 
 #ifdef __cplusplus
 }

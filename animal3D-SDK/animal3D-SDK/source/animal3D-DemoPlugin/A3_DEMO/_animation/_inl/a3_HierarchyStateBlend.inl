@@ -260,7 +260,7 @@ inline a3_SpatialPose* a3SpatialPoseTriangular(a3_SpatialPose* const pose0, a3_S
 	return NULL;
 }
 
-inline a3real a3SpatialPoseBiNearest(a3_SpatialPose* pose_out, a3_SpatialPose* const initPose0, a3_SpatialPose* const initPose1, a3_SpatialPose* const termPose0, a3_SpatialPose* const termPose1, a3real blendParam1, a3real blendParam2, a3real blendParam3)
+inline a3_SpatialPose* a3SpatialPoseBiNearest(a3_SpatialPose* pose_out, a3_SpatialPose* const initPose0, a3_SpatialPose* const initPose1, a3_SpatialPose* const termPose0, a3_SpatialPose* const termPose1, a3real blendParam1, a3real blendParam2, a3real blendParam3)
 {
 	//run two nearest tests
 	a3_SpatialPose* nearest1;
@@ -274,7 +274,7 @@ inline a3real a3SpatialPoseBiNearest(a3_SpatialPose* pose_out, a3_SpatialPose* c
 	return -1;
 }
 
-inline a3real a3SpatialPoseBiLerp(a3_SpatialPose* pose_out, a3_SpatialPose* const initPose0, a3_SpatialPose* const initPose1, a3_SpatialPose* const termPose0, a3_SpatialPose* const termPose1, a3real blendParam1, a3real blendParam2, a3real blendParam3)
+inline a3_SpatialPose* a3SpatialPoseBiLerp(a3_SpatialPose* pose_out, a3_SpatialPose* const initPose0, a3_SpatialPose* const initPose1, a3_SpatialPose* const termPose0, a3_SpatialPose* const termPose1, a3real blendParam1, a3real blendParam2, a3real blendParam3)
 {
 	a3_SpatialPose* lerp1;
 	a3_SpatialPose* lerp2;
@@ -285,6 +285,25 @@ inline a3real a3SpatialPoseBiLerp(a3_SpatialPose* pose_out, a3_SpatialPose* cons
 	a3spatialPoseLerp(pose_out, lerp1, lerp2, blendParam3);
 
 	return -1;
+}
+
+inline a3_SpatialPose* a3SpatialPoseBiCubic(a3_SpatialPose* pose_out, a3_SpatialPose* const pose0, a3_SpatialPose* const pose1, 
+	a3_SpatialPose* const pose2, a3_SpatialPose* const pose3, a3_SpatialPose* const pose4, 
+	a3_SpatialPose* const pose5, a3_SpatialPose* const pose6, a3_SpatialPose* const pose7, 
+	a3_SpatialPose* const pose8, a3_SpatialPose* const pose9, a3_SpatialPose* const pose10, 
+	a3_SpatialPose* const pose11, a3_SpatialPose* const pose12, a3_SpatialPose* const pose13, 
+	a3_SpatialPose* const pose14, a3_SpatialPose* const pose15, 
+	a3real blendParam1, a3real blendParam2, a3real blendParam3, a3real blendParam4, a3real blendParam5)
+{
+	a3SpatialPoseCubic(pose0, pose1, pose2, pose3, blendParam1);
+	a3SpatialPoseCubic(pose4, pose5, pose6, pose7, blendParam2);
+	a3SpatialPoseCubic(pose8, pose9, pose10, pose11, blendParam3);
+	a3SpatialPoseCubic(pose12, pose13, pose14, pose15, blendParam4);
+	
+	//need to include pose_out when I add pose out to cubic parameters
+	a3SpatialPoseCubic(pose12, pose13, pose14, pose15, blendParam4);
+
+	return pose_out;
 }
 
 //-----------------------------------------------------------------------------
