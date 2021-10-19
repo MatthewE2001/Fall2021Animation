@@ -169,6 +169,8 @@ a3_SpatialPose* a3SpatialPoseBlendLerp(a3_SpatialPose* const p0, a3_SpatialPose*
 
 a3_SpatialPose* a3SpatialPoseCubic(a3_SpatialPose* const prevPose, a3_SpatialPose* const pose0, a3_SpatialPose* const pose1, a3_SpatialPose* const poseNext, a3real blendParam);
 
+a3_SpatialPose* a3SpatialPoseDeConcat(a3_SpatialPose* const pose_lh, a3_SpatialPose* const pose_rh);
+
 #ifdef __cplusplus
 }
 #endif	// __cplusplus

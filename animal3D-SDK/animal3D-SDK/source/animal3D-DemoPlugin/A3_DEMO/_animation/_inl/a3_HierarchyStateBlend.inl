@@ -201,6 +201,25 @@ inline a3_SpatialPose* a3SpatialPoseCubic(a3_SpatialPose* const prevPose, a3_Spa
 	return cubic;
 }
 
+inline a3_SpatialPose* a3SpatialPoseDeConcat(a3_SpatialPose* const pose_lh, a3_SpatialPose* const pose_rh)
+{
+	a3_SpatialPose* deconcat;
+
+	deconcat->translation.x = pose_lh->translation.x - pose_rh->translation.x;
+	deconcat->translation.y = pose_lh->translation.y - pose_rh->translation.y;
+	deconcat->translation.z = pose_lh->translation.z - pose_rh->translation.z;
+
+	deconcat->scale.x = pose_lh->scale.x / pose_rh->scale.x;
+	deconcat->scale.y = pose_lh->scale.y / pose_rh->scale.y;
+	deconcat->scale.z = pose_lh->scale.z / pose_rh->scale.z;
+
+	deconcat->angles.x = a3trigValid_sind(pose_lh->angles.x - pose_rh->angles.x);
+	deconcat->angles.y = a3trigValid_sind(pose_lh->angles.y - pose_rh->angles.y);
+	deconcat->angles.z = a3trigValid_sind(pose_lh->angles.z - pose_rh->angles.z);
+
+	return deconcat;
+}
+
 
 //-----------------------------------------------------------------------------
 
