@@ -83,7 +83,7 @@ inline a3_HierarchyPose* a3hierarchyPoseOpIdentity(a3_HierarchyPose* pose_out)
 // pointer-based LERP operation for hierarchical pose
 inline a3_HierarchyPose* a3hierarchyPoseOpLERP(a3_HierarchyPose* pose_out, a3_HierarchyPose const* pose0, a3_HierarchyPose const* pose1, a3real const u)
 {
-
+	pose_out->pose->translation = a3vec4Lerp(pose0->pose->translation, pose1->pose->translation, u);
 	// done
 	return pose_out;
 }
