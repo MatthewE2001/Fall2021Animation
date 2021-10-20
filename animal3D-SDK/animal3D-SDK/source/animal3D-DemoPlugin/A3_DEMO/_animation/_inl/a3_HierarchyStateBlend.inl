@@ -295,13 +295,18 @@ inline a3_SpatialPose* a3SpatialPoseBiCubic(a3_SpatialPose* pose_out, a3_Spatial
 	a3_SpatialPose* const pose14, a3_SpatialPose* const pose15, 
 	a3real blendParam1, a3real blendParam2, a3real blendParam3, a3real blendParam4, a3real blendParam5)
 {
-	a3SpatialPoseCubic(pose0, pose1, pose2, pose3, blendParam1);
-	a3SpatialPoseCubic(pose4, pose5, pose6, pose7, blendParam2);
-	a3SpatialPoseCubic(pose8, pose9, pose10, pose11, blendParam3);
-	a3SpatialPoseCubic(pose12, pose13, pose14, pose15, blendParam4);
+	a3_SpatialPose* cubic1;
+	a3_SpatialPose* cubic2;
+	a3_SpatialPose* cubic3;
+	a3_SpatialPose* cubic4;
+
+	cubic1 = a3SpatialPoseCubic(pose0, pose1, pose2, pose3, blendParam1);
+	cubic2 = a3SpatialPoseCubic(pose4, pose5, pose6, pose7, blendParam2);
+	cubic3 = a3SpatialPoseCubic(pose8, pose9, pose10, pose11, blendParam3);
+	cubic4 = a3SpatialPoseCubic(pose12, pose13, pose14, pose15, blendParam4);
 	
 	//need to include pose_out when I add pose out to cubic parameters
-	a3SpatialPoseCubic(pose12, pose13, pose14, pose15, blendParam4);
+	a3SpatialPoseCubic(cubic1, cubic2, cubic3, cubic4, blendParam5);
 
 	return pose_out;
 }
