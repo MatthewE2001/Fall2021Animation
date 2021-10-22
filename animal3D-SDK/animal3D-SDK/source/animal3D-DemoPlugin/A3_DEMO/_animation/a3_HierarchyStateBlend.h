@@ -156,25 +156,25 @@ a3_HierarchyPose* a3hierarchyPoseOpLERP(a3_HierarchyPose* pose_out, a3_Hierarchy
 //-----------------------------------------------------------------------------
 
 //possibly remove the asterisk from the function type, or just add in return poses everywhere
-a3_SpatialPose* a3SpatialPoseSetConstruct(a3vec4 const angles, a3vec4 const scale, a3vec4 const translate);
+a3_SpatialPose* a3SpatialPoseSetConstruct(a3_SpatialPose* pose_out, a3vec4 const angles, a3vec4 const scale, a3vec4 const translate);
 
-a3_SpatialPose* a3SpatialPoseReturnCopy(a3_SpatialPose* const copyPose);
+a3_SpatialPose* a3SpatialPoseReturnCopy(a3_SpatialPose* pose_out, a3_SpatialPose* const copyPose);
 
-a3_SpatialPose* a3SpatialPoseFindInverse(a3_SpatialPose* const invPose);
+a3_SpatialPose* a3SpatialPoseFindInverse(a3_SpatialPose* pose_out, a3_SpatialPose* const invPose);
 
-a3_SpatialPose* a3SpatialPoseConcatenate(a3_SpatialPose* const pose_lh, a3_SpatialPose* const pose_rh);
+a3_SpatialPose* a3SpatialPoseConcatenate(a3_SpatialPose* pose_out, a3_SpatialPose* const pose_lh, a3_SpatialPose* const pose_rh);
 
-a3_SpatialPose* a3SpatialPoseNearest(a3_SpatialPose* const p0, a3_SpatialPose* const p1, a3real blendParam);
+a3_SpatialPose* a3SpatialPoseNearest(a3_SpatialPose* pose_out, a3_SpatialPose* const p0, a3_SpatialPose* const p1, a3real blendParam);
 
-a3_SpatialPose* a3SpatialPoseBlendLerp(a3_SpatialPose* const p0, a3_SpatialPose* const p1, a3real blendParam);
+a3_SpatialPose* a3SpatialPoseBlendLerp(a3_SpatialPose* pose_out, a3_SpatialPose* const p0, a3_SpatialPose* const p1, a3real blendParam);
 
-a3_SpatialPose* a3SpatialPoseCubic(a3_SpatialPose* const prevPose, a3_SpatialPose* const pose0, a3_SpatialPose* const pose1, a3_SpatialPose* const poseNext, a3real blendParam);
+a3_SpatialPose* a3SpatialPoseCubic(a3_SpatialPose* pose_out, a3_SpatialPose* const prevPose, a3_SpatialPose* const pose0, a3_SpatialPose* const pose1, a3_SpatialPose* const poseNext, a3real blendParam);
 
-a3_SpatialPose* a3SpatialPoseDeConcat(a3_SpatialPose* const pose_lh, a3_SpatialPose* const pose_rh);
+a3_SpatialPose* a3SpatialPoseDeConcat(a3_SpatialPose* pose_out, a3_SpatialPose* const pose_lh, a3_SpatialPose* const pose_rh);
 
-a3_SpatialPose* a3SpatialPoseCalcScale(a3real blendParam, a3_SpatialPose* const poseIn);
+a3_SpatialPose* a3SpatialPoseCalcScale(a3_SpatialPose* pose_out, a3real blendParam, a3_SpatialPose* const poseIn);
 
-a3_SpatialPose* a3SpatialPoseTriangular(a3_SpatialPose* const pose0, a3_SpatialPose* const pose1, a3_SpatialPose* const pose2, a3real scaleParam1, a3real scaleParam2);
+a3_SpatialPose* a3SpatialPoseTriangular(a3_SpatialPose* pose_out, a3_SpatialPose* const pose0, a3_SpatialPose* const pose1, a3_SpatialPose* const pose2, a3real scaleParam1, a3real scaleParam2);
 
 a3_SpatialPose* a3SpatialPoseBiNearest(a3_SpatialPose* pose_out, a3_SpatialPose* const initPose0, a3_SpatialPose* const initPose1,
 	a3_SpatialPose* const termPose0, a3_SpatialPose* const termPose1, a3real blendParam1, a3real blendParam2, a3real blendParam3);

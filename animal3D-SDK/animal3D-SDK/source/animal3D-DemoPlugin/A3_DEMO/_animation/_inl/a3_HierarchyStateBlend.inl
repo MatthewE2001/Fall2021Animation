@@ -92,7 +92,7 @@ inline a3_HierarchyPose* a3hierarchyPoseOpLERP(a3_HierarchyPose* pose_out, a3_Hi
 	return pose_out;
 }
 
-inline a3_SpatialPose* a3SpatialPoseSetConstruct(a3vec4 const angles, a3vec4 const scale, a3vec4 const translate)
+inline a3_SpatialPose* a3SpatialPoseSetConstruct(a3_SpatialPose* pose_out, a3vec4 const angles, a3vec4 const scale, a3vec4 const translate)
 {
 	a3_SpatialPose* newPose;
 
@@ -106,16 +106,16 @@ inline a3_SpatialPose* a3SpatialPoseSetConstruct(a3vec4 const angles, a3vec4 con
 	return newPose;
 }
 
-inline a3_SpatialPose* a3SpatialPoseReturnCopy(a3_SpatialPose* const copyPose)
+inline a3_SpatialPose* a3SpatialPoseReturnCopy(a3_SpatialPose* pose_out, a3_SpatialPose* const copyPose)
 {
-	a3_SpatialPose* pose_out; //to do make into a parameter
+	//a3_SpatialPose* pose_out; //to do make into a parameter
 
 	pose_out = copyPose;
 
 	return pose_out; //every function should have return pose_out
 }
 
-inline a3_SpatialPose* a3SpatialPoseFindInverse(a3_SpatialPose* const invPose)
+inline a3_SpatialPose* a3SpatialPoseFindInverse(a3_SpatialPose* pose_out, a3_SpatialPose* const invPose)
 {
 	a3_SpatialPose* inverse;
 
@@ -137,7 +137,7 @@ inline a3_SpatialPose* a3SpatialPoseFindInverse(a3_SpatialPose* const invPose)
 	return inverse;
 }
 
-inline a3_SpatialPose* a3SpatialPoseConcatenate(a3_SpatialPose* const pose_lh, a3_SpatialPose* const pose_rh)
+inline a3_SpatialPose* a3SpatialPoseConcatenate(a3_SpatialPose* pose_out, a3_SpatialPose* const pose_lh, a3_SpatialPose* const pose_rh)
 {
 	a3_SpatialPose* concat;
 
@@ -151,7 +151,7 @@ inline a3_SpatialPose* a3SpatialPoseConcatenate(a3_SpatialPose* const pose_lh, a
 	return concat;
 }
 
-inline a3_SpatialPose* a3SpatialPoseNearest(a3_SpatialPose* const p0, a3_SpatialPose* const p1, a3real blendParam)
+inline a3_SpatialPose* a3SpatialPoseNearest(a3_SpatialPose* pose_out, a3_SpatialPose* const p0, a3_SpatialPose* const p1, a3real blendParam)
 {
 	a3_SpatialPose* nearest;
 
@@ -167,7 +167,7 @@ inline a3_SpatialPose* a3SpatialPoseNearest(a3_SpatialPose* const p0, a3_Spatial
 	return nearest;
 }
 
-inline a3_SpatialPose* a3SpatialPoseBlendLerp(a3_SpatialPose* const p0, a3_SpatialPose* const p1, a3real blendParam)
+inline a3_SpatialPose* a3SpatialPoseBlendLerp(a3_SpatialPose* pose_out, a3_SpatialPose* const p0, a3_SpatialPose* const p1, a3real blendParam)
 {
 	a3_SpatialPose* lerp;
 
@@ -179,7 +179,7 @@ inline a3_SpatialPose* a3SpatialPoseBlendLerp(a3_SpatialPose* const p0, a3_Spati
 	return lerp;
 }
 
-inline a3_SpatialPose* a3SpatialPoseCubic(a3_SpatialPose* const prevPose, a3_SpatialPose* const pose0, a3_SpatialPose* const pose1, 
+inline a3_SpatialPose* a3SpatialPoseCubic(a3_SpatialPose* pose_out, a3_SpatialPose* const prevPose, a3_SpatialPose* const pose0, a3_SpatialPose* const pose1,
 	a3_SpatialPose* const poseNext, a3real blendParam)
 {
 	a3_SpatialPose* cubic;
@@ -205,7 +205,7 @@ inline a3_SpatialPose* a3SpatialPoseCubic(a3_SpatialPose* const prevPose, a3_Spa
 	return cubic;
 }
 
-inline a3_SpatialPose* a3SpatialPoseDeConcat(a3_SpatialPose* const pose_lh, a3_SpatialPose* const pose_rh)
+inline a3_SpatialPose* a3SpatialPoseDeConcat(a3_SpatialPose* pose_out, a3_SpatialPose* const pose_lh, a3_SpatialPose* const pose_rh)
 {
 	a3_SpatialPose* deconcat;
 
@@ -224,7 +224,7 @@ inline a3_SpatialPose* a3SpatialPoseDeConcat(a3_SpatialPose* const pose_lh, a3_S
 	return deconcat;
 }
 
-inline a3_SpatialPose* a3SpatialPoseCalcScale(a3real blendParam, a3_SpatialPose* const poseIn)
+inline a3_SpatialPose* a3SpatialPoseCalcScale(a3_SpatialPose* pose_out, a3real blendParam, a3_SpatialPose* const poseIn)
 {
 	a3_SpatialPose* scale;
 
@@ -248,7 +248,7 @@ inline a3_SpatialPose* a3SpatialPoseCalcScale(a3real blendParam, a3_SpatialPose*
 	return scale;
 }
 
-inline a3_SpatialPose* a3SpatialPoseTriangular(a3_SpatialPose* const pose0, a3_SpatialPose* const pose1, a3_SpatialPose* const pose2, a3real scaleParam1, a3real scaleParam2)
+inline a3_SpatialPose* a3SpatialPoseTriangular(a3_SpatialPose* pose_out, a3_SpatialPose* const pose0, a3_SpatialPose* const pose1, a3_SpatialPose* const pose2, a3real scaleParam1, a3real scaleParam2)
 {
 	//interpolate to find pose within triangle of three control poses
 	//then scale the initial pose to that interpolation I believe
@@ -266,12 +266,12 @@ inline a3_SpatialPose* a3SpatialPoseBiNearest(a3_SpatialPose* pose_out, a3_Spati
 	a3_SpatialPose* nearest1;
 	a3_SpatialPose* nearest2;
 
-	nearest1 = a3SpatialPoseNearest(initPose0, termPose0, blendParam1);
-	nearest2 = a3SpatialPoseNearest(initPose1, termPose1, blendParam2);
+	nearest1 = a3SpatialPoseNearest(nearest1, initPose0, termPose0, blendParam1);
+	nearest2 = a3SpatialPoseNearest(nearest2, initPose1, termPose1, blendParam2);
 
-	pose_out = a3SpatialPoseNearest(nearest1, nearest2, blendParam3);
+	pose_out = a3SpatialPoseNearest(pose_out, nearest1, nearest2, blendParam3);
 
-	return -1;
+	return pose_out;
 }
 
 inline a3_SpatialPose* a3SpatialPoseBiLerp(a3_SpatialPose* pose_out, a3_SpatialPose* const initPose0, a3_SpatialPose* const initPose1, a3_SpatialPose* const termPose0, a3_SpatialPose* const termPose1, a3real blendParam1, a3real blendParam2, a3real blendParam3)
@@ -284,7 +284,7 @@ inline a3_SpatialPose* a3SpatialPoseBiLerp(a3_SpatialPose* pose_out, a3_SpatialP
 
 	a3spatialPoseLerp(pose_out, lerp1, lerp2, blendParam3);
 
-	return -1;
+	return pose_out;
 }
 
 inline a3_SpatialPose* a3SpatialPoseBiCubic(a3_SpatialPose* pose_out, a3_SpatialPose* const pose0, a3_SpatialPose* const pose1, 
@@ -300,13 +300,13 @@ inline a3_SpatialPose* a3SpatialPoseBiCubic(a3_SpatialPose* pose_out, a3_Spatial
 	a3_SpatialPose* cubic3;
 	a3_SpatialPose* cubic4;
 
-	cubic1 = a3SpatialPoseCubic(pose0, pose1, pose2, pose3, blendParam1);
-	cubic2 = a3SpatialPoseCubic(pose4, pose5, pose6, pose7, blendParam2);
-	cubic3 = a3SpatialPoseCubic(pose8, pose9, pose10, pose11, blendParam3);
-	cubic4 = a3SpatialPoseCubic(pose12, pose13, pose14, pose15, blendParam4);
+	cubic1 = a3SpatialPoseCubic(cubic1, pose0, pose1, pose2, pose3, blendParam1);
+	cubic2 = a3SpatialPoseCubic(cubic2, pose4, pose5, pose6, pose7, blendParam2);
+	cubic3 = a3SpatialPoseCubic(cubic3, pose8, pose9, pose10, pose11, blendParam3);
+	cubic4 = a3SpatialPoseCubic(cubic4, pose12, pose13, pose14, pose15, blendParam4);
 	
 	//need to include pose_out when I add pose out to cubic parameters
-	a3SpatialPoseCubic(cubic1, cubic2, cubic3, cubic4, blendParam5);
+	a3SpatialPoseCubic(pose_out, cubic1, cubic2, cubic3, cubic4, blendParam5);
 
 	return pose_out;
 }
