@@ -305,7 +305,6 @@ inline a3_SpatialPose* a3SpatialPoseBiCubic(a3_SpatialPose* pose_out, a3_Spatial
 	cubic3 = a3SpatialPoseCubic(cubic3, pose8, pose9, pose10, pose11, blendParam3);
 	cubic4 = a3SpatialPoseCubic(cubic4, pose12, pose13, pose14, pose15, blendParam4);
 	
-	//need to include pose_out when I add pose out to cubic parameters
 	a3SpatialPoseCubic(pose_out, cubic1, cubic2, cubic3, cubic4, blendParam5);
 
 	return pose_out;

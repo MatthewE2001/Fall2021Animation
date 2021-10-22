@@ -40,9 +40,40 @@ extern "C"
 #else	// !__cplusplus
 
 #endif	// __cplusplus
-	
-//use this file I assume to do a lot of blend stuff
-	//Writing a lot of functions
+
+//Robust Blend Node for any op (any operation on blend can use this)
+typedef a3_SpatialPose*(*a3_SpatialPoseBlendOp)(a3_SpatialPose* pose_out, a3_SpatialPose const* ctrl[], a3real const param[]);
+
+typedef struct a3_SpatialPoseBlendNode
+{
+	a3_SpatialPoseBlendOp op;
+	a3_SpatialPose* pose_out;
+	a3_SpatialPose const* pose_ctrls[8]; //8 set as a random max value
+	a3real params[8]; //8 again a random max value
+
+} a3_SpatialPoseBlendNode;
+
+inline a3_SpatialPoseBlendNode* a3SpatialPoseBlendNodeCall(a3_SpatialPoseBlendNode* b)
+{
+	b->op(b->pose_out, b->pose_ctrls, b->params);
+
+	return b;
+}
+
+//lerp (example)
+inline a3_SpatialPose* a3_SpatialPoseBlendLerp(a3_SpatialPose* pose_out, a3_SpatialPose const* ctrl[2], a3real const param[1])
+{
+	//formula = p0 + (p1 - p0) * u
+	a3spatialPoseLerp(pose_out, ctrl[0], ctrl[1], param[0]);
+
+	return pose_out;
+}
+
+//this is object based
+typedef a3_SpatialPose(*a3_SpatialPoseBlendOpLerp)(a3_SpatialPose const p0, a3_SpatialPose p1, a3real const u);
+
+//pointer based
+typedef a3_SpatialPose* (*a3_SpatialPoseBlendOpLerp)(a3_SpatialPose* p_out, a3_SpatialPose const* p0, a3_SpatialPose const* p1, a3real const u);
 
 //blend operation function pointer
 typedef a3vec4(*a3_BlendOpLerp)(a3vec4 const v0, a3vec4 const v1, a3real const u);
