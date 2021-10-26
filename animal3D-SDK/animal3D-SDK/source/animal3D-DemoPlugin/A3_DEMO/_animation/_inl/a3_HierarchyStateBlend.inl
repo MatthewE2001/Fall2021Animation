@@ -310,6 +310,27 @@ inline a3_SpatialPose* a3SpatialPoseBiCubic(a3_SpatialPose* pose_out, a3_Spatial
 	return pose_out;
 }
 
+inline a3_SpatialPose* a3SpatialPoseSmoothStep(a3_SpatialPose* pose_out, a3_SpatialPose const* initPose, a3_SpatialPose const* termPose, a3real const blendParam)
+{
+	//an easing interpolation for poses
+
+	return pose_out;
+}
+
+inline a3_SpatialPose* a3SpatialPoseDescale(a3_SpatialPose* pose_out, a3_SpatialPose const controlPose, a3real const blendParam)
+{
+	//calculate the descaled pose
+
+	return pose_out;
+}
+
+inline a3_SpatialPose* a3SpatialPoseConvert(a3_SpatialPose* pose_out)
+{
+	//perform convert step for spatial pose
+
+	return pose_out;
+}
+
 //-----------------------------------------------------------------------------
 
 

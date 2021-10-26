@@ -49,7 +49,7 @@ typedef struct a3_SpatialPoseBlendNode
 	a3_SpatialPoseBlendOp op;
 	a3_SpatialPose* pose_out;
 	a3_SpatialPose const* pose_ctrls[8]; //8 set as a random max value
-	a3real params[8]; //8 again a random max value
+	a3real const* params[8]; //8 again a random max value (Dan said const way to improve this more robust)
 
 } a3_SpatialPoseBlendNode;
 
@@ -218,6 +218,12 @@ a3_SpatialPose* a3SpatialPoseBiCubic(a3_SpatialPose* pose_out, a3_SpatialPose* c
 	a3_SpatialPose* const pose7, a3_SpatialPose* const pose8, a3_SpatialPose* const pose9, a3_SpatialPose* const pose10, a3_SpatialPose* const pose11,
 	a3_SpatialPose* const pose12, a3_SpatialPose* const pose13, a3_SpatialPose* const pose14, a3_SpatialPose* const pose15,
 	a3real blendParam1, a3real blendParam2, a3real blendParam3, a3real blendParam4, a3real blendParam5);
+
+a3_SpatialPose* a3SpatialPoseSmoothStep(a3_SpatialPose* pose_out, a3_SpatialPose const* initPose, a3_SpatialPose const* termPose, a3real const blendParam);
+
+a3_SpatialPose* a3SpatialPoseDescale(a3_SpatialPose* pose_out, a3_SpatialPose const controlPose, a3real const blendParam);
+
+a3_SpatialPose* a3SpatialPoseConvert(a3_SpatialPose* pose_out);
 
 #ifdef __cplusplus
 }
