@@ -225,6 +225,12 @@ a3_SpatialPose* a3SpatialPoseDescale(a3_SpatialPose* pose_out, a3_SpatialPose co
 
 a3_SpatialPose* a3SpatialPoseConvert(a3_SpatialPose* pose_out);
 
+a3_SpatialPose* a3SpatialPoseRevert(a3_SpatialPose* pose_out);
+
+//also need to make forward kinematics and inverse kinematics functions
+	//presumably should call a3_kinematics within there?
+a3_SpatialPose* a3SpatialPoseForwardKinematics(a3_Hierarchy const* hierarchy, a3_SpatialPose* object_pose, a3_SpatialPose* local_pose);
+
 #ifdef __cplusplus
 }
 #endif	// __cplusplus

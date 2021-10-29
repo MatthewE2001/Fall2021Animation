@@ -331,6 +331,21 @@ inline a3_SpatialPose* a3SpatialPoseConvert(a3_SpatialPose* pose_out)
 	return pose_out;
 }
 
+inline a3_SpatialPose* a3SpatialPoseRevert(a3_SpatialPose* pose_out)
+{
+	//revert/restore the pose back to a previous state
+
+	return pose_out;
+}
+
+inline a3_SpatialPose* a3SpatialPoseForwardKinematics(a3_Hierarchy const* hierarchy, a3_SpatialPose* object_pose, a3_SpatialPose* local_pose)
+{
+	//perform forward kinematics
+	//a3kinematicsSolveForwardPartial();
+
+	return object_pose;
+}
+
 //-----------------------------------------------------------------------------
 
 
