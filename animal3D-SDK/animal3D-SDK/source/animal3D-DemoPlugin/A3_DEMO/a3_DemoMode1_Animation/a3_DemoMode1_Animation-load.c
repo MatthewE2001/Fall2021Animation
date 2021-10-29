@@ -355,11 +355,11 @@ void a3animation_init_animation(a3_DemoState const* demoState, a3_DemoMode1_Anim
 
 	//this below is good for testing blend operations fast
 	//example blend operation: lerp
-	a3_SpatialPoseBlendOpLerp testLerp;
-	testLerp.opOrientation = a3vec4Nlerp; //also could be a3vec4Slerp I think
-	testLerp.opAngles = a3vec4Lerp;
-	testLerp.opScale = a3vec4LogLerp;
-	testLerp.opTranslation = a3vec4Lerp;
+	//a3_SpatialPoseBlendOpLerp testLerp;
+	//testLerp.opOrientation = a3vec4Nlerp; //also could be a3vec4Slerp I think
+	//testLerp.opAngles = a3vec4Lerp;
+	//testLerp.opScale = a3vec4LogLerp;
+	//testLerp.opTranslation = a3vec4Lerp;
 
 	//resultAngles = testLerp.opAngles(*args*); //args = arguments?
 }

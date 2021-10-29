@@ -94,16 +94,14 @@ inline a3_HierarchyPose* a3hierarchyPoseOpLERP(a3_HierarchyPose* pose_out, a3_Hi
 
 inline a3_SpatialPose* a3SpatialPoseSetConstruct(a3_SpatialPose* pose_out, a3vec4 const angles, a3vec4 const scale, a3vec4 const translate)
 {
-	a3_SpatialPose* newPose;
-
 	//do I need to initialize memory here potentially
 	//newPose = memsize(sizeof(a3_SpatialPose)); //memsize is prob wrong
 
-	newPose->angles = angles;
-	newPose->scale = scale;
-	newPose->translation = translate;
+	pose_out->angles = angles;
+	pose_out->scale = scale;
+	pose_out->translation = translate;
 
-	return newPose;
+	return pose_out;
 }
 
 inline a3_SpatialPose* a3SpatialPoseReturnCopy(a3_SpatialPose* pose_out, a3_SpatialPose* const copyPose)
@@ -117,135 +115,121 @@ inline a3_SpatialPose* a3SpatialPoseReturnCopy(a3_SpatialPose* pose_out, a3_Spat
 
 inline a3_SpatialPose* a3SpatialPoseFindInverse(a3_SpatialPose* pose_out, a3_SpatialPose* const invPose)
 {
-	a3_SpatialPose* inverse;
-
 	//allocate new memory for inverse here
 
 	//negation here or not?
-	inverse->angles.x = -invPose->angles.x;
-	inverse->angles.y = -invPose->angles.y;
-	inverse->angles.z = -invPose->angles.z;
+	pose_out->angles.x = -invPose->angles.x;
+	pose_out->angles.y = -invPose->angles.y;
+	pose_out->angles.z = -invPose->angles.z;
 
-	inverse->scale.x = invPose->scale.x;
-	inverse->scale.y = invPose->scale.y;
-	inverse->scale.z = invPose->scale.z;
+	pose_out->scale.x = invPose->scale.x;
+	pose_out->scale.y = invPose->scale.y;
+	pose_out->scale.z = invPose->scale.z;
 
-	inverse->translation.x = -invPose->translation.x;
-	inverse->translation.y = -invPose->translation.y;
-	inverse->translation.z = -invPose->translation.z;
+	pose_out->translation.x = -invPose->translation.x;
+	pose_out->translation.y = -invPose->translation.y;
+	pose_out->translation.z = -invPose->translation.z;
 
-	return inverse;
+	return pose_out;
 }
 
 inline a3_SpatialPose* a3SpatialPoseConcatenate(a3_SpatialPose* pose_out, a3_SpatialPose* const pose_lh, a3_SpatialPose* const pose_rh)
 {
-	a3_SpatialPose* concat;
-
 	//a3spatialPoseOpIdentity(concat);
 
 	//initialize concat memory here
 	//also could recreate the concatenation step here
 
-	a3spatialPoseConcat(concat, pose_lh, pose_rh);
+	a3spatialPoseConcat(pose_out, pose_lh, pose_rh);
 
-	return concat;
+	return pose_out;
 }
 
 inline a3_SpatialPose* a3SpatialPoseNearest(a3_SpatialPose* pose_out, a3_SpatialPose* const p0, a3_SpatialPose* const p1, a3real blendParam)
 {
-	a3_SpatialPose* nearest;
-
 	if (blendParam < 0.5)
 	{
-		nearest = p0;
+		pose_out = p0;
 	}
 	else if (blendParam >= 0.5)
 	{
-		nearest = p1;
+		pose_out = p1;
 	}
 
-	return nearest;
+	return pose_out;
 }
 
 inline a3_SpatialPose* a3SpatialPoseBlendLerp(a3_SpatialPose* pose_out, a3_SpatialPose* const p0, a3_SpatialPose* const p1, a3real blendParam)
 {
-	a3_SpatialPose* lerp;
-
 	//a3spatialPoseReset(lerp);
 	//initialize lerp pose memory
 
-	a3spatialPoseLerp(lerp, p0, p1, blendParam);
+	a3spatialPoseLerp(pose_out, p0, p1, blendParam);
 
-	return lerp;
+	return pose_out;
 }
 
 inline a3_SpatialPose* a3SpatialPoseCubic(a3_SpatialPose* pose_out, a3_SpatialPose* const prevPose, a3_SpatialPose* const pose0, a3_SpatialPose* const pose1,
 	a3_SpatialPose* const poseNext, a3real blendParam)
 {
-	a3_SpatialPose* cubic;
-
 	//give cubic memory size
 
 	//catmull rom interpolation
-	cubic->translation.x = (a3real)0.5 * ((-blendParam + 2 * (blendParam * blendParam) - (blendParam * blendParam * blendParam)) * prevPose->translation.x
+	pose_out->translation.x = (a3real)0.5 * ((-blendParam + 2 * (blendParam * blendParam) - (blendParam * blendParam * blendParam)) * prevPose->translation.x
 		+ (2 - 5 * (blendParam * blendParam) + 3 * (blendParam * blendParam * blendParam)) * pose0->translation.x
 		+ (blendParam + 4 * (blendParam * blendParam) - 3 * (blendParam * blendParam * blendParam)) * pose1->translation.x
 		+ (-(blendParam * blendParam) + (blendParam * blendParam * blendParam))) * poseNext->translation.x;
 
-	cubic->translation.y = (a3real)0.5 * ((-blendParam + 2 * (blendParam * blendParam) - (blendParam * blendParam * blendParam)) * prevPose->translation.y
+	pose_out->translation.y = (a3real)0.5 * ((-blendParam + 2 * (blendParam * blendParam) - (blendParam * blendParam * blendParam)) * prevPose->translation.y
 		+ (2 - 5 * (blendParam * blendParam) + 3 * (blendParam * blendParam * blendParam)) * pose0->translation.y
 		+ (blendParam + 4 * (blendParam * blendParam) - 3 * (blendParam * blendParam * blendParam)) * pose1->translation.y
 		+ (-(blendParam * blendParam) + (blendParam * blendParam * blendParam))) * poseNext->translation.y;
 
-	cubic->translation.z = (a3real)0.5 * ((-blendParam + 2 * (blendParam * blendParam) - (blendParam * blendParam * blendParam)) * prevPose->translation.z
+	pose_out->translation.z = (a3real)0.5 * ((-blendParam + 2 * (blendParam * blendParam) - (blendParam * blendParam * blendParam)) * prevPose->translation.z
 		+ (2 - 5 * (blendParam * blendParam) + 3 * (blendParam * blendParam * blendParam)) * pose0->translation.z
 		+ (blendParam + 4 * (blendParam * blendParam) - 3 * (blendParam * blendParam * blendParam)) * pose1->translation.z
 		+ (-(blendParam * blendParam) + (blendParam * blendParam * blendParam))) * poseNext->translation.z;
 
-	return cubic;
+	return pose_out;
 }
 
 inline a3_SpatialPose* a3SpatialPoseDeConcat(a3_SpatialPose* pose_out, a3_SpatialPose* const pose_lh, a3_SpatialPose* const pose_rh)
 {
-	a3_SpatialPose* deconcat;
+	pose_out->translation.x = pose_lh->translation.x - pose_rh->translation.x;
+	pose_out->translation.y = pose_lh->translation.y - pose_rh->translation.y;
+	pose_out->translation.z = pose_lh->translation.z - pose_rh->translation.z;
 
-	deconcat->translation.x = pose_lh->translation.x - pose_rh->translation.x;
-	deconcat->translation.y = pose_lh->translation.y - pose_rh->translation.y;
-	deconcat->translation.z = pose_lh->translation.z - pose_rh->translation.z;
+	pose_out->scale.x = pose_lh->scale.x / pose_rh->scale.x;
+	pose_out->scale.y = pose_lh->scale.y / pose_rh->scale.y;
+	pose_out->scale.z = pose_lh->scale.z / pose_rh->scale.z;
 
-	deconcat->scale.x = pose_lh->scale.x / pose_rh->scale.x;
-	deconcat->scale.y = pose_lh->scale.y / pose_rh->scale.y;
-	deconcat->scale.z = pose_lh->scale.z / pose_rh->scale.z;
+	pose_out->angles.x = a3trigValid_sind(pose_lh->angles.x - pose_rh->angles.x);
+	pose_out->angles.y = a3trigValid_sind(pose_lh->angles.y - pose_rh->angles.y);
+	pose_out->angles.z = a3trigValid_sind(pose_lh->angles.z - pose_rh->angles.z);
 
-	deconcat->angles.x = a3trigValid_sind(pose_lh->angles.x - pose_rh->angles.x);
-	deconcat->angles.y = a3trigValid_sind(pose_lh->angles.y - pose_rh->angles.y);
-	deconcat->angles.z = a3trigValid_sind(pose_lh->angles.z - pose_rh->angles.z);
-
-	return deconcat;
+	return pose_out;
 }
 
 inline a3_SpatialPose* a3SpatialPoseCalcScale(a3_SpatialPose* pose_out, a3real blendParam, a3_SpatialPose* const poseIn)
 {
-	a3_SpatialPose* scale;
-
 	if (blendParam == 0)
 	{
 		//scale is identity pose
-		a3spatialPoseReset(scale);
+		a3spatialPoseReset(pose_out);
 	}
 	else if (blendParam == 1)
 	{
-		scale = poseIn;
+		pose_out = poseIn;
 	}
 	else
 	{
 		//have it set to gradient of sorts between the control and identity poses
-		scale->scale.x = 1 * blendParam + poseIn->scale.x * (1 - blendParam);
-		scale->scale.y = 1 * blendParam + poseIn->scale.y * (1 - blendParam);
-		scale->scale.z = 1 * blendParam + poseIn->scale.z * (1 - blendParam);
+		pose_out->scale.x = 1 * blendParam + poseIn->scale.x * (1 - blendParam);
+		pose_out->scale.y = 1 * blendParam + poseIn->scale.y * (1 - blendParam);
+		pose_out->scale.z = 1 * blendParam + poseIn->scale.z * (1 - blendParam);
 	}
 
-	return scale;
+	return pose_out;
 }
 
 inline a3_SpatialPose* a3SpatialPoseTriangular(a3_SpatialPose* pose_out, a3_SpatialPose* const pose0, a3_SpatialPose* const pose1, a3_SpatialPose* const pose2, a3real scaleParam1, a3real scaleParam2)
@@ -313,13 +297,36 @@ inline a3_SpatialPose* a3SpatialPoseBiCubic(a3_SpatialPose* pose_out, a3_Spatial
 inline a3_SpatialPose* a3SpatialPoseSmoothStep(a3_SpatialPose* pose_out, a3_SpatialPose const* initPose, a3_SpatialPose const* termPose, a3real const blendParam)
 {
 	//an easing interpolation for poses
+	pose_out->translation.x = a3clamp(initPose->translation.x, termPose->translation.x, blendParam);
+	pose_out->translation.y = a3clamp(initPose->translation.y, termPose->translation.y, blendParam);
+	pose_out->translation.z = a3clamp(initPose->translation.z, termPose->translation.z, blendParam);
 
 	return pose_out;
 }
 
-inline a3_SpatialPose* a3SpatialPoseDescale(a3_SpatialPose* pose_out, a3_SpatialPose const controlPose, a3real const blendParam)
+inline a3_SpatialPose* a3SpatialPoseDescale(a3_SpatialPose* pose_out, a3_SpatialPose const* controlPose, a3real const blendParam)
 {
+	//calculate the inverse pose
+	//a3SpatialPoseFindInverse()
+
 	//calculate the descaled pose
+	if (blendParam == 0)
+	{
+		//scale is identity pose
+		a3spatialPoseReset(pose_out);
+	}
+	else if (blendParam == 1)
+	{
+		pose_out = controlPose;
+	}
+	else
+	{
+		//CHANGE to descale values
+		//have it set to gradient of sorts between the control and identity poses
+		pose_out->scale.x = 1 * blendParam + controlPose->scale.x * (1 - blendParam);
+		pose_out->scale.y = 1 * blendParam + controlPose->scale.y * (1 - blendParam);
+		pose_out->scale.z = 1 * blendParam + controlPose->scale.z * (1 - blendParam);
+	}
 
 	return pose_out;
 }
@@ -341,9 +348,18 @@ inline a3_SpatialPose* a3SpatialPoseRevert(a3_SpatialPose* pose_out)
 inline a3_SpatialPose* a3SpatialPoseForwardKinematics(a3_Hierarchy const* hierarchy, a3_SpatialPose* object_pose, a3_SpatialPose* local_pose)
 {
 	//perform forward kinematics
-	//a3kinematicsSolveForwardPartial();
+	//a3kinematicsSolveForwardPartial(); //or
+	//a3Real4x4Product();
 
 	return object_pose;
+}
+
+inline a3_SpatialPose* a3SpatialPoseInverseKinematics(a3_Hierarchy const* hierarchy, a3_SpatialPose* object_pose, a3_SpatialPose* local_pose)
+{
+	//perform inverse kinematics
+
+
+	return local_pose;
 }
 
 //-----------------------------------------------------------------------------
