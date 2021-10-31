@@ -304,7 +304,7 @@ inline a3_SpatialPose* a3SpatialPoseSmoothStep(a3_SpatialPose* pose_out, a3_Spat
 	return pose_out;
 }
 
-inline a3_SpatialPose* a3SpatialPoseDescale(a3_SpatialPose* pose_out, a3_SpatialPose const* controlPose, a3real const blendParam)
+inline a3_SpatialPose* a3SpatialPoseDescale(a3_SpatialPose* pose_out, a3_SpatialPose* const controlPose, a3real const blendParam)
 {
 	//calculate the inverse pose
 	//a3SpatialPoseFindInverse()

@@ -222,7 +222,7 @@ a3_SpatialPose* a3SpatialPoseBiCubic(a3_SpatialPose* pose_out, a3_SpatialPose* c
 
 a3_SpatialPose* a3SpatialPoseSmoothStep(a3_SpatialPose* pose_out, a3_SpatialPose const* initPose, a3_SpatialPose const* termPose, a3real const blendParam);
 
-a3_SpatialPose* a3SpatialPoseDescale(a3_SpatialPose* pose_out, a3_SpatialPose const* controlPose, a3real const blendParam);
+a3_SpatialPose* a3SpatialPoseDescale(a3_SpatialPose* pose_out, a3_SpatialPose* const controlPose, a3real const blendParam);
 
 a3_SpatialPose* a3SpatialPoseConvert(a3_SpatialPose* pose_out); //need more parameters?
 
