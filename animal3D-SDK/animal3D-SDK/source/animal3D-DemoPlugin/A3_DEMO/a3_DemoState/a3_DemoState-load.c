@@ -77,6 +77,7 @@
 #include "../a3_DemoState.h"
 
 #include <stdio.h>
+#include <windows.h>
 
 
 //-----------------------------------------------------------------------------
@@ -1009,3 +1010,72 @@ void a3demo_loadValidate(a3_DemoState* demoState)
 
 
 //-----------------------------------------------------------------------------
+
+const char winClass[] = "blendTreeWindowClass";
+
+// Window creation procedure
+LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
+{
+	switch (msg)
+	{
+	case WM_CLOSE:
+		DestroyWindow(hwnd);
+	break;
+	case WM_DESTROY:
+		PostQuitMessage(0);
+	break;
+	default:
+		return DefWindowProc(hwnd, msg, wParam, lParam);
+	}
+	return DefWindowProcW(hwnd, msg, wParam, lParam);;
+}
+
+
+void a3demo_loadBlendTreeViewer(a3_DemoState* demoState)
+{
+	printf("Lauching Blend Tree Viewer");
+	
+	const char CLASS_NAME[] = "Sample Window Class";
+
+	WNDCLASS wc;
+
+	wc.cbClsExtra = 0;
+	wc.cbWndExtra = 0;
+	wc.hCursor = LoadCursor(0, IDC_ARROW);
+	wc.hIcon = LoadIcon(0, IDI_WINLOGO);
+	wc.lpszMenuName = 0;
+	wc.style = 0;
+	wc.hbrBackground = 0;
+	wc.lpfnWndProc = WndProc;
+	wc.hInstance = GetModuleHandle(NULL);
+	wc.lpszClassName = CLASS_NAME;
+
+	RegisterClass(&wc);
+
+	HWND hwnd = CreateWindowEx(
+		WS_EX_CLIENTEDGE,
+		CLASS_NAME,
+		"Blend Tree",
+		WS_OVERLAPPEDWINDOW,
+		CW_USEDEFAULT, CW_USEDEFAULT, 240, 120,
+		NULL,
+		NULL,
+		GetModuleHandle(NULL),
+		NULL
+	);
+
+
+	if (hwnd == NULL)
+	{
+		printf("WINDOW FAILED");
+		return;
+	}
+
+
+	ShowWindow(hwnd, 0);
+	UpdateWindow(hwnd);
+	
+	printf("WINDOW CREATED");
+
+
+}

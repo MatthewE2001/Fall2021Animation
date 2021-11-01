@@ -102,6 +102,7 @@ void a3demo_loadShaders(a3_DemoState* demoState);
 void a3demo_loadTextures(a3_DemoState* demoState);
 void a3demo_loadFramebuffers(a3_DemoState* demoState);
 void a3demo_loadValidate(a3_DemoState* demoState);
+void a3demo_loadBlendTreeViewer(a3_DemoState* demoState);
 
 // unloading
 void a3demo_unloadGeometry(a3_DemoState* demoState);
@@ -142,6 +143,9 @@ void a3demo_load(a3_DemoState* demoState)
 
 	// textures
 	a3demo_loadTextures(demoState);
+
+	// blend tree viewer
+	a3demo_loadBlendTreeViewer(demoState);
 
 
 	// set flags
