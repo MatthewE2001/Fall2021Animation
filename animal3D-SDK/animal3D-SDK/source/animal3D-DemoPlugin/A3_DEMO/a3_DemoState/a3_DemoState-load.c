@@ -1009,3 +1009,8 @@ void a3demo_loadValidate(a3_DemoState* demoState)
 
 
 //-----------------------------------------------------------------------------
+
+void a3demo_loadBlendTreeViewer(a3_DemoState* demoState)
+{
+	printf("Lauching Blend Tree Viewer");
+}
