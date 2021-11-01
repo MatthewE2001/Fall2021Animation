@@ -369,12 +369,16 @@ inline a3_SpatialPose* a3SpatialPoseInverseKinematics(a3_Hierarchy const* hierar
 
 	const a3_HierarchyNode* itr = hierarchy->nodes;
 	const a3_HierarchyNode* const end = itr + hierarchy->numNodes;;
+
+	a3_SpatialPose* objectInv;
+
+	a3SpatialPoseFindInverse(objectInv, object_pose);
 	
 	for (; itr < end; ++itr)
 	{
 		if (itr->parentIndex >= 0)
 			a3real4x4Product(local_pose[itr->index].transform.m,
-				object_pose[itr->parentIndex].transform.m, //this needs to be object pose inverse
+				objectInv[itr->parentIndex].transform.m,
 				object_pose[itr->index].transform.m);
 		else
 			local_pose[itr->index] = object_pose[itr->index];
