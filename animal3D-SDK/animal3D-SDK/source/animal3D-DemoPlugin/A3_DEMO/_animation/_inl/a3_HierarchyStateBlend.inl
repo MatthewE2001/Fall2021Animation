@@ -241,7 +241,7 @@ inline a3_SpatialPose* a3SpatialPoseTriangular(a3_SpatialPose* pose_out, a3_Spat
 
 	//a3real4Trilerp(tmpTranslate.v, pose0->translation.v, pose1->translation.v, pos)
 
-	return NULL;
+	return pose_out;
 }
 
 inline a3_SpatialPose* a3SpatialPoseBiNearest(a3_SpatialPose* pose_out, a3_SpatialPose* const initPose0, a3_SpatialPose* const initPose1, a3_SpatialPose* const termPose0, a3_SpatialPose* const termPose1, a3real blendParam1, a3real blendParam2, a3real blendParam3)
