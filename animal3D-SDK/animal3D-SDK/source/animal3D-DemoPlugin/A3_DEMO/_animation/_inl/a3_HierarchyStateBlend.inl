@@ -236,10 +236,14 @@ inline a3_SpatialPose* a3SpatialPoseTriangular(a3_SpatialPose* pose_out, a3_Spat
 {
 	//interpolate to find pose within triangle of three control poses
 	//then scale the initial pose to that interpolation I believe
+	a3real scaleParam0 = 1 - scaleParam1 - scaleParam2;
 
-	//a3vec4 tmpTranslate, tmpScale;
+	//a3real2Trilerp(pose_out->translation.v, pose0->translation.v, pose1->translation.v, pose1->translation.v,
+		//pose2->translation.v, pose2->translation.v, pose0->translation.v);
 
-	//a3real4Trilerp(tmpTranslate.v, pose0->translation.v, pose1->translation.v, pos)
+	a3real4Lerp(pose_out->translation.v, pose0->translation.v, pose1->translation.v, scaleParam0);
+	a3real4Lerp(pose_out->translation.v, pose1->translation.v, pose2->translation.v, scaleParam1);
+	a3real4Lerp(pose_out->translation.v, pose2->translation.v, pose0->translation.v, scaleParam2);
 
 	return pose_out;
 }
