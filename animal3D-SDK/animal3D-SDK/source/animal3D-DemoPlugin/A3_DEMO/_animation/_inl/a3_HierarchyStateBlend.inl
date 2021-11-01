@@ -321,11 +321,10 @@ inline a3_SpatialPose* a3SpatialPoseDescale(a3_SpatialPose* pose_out, a3_Spatial
 	}
 	else
 	{
-		//CHANGE to descale values
-		//have it set to gradient of sorts between the control and identity poses
-		pose_out->scale.x = 1 * blendParam + controlPose->scale.x * (1 - blendParam);
-		pose_out->scale.y = 1 * blendParam + controlPose->scale.y * (1 - blendParam);
-		pose_out->scale.z = 1 * blendParam + controlPose->scale.z * (1 - blendParam);
+		//double check that this is changed to descale values
+		pose_out->scale.x = 1 * controlPose->scale.x - 1 * (1 - blendParam);
+		pose_out->scale.y = 1 * controlPose->scale.y - 1 * (1 - blendParam);
+		pose_out->scale.z = 1 * controlPose->scale.z - 1 * (1 - blendParam);
 	}
 
 	return pose_out;
@@ -334,6 +333,7 @@ inline a3_SpatialPose* a3SpatialPoseDescale(a3_SpatialPose* pose_out, a3_Spatial
 inline a3_SpatialPose* a3SpatialPoseConvert(a3_SpatialPose* pose_out)
 {
 	//perform convert step for spatial pose
+	//would that mean changing the transform matrix to identity or what exactly
 
 	return pose_out;
 }
@@ -341,6 +341,7 @@ inline a3_SpatialPose* a3SpatialPoseConvert(a3_SpatialPose* pose_out)
 inline a3_SpatialPose* a3SpatialPoseRevert(a3_SpatialPose* pose_out)
 {
 	//revert/restore the pose back to a previous state
+	//restore raw components meaning ...
 
 	return pose_out;
 }
@@ -348,8 +349,16 @@ inline a3_SpatialPose* a3SpatialPoseRevert(a3_SpatialPose* pose_out)
 inline a3_SpatialPose* a3SpatialPoseForwardKinematics(a3_Hierarchy const* hierarchy, a3_SpatialPose* object_pose, a3_SpatialPose* local_pose)
 {
 	//perform forward kinematics
-	//a3kinematicsSolveForwardPartial(); //or
-	//a3Real4x4Product();
+
+	//this might be the way to set up the kinematics work
+	const a3_HierarchyNode* itr = hierarchy->nodes;
+	
+	if (itr->parentIndex >= 0)
+		a3real4x4Product(object_pose[itr->index].transform.m,
+			object_pose[itr->parentIndex].transform.m,
+			local_pose[itr->index].transform.m);
+	else
+		object_pose[itr->index] = local_pose[itr->index];
 
 	return object_pose;
 }
@@ -358,6 +367,18 @@ inline a3_SpatialPose* a3SpatialPoseInverseKinematics(a3_Hierarchy const* hierar
 {
 	//perform inverse kinematics
 
+	const a3_HierarchyNode* itr = hierarchy->nodes;
+	const a3_HierarchyNode* const end = itr + hierarchy->numNodes;;
+	
+	for (; itr < end; ++itr)
+	{
+		if (itr->parentIndex >= 0)
+			a3real4x4Product(local_pose[itr->index].transform.m,
+				object_pose[itr->parentIndex].transform.m, //this needs to be object pose inverse
+				object_pose[itr->index].transform.m);
+		else
+			local_pose[itr->index] = object_pose[itr->index];
+	}
 
 	return local_pose;
 }
