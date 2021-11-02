@@ -178,11 +178,12 @@ void a3demo_render_blendtree(const a3_DemoState* demoState,
 	a3_TextRenderer const* text, a3vec4 const col,
 	a3f32 const textAlign, a3f32 const textDepth, a3f32 const textOffsetDelta, a3f32 textOffset)
 {
-	// display some general data
+	// Title display
 	a3textDraw(text, textAlign, textOffset += textOffsetDelta, textDepth, col.r, col.g, col.b, col.a,
-		"Blend tree = %07.4lf F/s", demoState->timer->ticksPerSecond);
+		"Blend Tree Navigator");
+
 	a3textDraw(text, textAlign, textOffset += textOffsetDelta, textDepth, col.r, col.g, col.b, col.a,
-		"Operation:");
+		"Operation: ('p')");
 	// switch statement to detect current blending op
 	
 	switch (demoState->blendMode)
@@ -205,8 +206,61 @@ void a3demo_render_blendtree(const a3_DemoState* demoState,
 
 	a3textDraw(text, textAlign, textOffset += textOffsetDelta, textDepth, col.r, col.g, col.b, col.a,
 		"Input(s):");
+
+	// The blending mode will impact the number of inputs listed
+	switch (demoState->blendMode)
+	{
+	case demoState_blend_lerp:
+		// Single input
+		a3textDraw(text, textAlign, textOffset += textOffsetDelta, textDepth, col.r, col.g, col.b, col.a,
+			"   Input 0 (Parameter)");
+		break;
+
+	case demoState_blend_add:
+		// No inputs (N/A)
+		a3textDraw(text, textAlign, textOffset += textOffsetDelta, textDepth, col.r, col.g, col.b, col.a,
+			"   N/A");
+		break;
+
+	case demoState_blend_scale:
+		// Single input
+		a3textDraw(text, textAlign, textOffset += textOffsetDelta, textDepth, col.r, col.g, col.b, col.a,
+			"   Input 0 (Parameter)");
+		break;
+	}
+
 	a3textDraw(text, textAlign, textOffset += textOffsetDelta, textDepth, col.r, col.g, col.b, col.a,
 		"Control(s):");
+
+	// The blending mode will impact the number of control poses listed
+	switch (demoState->blendMode)
+	{
+	case demoState_blend_lerp:
+		// Two control poses
+		a3textDraw(text, textAlign, textOffset += textOffsetDelta, textDepth, col.r, col.g, col.b, col.a,
+			"   Pose 0");
+		a3textDraw(text, textAlign, textOffset += textOffsetDelta, textDepth, col.r, col.g, col.b, col.a,
+			"   Pose 1");
+		break;
+
+	case demoState_blend_add:
+		// Two control poses
+		a3textDraw(text, textAlign, textOffset += textOffsetDelta, textDepth, col.r, col.g, col.b, col.a,
+			"   Pose 0");
+		a3textDraw(text, textAlign, textOffset += textOffsetDelta, textDepth, col.r, col.g, col.b, col.a,
+			"   Pose 1");
+		break;
+
+	case demoState_blend_scale:
+		// Two control poses
+		a3textDraw(text, textAlign, textOffset += textOffsetDelta, textDepth, col.r, col.g, col.b, col.a,
+			"   Pose 0");
+		a3textDraw(text, textAlign, textOffset += textOffsetDelta, textDepth, col.r, col.g, col.b, col.a,
+			"   Pose 1");
+		break;
+	}
+
+	// Hierarchical tracking
 
 
 	// global controls
