@@ -78,6 +78,7 @@ enum a3_DemoState_BlendMode
 	demoState_blend_lerp,			// lerp
 	demoState_blend_add,			// add
 	demoState_blend_scale,			// scale
+	demoState_blend_none,			// none
 
 	demoState_blend_max
 };
@@ -154,6 +155,10 @@ struct a3_DemoState
 	a3ui32 frameWidth, frameHeight;
 	a3real frameWidthInv, frameHeightInv, frameAspect;
 	a3i32 frameBorder;
+
+	// ------------------------------------------------------------------------
+	// Blend Tree hierarchical tracking
+	a3i32 blendTreeLevel;
 
 
 	//-------------------------------------------------------------------------

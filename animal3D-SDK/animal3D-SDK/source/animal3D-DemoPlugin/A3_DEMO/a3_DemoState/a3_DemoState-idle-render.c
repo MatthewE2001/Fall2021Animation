@@ -183,7 +183,7 @@ void a3demo_render_blendtree(const a3_DemoState* demoState,
 		"Blend Tree Navigator");
 
 	a3textDraw(text, textAlign, textOffset += textOffsetDelta, textDepth, col.r, col.g, col.b, col.a,
-		"Operation: ('p')");
+		"Operation:");
 	// switch statement to detect current blending op
 	
 	switch (demoState->blendMode)
@@ -202,6 +202,11 @@ void a3demo_render_blendtree(const a3_DemoState* demoState,
 			a3textDraw(text, textAlign, textOffset += textOffsetDelta, textDepth, col.r, col.g, col.b, col.a,
 				"   Scale");
 			break;
+
+		case demoState_blend_none:
+			a3textDraw(text, textAlign, textOffset += textOffsetDelta, textDepth, col.r, col.g, col.b, col.a,
+				"   None");
+			break;
 	}
 
 	a3textDraw(text, textAlign, textOffset += textOffsetDelta, textDepth, col.r, col.g, col.b, col.a,
@@ -213,7 +218,7 @@ void a3demo_render_blendtree(const a3_DemoState* demoState,
 	case demoState_blend_lerp:
 		// Single input
 		a3textDraw(text, textAlign, textOffset += textOffsetDelta, textDepth, col.r, col.g, col.b, col.a,
-			"   Input 0 (Parameter)");
+			"   Input 0");
 		break;
 
 	case demoState_blend_add:
@@ -225,7 +230,13 @@ void a3demo_render_blendtree(const a3_DemoState* demoState,
 	case demoState_blend_scale:
 		// Single input
 		a3textDraw(text, textAlign, textOffset += textOffsetDelta, textDepth, col.r, col.g, col.b, col.a,
-			"   Input 0 (Parameter)");
+			"   Input 0");
+		break;
+
+	case demoState_blend_none:
+		// No inputs (N/A)
+		a3textDraw(text, textAlign, textOffset += textOffsetDelta, textDepth, col.r, col.g, col.b, col.a,
+			"   N/A");
 		break;
 	}
 
@@ -258,13 +269,33 @@ void a3demo_render_blendtree(const a3_DemoState* demoState,
 		a3textDraw(text, textAlign, textOffset += textOffsetDelta, textDepth, col.r, col.g, col.b, col.a,
 			"   Pose 1");
 		break;
+
+	case demoState_blend_none:
+		// Two control poses
+		a3textDraw(text, textAlign, textOffset += textOffsetDelta, textDepth, col.r, col.g, col.b, col.a,
+			"   N/A");
+		break;
 	}
 
-	// Hierarchical tracking
+	if (demoState->blendTreeLevel == 0)
+	{
+		// The hierarchy level cannot be increased
+		a3textDraw(text, textAlign, textOffset += textOffsetDelta, textDepth, col.r, col.g, col.b, col.a,
+			"Hierarchy level: 0 (Top)");
+	}
+	else
+	{
+		// The hierarchy level can be decreased
+		char level[20];
+		a3textDraw(text, textAlign, textOffset += textOffsetDelta, textDepth, col.r, col.g, col.b, col.a,
+			"Hierarchy level: %s", _itoa(demoState->blendTreeLevel, level, 10));
+	}
 
 
 	// global controls
 	textOffset = -0.8f;
+	a3textDraw(text, textAlign, textOffset += textOffsetDelta, textDepth, col.r, col.g, col.b, col.a,
+		"Hierarchy navigation:        'p' (operation) | 'o' (climb) | '1' (input 1) | '2' (input 2) ");
 	a3textDraw(text, textAlign, textOffset += textOffsetDelta, textDepth, col.r, col.g, col.b, col.a,
 		"Toggle text display:        't' (toggle) | 'T' (alloc/dealloc) ");
 	a3textDraw(text, textAlign, textOffset += textOffsetDelta, textDepth, col.r, col.g, col.b, col.a,
