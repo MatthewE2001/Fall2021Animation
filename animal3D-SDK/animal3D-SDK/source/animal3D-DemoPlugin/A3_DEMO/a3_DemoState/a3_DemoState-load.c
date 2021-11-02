@@ -77,6 +77,7 @@
 #include "../a3_DemoState.h"
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <windows.h>
 
 
@@ -1011,71 +1012,95 @@ void a3demo_loadValidate(a3_DemoState* demoState)
 
 //-----------------------------------------------------------------------------
 
-const char winClass[] = "blendTreeWindowClass";
+LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam);
 
-// Window creation procedure
-LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
+int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine, int iCmdShow)
 {
-	switch (msg)
+	TCHAR appname[] = TEXT("Windows");
+	WNDCLASS wndclass;
+	MSG msg;
+	HWND hwnd;
+
+	wndclass.cbClsExtra = 0;
+	wndclass.cbWndExtra = 0;
+	wndclass.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);
+	wndclass.hCursor = LoadCursor(NULL, IDC_ARROW);
+	wndclass.hIcon = LoadIcon(NULL, IDI_APPLICATION);
+	wndclass.hInstance = hInstance;
+	wndclass.lpfnWndProc = WndProc;
+	wndclass.lpszClassName = appname;
+	wndclass.lpszMenuName = NULL;
+	wndclass.style = CS_HREDRAW | CS_VREDRAW;
+
+	if (!RegisterClass(&wndclass))
 	{
-	case WM_CLOSE:
-		DestroyWindow(hwnd);
-	break;
-	case WM_DESTROY:
-		PostQuitMessage(0);
-	break;
-	default:
-		return DefWindowProc(hwnd, msg, wParam, lParam);
+		MessageBox(NULL, TEXT("Window class not registered"), TEXT("Error"), MB_ICONERROR);
+		return 0;
 	}
-	return DefWindowProcW(hwnd, msg, wParam, lParam);;
+
+	hwnd = CreateWindow(appname,
+		appname,
+		WS_OVERLAPPEDWINDOW,
+		CW_USEDEFAULT,
+		CW_USEDEFAULT,
+		600,
+		500,
+		NULL,
+		NULL,
+		hInstance,
+		NULL);
+
+	ShowWindow(hwnd, iCmdShow);
+	UpdateWindow(hwnd);
+
+	while (GetMessage(&msg, NULL, 0, 0))
+	{
+		TranslateMessage(&msg);
+		DispatchMessage(&msg);
+	}
+
+	return (int) msg.wParam;
+}
+
+LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	HDC hdc;
+	PAINTSTRUCT ps;
+
+	switch (message)
+	{
+	case WM_CREATE:
+		MessageBox(NULL, TEXT("WINDOW IS STARTED"), TEXT("STARTED"), MB_ICONINFORMATION);
+		return 0;
+		break;
+
+	case WM_PAINT:
+		hdc = BeginPaint(hwnd, &ps);
+
+		SetTextColor(hdc, RGB(0, 0, 240));
+		RECT rect;
+		GetClientRect(hwnd, &rect);
+
+		DrawText(hdc, TEXT("TEST"), -1, &rect, DT_VCENTER | DT_CENTER | DT_SINGLELINE);
+
+		EndPaint(hwnd, &ps);
+		break;
+
+	case WM_DESTROY:
+		// EXIT MESSAGE
+		return 0;
+	}
+	return DefWindowProc(hwnd, message, wParam, lParam);
+
 }
 
 
 void a3demo_loadBlendTreeViewer(a3_DemoState* demoState)
 {
-	printf("Lauching Blend Tree Viewer");
+	system("cls");
+	printf("Text-Base Blend Tree Viewer");
+
 	
-	const char CLASS_NAME[] = "Sample Window Class";
-
-	WNDCLASS wc;
-
-	wc.cbClsExtra = 0;
-	wc.cbWndExtra = 0;
-	wc.hCursor = LoadCursor(0, IDC_ARROW);
-	wc.hIcon = LoadIcon(0, IDI_WINLOGO);
-	wc.lpszMenuName = 0;
-	wc.style = 0;
-	wc.hbrBackground = 0;
-	wc.lpfnWndProc = WndProc;
-	wc.hInstance = GetModuleHandle(NULL);
-	wc.lpszClassName = CLASS_NAME;
-
-	RegisterClass(&wc);
-
-	HWND hwnd = CreateWindowEx(
-		WS_EX_CLIENTEDGE,
-		CLASS_NAME,
-		"Blend Tree",
-		WS_OVERLAPPEDWINDOW,
-		CW_USEDEFAULT, CW_USEDEFAULT, 240, 120,
-		NULL,
-		NULL,
-		GetModuleHandle(NULL),
-		NULL
-	);
-
-
-	if (hwnd == NULL)
-	{
-		printf("WINDOW FAILED");
-		return;
-	}
-
-
-	ShowWindow(hwnd, 0);
-	UpdateWindow(hwnd);
-	
-	printf("WINDOW CREATED");
 
 
 }

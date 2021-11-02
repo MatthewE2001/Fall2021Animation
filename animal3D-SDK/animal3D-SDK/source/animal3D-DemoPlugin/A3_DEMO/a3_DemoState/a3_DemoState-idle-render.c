@@ -44,6 +44,9 @@
 #include <OpenGL/gl3.h>
 #endif	// _WIN32
 
+#include <stdio.h>
+#include <stdlib.h>
+
 
 //-----------------------------------------------------------------------------
 // RENDER TEXT
@@ -170,6 +173,51 @@ void a3demo_render_data(const a3_DemoState* demoState,
 		"Reload all shader programs: 'P' ****CHECK CONSOLE FOR ERRORS!**** ");
 }
 
+// blend tree data
+void a3demo_render_blendtree(const a3_DemoState* demoState,
+	a3_TextRenderer const* text, a3vec4 const col,
+	a3f32 const textAlign, a3f32 const textDepth, a3f32 const textOffsetDelta, a3f32 textOffset)
+{
+	// display some general data
+	a3textDraw(text, textAlign, textOffset += textOffsetDelta, textDepth, col.r, col.g, col.b, col.a,
+		"Blend tree = %07.4lf F/s", demoState->timer->ticksPerSecond);
+	a3textDraw(text, textAlign, textOffset += textOffsetDelta, textDepth, col.r, col.g, col.b, col.a,
+		"Operation:");
+	// switch statement to detect current blending op
+	
+	switch (demoState->blendMode)
+	{
+		case demoState_blend_lerp:
+			a3textDraw(text, textAlign, textOffset += textOffsetDelta, textDepth, col.r, col.g, col.b, col.a,
+				"   Lerp");
+			break;
+
+		case demoState_blend_add:
+			a3textDraw(text, textAlign, textOffset += textOffsetDelta, textDepth, col.r, col.g, col.b, col.a,
+				"   Add");
+			break;
+
+		case demoState_blend_scale:
+			a3textDraw(text, textAlign, textOffset += textOffsetDelta, textDepth, col.r, col.g, col.b, col.a,
+				"   Scale");
+			break;
+	}
+
+	a3textDraw(text, textAlign, textOffset += textOffsetDelta, textDepth, col.r, col.g, col.b, col.a,
+		"Input(s):");
+	a3textDraw(text, textAlign, textOffset += textOffsetDelta, textDepth, col.r, col.g, col.b, col.a,
+		"Control(s):");
+
+
+	// global controls
+	textOffset = -0.8f;
+	a3textDraw(text, textAlign, textOffset += textOffsetDelta, textDepth, col.r, col.g, col.b, col.a,
+		"Toggle text display:        't' (toggle) | 'T' (alloc/dealloc) ");
+	a3textDraw(text, textAlign, textOffset += textOffsetDelta, textDepth, col.r, col.g, col.b, col.a,
+		"Reload all shader programs: 'P' ****CHECK CONSOLE FOR ERRORS!**** ");
+}
+
+
 /*
 // bloom iteration
 void a3demo_render_bloomIteration(a3_DemoState const* demoState, a3real2 pixelSize, a3_Framebuffer const* fbo_prev,
@@ -182,8 +230,10 @@ void a3demo_render_bloomIteration(a3_DemoState const* demoState, a3real2 pixelSi
 }
 */
 
+
 //-----------------------------------------------------------------------------
 // RENDER
+
 
 void a3demo_render(a3_DemoState const* demoState, a3f64 const dt)
 {
@@ -247,6 +297,10 @@ void a3demo_render(a3_DemoState const* demoState, a3f64 const dt)
 				// general data
 			case demoState_textData:
 				a3demo_render_data(demoState, text, col, textAlign + x, textDepth, textOffsetDelta, textOffset + y);
+				break;
+
+			case demoState_textBlendTree:
+				a3demo_render_blendtree(demoState, text, col, textAlign + x, textDepth, textOffsetDelta, textOffset + y);
 				break;
 			}
 		}

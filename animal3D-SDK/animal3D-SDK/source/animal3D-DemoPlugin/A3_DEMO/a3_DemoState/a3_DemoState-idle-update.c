@@ -32,6 +32,9 @@
 
 #include "../a3_DemoState.h"
 
+#include <stdio.h>
+#include <stdlib.h>
+
 
 //-----------------------------------------------------------------------------
 // GENERAL UTILITIES
@@ -83,6 +86,7 @@ void a3demo_update_objects(a3_DemoState* demoState, a3f64 const dt,
 		{
 			a3demo_updateSceneObject(sceneObjectBase, useZYX);
 		}
+
 }
 
 void a3demo_update_defaultAnimation(a3_DemoState* demoState, a3f64 const dt,
@@ -128,6 +132,7 @@ void a3demo_update_pointLight(a3_DemoSceneObject* obj_camera, a3_DemoPointLight*
 }
 
 
+
 //-----------------------------------------------------------------------------
 // UPDATE
 
@@ -139,3 +144,4 @@ void a3demo_update(a3_DemoState *demoState, a3f64 const dt)
 
 
 //-----------------------------------------------------------------------------
+

@@ -487,6 +487,9 @@ A3DYLIBSYMBOL void a3demoCB_keyCharPress(a3_DemoState *demoState, a3i32 asciiKey
 		// toggle text mode
 		a3demoCtrlCaseIncLoop(demoState->textMode, demoState_text_max, 't');
 
+		// toggle blend mode
+		a3demoCtrlCaseIncLoop(demoState->blendMode, demoState_blend_max, 'p');
+
 		// reload text
 	case 'T':
 		if (!a3textIsInitialized(demoState->text))
