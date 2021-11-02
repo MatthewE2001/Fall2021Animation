@@ -232,6 +232,8 @@ a3_SpatialPose* a3SpatialPoseForwardKinematics(a3_Hierarchy const* hierarchy, a3
 
 a3_SpatialPose* a3SpatialPoseInverseKinematics(a3_Hierarchy const* hierarchy, a3_SpatialPose* object_pose, a3_SpatialPose* local_pose);
 
+a3_SpatialPose* a3SpatialPoseCubicHermite(a3_SpatialPose* pose_out, a3_SpatialPose* initPose, a3_SpatialPose* termPose);
+
 #ifdef __cplusplus
 }
 #endif	// __cplusplus

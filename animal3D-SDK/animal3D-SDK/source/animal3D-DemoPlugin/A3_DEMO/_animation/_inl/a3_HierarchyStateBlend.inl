@@ -94,9 +94,6 @@ inline a3_HierarchyPose* a3hierarchyPoseOpLERP(a3_HierarchyPose* pose_out, a3_Hi
 
 inline a3_SpatialPose* a3SpatialPoseSetConstruct(a3_SpatialPose* pose_out, a3vec4 const angles, a3vec4 const scale, a3vec4 const translate)
 {
-	//do I need to initialize memory here potentially
-	//newPose = memsize(sizeof(a3_SpatialPose)); //memsize is prob wrong
-
 	pose_out->angles = angles;
 	pose_out->scale = scale;
 	pose_out->translation = translate;
@@ -106,8 +103,6 @@ inline a3_SpatialPose* a3SpatialPoseSetConstruct(a3_SpatialPose* pose_out, a3vec
 
 inline a3_SpatialPose* a3SpatialPoseReturnCopy(a3_SpatialPose* pose_out, a3_SpatialPose* const copyPose)
 {
-	//a3_SpatialPose* pose_out; //to do make into a parameter
-
 	pose_out = copyPose;
 
 	return pose_out; //every function should have return pose_out
@@ -115,8 +110,6 @@ inline a3_SpatialPose* a3SpatialPoseReturnCopy(a3_SpatialPose* pose_out, a3_Spat
 
 inline a3_SpatialPose* a3SpatialPoseFindInverse(a3_SpatialPose* pose_out, a3_SpatialPose* const invPose)
 {
-	//allocate new memory for inverse here
-
 	//negation here or not?
 	pose_out->angles.x = -invPose->angles.x;
 	pose_out->angles.y = -invPose->angles.y;
@@ -135,11 +128,6 @@ inline a3_SpatialPose* a3SpatialPoseFindInverse(a3_SpatialPose* pose_out, a3_Spa
 
 inline a3_SpatialPose* a3SpatialPoseConcatenate(a3_SpatialPose* pose_out, a3_SpatialPose* const pose_lh, a3_SpatialPose* const pose_rh)
 {
-	//a3spatialPoseOpIdentity(concat);
-
-	//initialize concat memory here
-	//also could recreate the concatenation step here
-
 	a3spatialPoseConcat(pose_out, pose_lh, pose_rh);
 
 	return pose_out;
@@ -161,9 +149,6 @@ inline a3_SpatialPose* a3SpatialPoseNearest(a3_SpatialPose* pose_out, a3_Spatial
 
 inline a3_SpatialPose* a3SpatialPoseBlendLerp(a3_SpatialPose* pose_out, a3_SpatialPose* const p0, a3_SpatialPose* const p1, a3real blendParam)
 {
-	//a3spatialPoseReset(lerp);
-	//initialize lerp pose memory
-
 	a3spatialPoseLerp(pose_out, p0, p1, blendParam);
 
 	return pose_out;
@@ -237,9 +222,6 @@ inline a3_SpatialPose* a3SpatialPoseTriangular(a3_SpatialPose* pose_out, a3_Spat
 	//interpolate to find pose within triangle of three control poses
 	//then scale the initial pose to that interpolation I believe
 	a3real scaleParam0 = 1 - scaleParam1 - scaleParam2;
-
-	//a3real2Trilerp(pose_out->translation.v, pose0->translation.v, pose1->translation.v, pose1->translation.v,
-		//pose2->translation.v, pose2->translation.v, pose0->translation.v);
 
 	a3real4Lerp(pose_out->translation.v, pose0->translation.v, pose1->translation.v, scaleParam0);
 	a3real4Lerp(pose_out->translation.v, pose1->translation.v, pose2->translation.v, scaleParam1);
@@ -338,6 +320,45 @@ inline a3_SpatialPose* a3SpatialPoseConvert(a3_SpatialPose* pose_out)
 {
 	//perform convert step for spatial pose
 	//would that mean changing the transform matrix to identity or what exactly
+	if (pose_out)
+	{
+		/*a3mat4 rx, ry, rz, r;
+		a3real4x4SetRotateX(rx.m, pose_out->angles.x);
+		a3real4x4SetRotateY(ry.m, pose_out->angles.y);
+		a3real4x4SetRotateZ(rz.m, pose_out->angles.z);
+		
+		switch (order)
+		{
+		case a3poseEulerOrder_xyz:
+			a3real4x4Product(r.m, rx.m, ry.m);
+			a3real4x4Product(spatialPose->transform.m, r.m, rz.m);
+			break;
+		case a3poseEulerOrder_yzx:
+			a3real4x4Product(r.m, ry.m, rz.m);
+			a3real4x4Product(spatialPose->transform.m, r.m, rx.m);
+			break;
+		case a3poseEulerOrder_zxy:
+			a3real4x4Product(r.m, rz.m, rx.m);
+			a3real4x4Product(spatialPose->transform.m, r.m, ry.m);
+			break;
+		case a3poseEulerOrder_yxz:
+			a3real4x4Product(r.m, ry.m, rx.m);
+			a3real4x4Product(spatialPose->transform.m, r.m, rz.m);
+			break;
+		case a3poseEulerOrder_xzy:
+			a3real4x4Product(r.m, rx.m, rz.m);
+			a3real4x4Product(spatialPose->transform.m, r.m, ry.m);
+			break;
+		case a3poseEulerOrder_zyx:
+			a3real4x4Product(r.m, rz.m, ry.m);
+			a3real4x4Product(spatialPose->transform.m, r.m, rx.m);
+			break;*/
+		}
+
+		a3real3MulS(pose_out->transform.v0.v, pose_out->scale.x);
+		a3real3MulS(pose_out->transform.v1.v, pose_out->scale.y);
+		a3real3MulS(pose_out->transform.v2.v, pose_out->scale.z);
+		pose_out->transform.v3 = pose_out->translation;
 
 	return pose_out;
 }
@@ -345,7 +366,8 @@ inline a3_SpatialPose* a3SpatialPoseConvert(a3_SpatialPose* pose_out)
 inline a3_SpatialPose* a3SpatialPoseRevert(a3_SpatialPose* pose_out)
 {
 	//revert/restore the pose back to a previous state
-	//restore raw components meaning ...
+	//reverse the process from before?
+
 
 	return pose_out;
 }

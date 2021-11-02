@@ -361,6 +361,8 @@ void a3animation_init_animation(a3_DemoState const* demoState, a3_DemoMode1_Anim
 	//testLerp.opScale = a3vec4LogLerp;
 	//testLerp.opTranslation = a3vec4Lerp;
 
+	//to do create the blend structure here with our new functions?
+
 	//resultAngles = testLerp.opAngles(*args*); //args = arguments?
 }
 
