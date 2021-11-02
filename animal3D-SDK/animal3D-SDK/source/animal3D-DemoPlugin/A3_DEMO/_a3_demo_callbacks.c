@@ -487,6 +487,9 @@ A3DYLIBSYMBOL void a3demoCB_keyCharPress(a3_DemoState *demoState, a3i32 asciiKey
 		// toggle text mode
 		a3demoCtrlCaseIncLoop(demoState->textMode, demoState_text_max, 't');
 
+		// toggle blend mode
+		a3demoCtrlCaseIncLoop(demoState->blendMode, demoState_blend_max, 'p');
+
 		// reload text
 	case 'T':
 		if (!a3textIsInitialized(demoState->text))
@@ -507,6 +510,60 @@ A3DYLIBSYMBOL void a3demoCB_keyCharPress(a3_DemoState *demoState, a3i32 asciiKey
 		a3demo_unloadShaders(demoState);
 		a3demo_loadShaders(demoState);
 		break;
+
+		// increase the level of the hierarchy if able
+	case 'o':
+		if (demoState->blendTreeLevel == 0)
+		{
+			// cannot increase level
+			break;
+		}
+		else
+		{
+			demoState->blendTreeLevel -= 1;
+			break;
+		}
+
+		// Navigate inside input one if it exists
+	case '1':
+		switch (demoState->blendMode)
+		{
+		case demoState_blend_lerp:
+			demoState->blendTreeLevel += 1;
+			break;
+
+		case demoState_blend_add:
+			demoState->blendTreeLevel += 1;
+			break;
+
+		case demoState_blend_scale:
+			demoState->blendTreeLevel += 1;
+			break;
+		
+		case demoState_blend_none:
+			break;
+		}
+
+		// Navigate inside input two if it exists
+	case '2':
+		switch (demoState->blendMode)
+		{
+		case demoState_blend_lerp:
+			demoState->blendTreeLevel += 1;
+			break;
+
+		case demoState_blend_add:
+			demoState->blendTreeLevel += 1;
+			break;
+
+		case demoState_blend_scale:
+			demoState->blendTreeLevel += 1;
+			break;
+
+		case demoState_blend_none:
+			break;
+		}
+
 	}
 
 

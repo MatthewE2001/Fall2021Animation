@@ -57,6 +57,7 @@ typedef struct	a3_DemoState					a3_DemoState;
 typedef struct	a3_DemoModeCallbacks			a3_DemoModeCallbacks;
 typedef enum	a3_DemoState_ModeName			a3_DemoState_ModeName;
 typedef enum	a3_DemoState_TextDisplayName	a3_DemoState_TextDisplayName;
+typedef enum	a3_DemoState_BlendMode			a3_DemoState_BlendMode;
 #endif	// __cplusplus
 
 
@@ -71,6 +72,18 @@ enum a3_DemoState_ModeName
 	demoState_mode_max
 };
 
+// blend mode names
+enum a3_DemoState_BlendMode
+{
+	demoState_blend_lerp,			// lerp
+	demoState_blend_add,			// add
+	demoState_blend_scale,			// scale
+	demoState_blend_none,			// none
+
+	demoState_blend_max
+};
+
+
 
 // text mode names
 enum a3_DemoState_TextDisplayName
@@ -79,6 +92,7 @@ enum a3_DemoState_TextDisplayName
 	demoState_textControls,			// display controls
 	demoState_textControls_gen,		// display general controls
 	demoState_textData,				// display data
+	demoState_textBlendTree,		// display data
 
 	demoState_text_max
 };
@@ -142,6 +156,10 @@ struct a3_DemoState
 	a3real frameWidthInv, frameHeightInv, frameAspect;
 	a3i32 frameBorder;
 
+	// ------------------------------------------------------------------------
+	// Blend Tree hierarchical tracking
+	a3i32 blendTreeLevel;
+
 
 	//-------------------------------------------------------------------------
 	// objects that have known or fixed instance count in the whole demo
@@ -150,6 +168,9 @@ struct a3_DemoState
 	a3boolean textInit;
 	a3_DemoState_TextDisplayName textMode;
 	a3_TextRenderer text[2];
+
+	// blend controller
+	a3_DemoState_BlendMode blendMode;
 
 	// input
 	a3_MouseInput mouse[1];
