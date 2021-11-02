@@ -111,20 +111,28 @@ void a3animation_update(a3_DemoState* demoState, a3_DemoMode1_Animation* demoMod
 	//a3hierarchyPoseCopy(activeHS->objectSpace,
 	//	demoMode->hierarchyPoseGroup_skel->hpose + demoMode->hierarchyKeyPose_display[0] + 1,
 	//	demoMode->hierarchy_skel->numNodes);
-	a3hierarchyPoseLerp(activeHS->objectSpace,	// use as temp storage
-		demoMode->hierarchyPoseGroup_skel->hpose + demoMode->hierarchyKeyPose_display[0] + 1,
-		demoMode->hierarchyPoseGroup_skel->hpose + demoMode->hierarchyKeyPose_display[1] + 1,
-		demoMode->hierarchyKeyPose_param,
-		demoMode->hierarchy_skel->numNodes);
+	//a3hierarchyPoseLerp(activeHS->objectSpace,	// use as temp storage
+		//demoMode->hierarchyPoseGroup_skel->hpose + demoMode->hierarchyKeyPose_display[0] + 1,
+		//demoMode->hierarchyPoseGroup_skel->hpose + demoMode->hierarchyKeyPose_display[1] + 1,
+		//demoMode->hierarchyKeyPose_param,
+		//demoMode->hierarchy_skel->numNodes);
+	a3spatialPoseLerp(activeHS->objectSpace->pose, 
+		demoMode->hierarchyPoseGroup_skel->hpose->pose + demoMode->hierarchyKeyPose_display[0] + 1,
+		demoMode->hierarchyPoseGroup_skel->hpose->pose + demoMode->hierarchyKeyPose_display[1] + 1,
+		demoMode->hierarchyKeyPose_param);
 	a3hierarchyPoseConcat(activeHS->localSpace,	// goal to calculate
 		baseHS->localSpace, // holds base pose
 		activeHS->objectSpace, // temp storage
 		demoMode->hierarchy_skel->numNodes);
+	//a3spatialPoseConcat(activeHS->localSpace->pose,	// goal to calculate
+		//baseHS->localSpace->pose, // holds base pose
+		//activeHS->objectSpace->pose);
 	a3hierarchyPoseConvert(activeHS->localSpace,
 		demoMode->hierarchy_skel->numNodes,
 		demoMode->hierarchyPoseGroup_skel->channel,
 		demoMode->hierarchyPoseGroup_skel->order);
 	a3kinematicsSolveForward(activeHS);
+	//a3SpatialPoseForwardKinematics(demoMode->hierarchy_skel, activeHS->objectSpace->pose, baseHS->localSpace->pose);
 	a3hierarchyStateUpdateObjectInverse(activeHS);
 	a3hierarchyStateUpdateObjectBindToCurrent(activeHS, baseHS);
 

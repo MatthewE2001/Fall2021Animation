@@ -413,6 +413,13 @@ inline a3_SpatialPose* a3SpatialPoseInverseKinematics(a3_Hierarchy const* hierar
 	return local_pose;
 }
 
+inline a3_SpatialPose* a3SpatialPoseCubicHermite(a3_SpatialPose* pose_out, a3_SpatialPose* initPose, a3_SpatialPose* termPose)
+{
+
+
+	return pose_out;
+}
+
 //-----------------------------------------------------------------------------
 
 
