@@ -120,6 +120,20 @@ struct a3_SpatialPose
 	a3vec4 user;
 };
 
+//individual node representing whole skeleton as child of this node
+struct a3_WholeSpatialPose
+{
+	//if this node moves, the whole skeleton will follow
+	//a3_SpatialPose* childPose; //or
+	//a3_hierarchy* childHierarchy;
+	a3mat4 transformMat;
+	a3dualquat transformDQ;
+	a3vec4 rotate;
+	a3vec4 scale;
+	a3vec4 translate;
+	a3vec4 user;
+};
+
 
 //-----------------------------------------------------------------------------
 
