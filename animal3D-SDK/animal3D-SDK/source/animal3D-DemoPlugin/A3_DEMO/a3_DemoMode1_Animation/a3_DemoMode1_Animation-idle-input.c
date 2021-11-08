@@ -133,18 +133,40 @@ void a3animation_input(a3_DemoState* demoState, a3_DemoMode1_Animation* demoMode
 			a3f64 lJoystick[2], rJoystick[2];
 			a3XboxControlGetJoysticks(demoState->xcontrol, lJoystick, rJoystick);
 
-			// Convert the right joystick X and Y values to degrees
-			a3real rotation_degrees = a3atan2d((a3real)rJoystick[1], (a3real)rJoystick[0]);
-			// Apply angle correction if angle is negative
-			if (rotation_degrees < 0.0)
-			{
-				rotation_degrees = (a3real)360.0 + rotation_degrees;
-			}
-			printf("Right Joystick: %4.2f\n", rotation_degrees);
-
 			// Update the rotation of the character node
+			switch (demoMode->ctrl_rotation)
+			{
+			// Direct assignment from controller input
+			case animation_input_direct:
+				demoState->demoMode1_animation->obj_skeleton_ctrl->euler.z -= a3atan2d((a3real)rJoystick[0], (a3real)rJoystick[1]);
+				break;
+			case animation_input_euler:
+				break;
+			case animation_input_kinematic:
+				break;
+			case animation_input_interpolate1:
+				break;
+			case animation_input_interpolate2:
+				break;
+			}
 
-			// Update the translation of the character by adding/subtracting from the current value
+			// Update the position of the character
+			switch (demoMode->ctrl_position)
+			{
+			// Direct assignment from controller input
+			case animation_input_direct:
+				demoState->demoMode1_animation->obj_skeleton_ctrl->position.x += ((a3real)lJoystick[0] * a3real_pi);
+				demoState->demoMode1_animation->obj_skeleton_ctrl->position.y += ((a3real)lJoystick[1] * a3real_pi);
+				break;
+			case animation_input_euler:
+				break;
+			case animation_input_kinematic:
+				break;
+			case animation_input_interpolate1:
+				break;
+			case animation_input_interpolate2:
+				break;
+			}
 		
 
 		}
