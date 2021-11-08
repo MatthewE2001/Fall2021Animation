@@ -75,10 +75,9 @@ void a3animation_input_keyCharPress(a3_DemoState const* demoState, a3_DemoMode1_
 
 void a3animation_input_keyCharHold(a3_DemoState const* demoState, a3_DemoMode1_Animation* demoMode, a3i32 const asciiKey, a3i32 const state)
 {
-//	switch (asciiKey)
-//	{
-//
-//	}
+	//switch (asciiKey)
+	//{
+	//}
 }
 
 
@@ -159,6 +158,9 @@ void a3animation_input(a3_DemoState* demoState, a3_DemoMode1_Animation* demoMode
 				demoState->demoMode1_animation->obj_skeleton_ctrl->position.y += ((a3real)lJoystick[1] * a3real_pi);
 				break;
 			case animation_input_euler:
+				// Horizontal axis of orientation maps to character's angular velocity around the world "up" axis
+				// Use Euler's method to integrate into rotation
+
 				break;
 			case animation_input_kinematic:
 				break;
@@ -172,8 +174,53 @@ void a3animation_input(a3_DemoState* demoState, a3_DemoMode1_Animation* demoMode
 		}
 		else
 		{
-			// ****TO-DO:
-			// calculate normalized vectors given keyboard state
+			// Update position of the character
+			switch (demoMode->ctrl_position)
+			{
+			// Direct assignment from keyboard input
+			case animation_input_direct:
+			{
+				// Get the position by normalizing the WASD inputs (if possible)
+
+				a3real2 direction = { 0.0, 0.0 };
+
+				if (a3keyboardGetState(demoState->keyboard, a3key_W))
+				{
+					direction[1] += 1;
+				}
+				if (a3keyboardGetState(demoState->keyboard, a3key_S))
+				{
+					direction[1] -= 1;
+				}
+				if (a3keyboardGetState(demoState->keyboard, a3key_A))
+				{
+					direction[0] -= 1;
+				}
+				if (a3keyboardGetState(demoState->keyboard, a3key_D))
+				{
+					direction[0] += 1;
+				}
+
+				// Checking to avoid a divide by zero error during normalization
+				if (direction[0] == 0.0) { }
+				else if (direction[1] == 0.0) { }
+				else { a3real2Normalize(direction); }
+
+				// Set the position based on the normalized vector
+				demoState->demoMode1_animation->obj_skeleton_ctrl->position.x += ((a3real)direction[0] * a3real_pi);
+				demoState->demoMode1_animation->obj_skeleton_ctrl->position.y += ((a3real)direction[1] * a3real_pi);
+				break;
+			}
+			case animation_input_euler:
+				break;
+			case animation_input_kinematic:
+				break;
+			case animation_input_interpolate1:
+				break;
+			case animation_input_interpolate2:
+				break;
+			}
+
 
 		}
 		break;
