@@ -32,7 +32,7 @@
 
 //typedef struct a3_DemoState a3_DemoState;
 #include "../a3_DemoState.h"
-
+#include <stdio.h>
 #include "../_a3_demo_utilities/a3_DemoMacros.h"
 
 
@@ -127,7 +127,26 @@ void a3animation_input(a3_DemoState* demoState, a3_DemoMode1_Animation* demoMode
 		{
 			// ****TO-DO:
 			// get directly from joysticks
+
+			// Right joystick controls rotation of the character, left controls movement
+			// These values get updated continuously
+			a3f64 lJoystick[2], rJoystick[2];
+			a3XboxControlGetJoysticks(demoState->xcontrol, lJoystick, rJoystick);
+
+			// Convert the right joystick X and Y values to degrees
+			a3real rotation_degrees = a3atan2d((a3real)rJoystick[1], (a3real)rJoystick[0]);
+			// Apply angle correction if angle is negative
+			if (rotation_degrees < 0.0)
+			{
+				rotation_degrees = (a3real)360.0 + rotation_degrees;
+			}
+			printf("Right Joystick: %4.2f\n", rotation_degrees);
+
+			// Update the rotation of the character node
+
+			// Update the translation of the character by adding/subtracting from the current value
 		
+
 		}
 		else
 		{
