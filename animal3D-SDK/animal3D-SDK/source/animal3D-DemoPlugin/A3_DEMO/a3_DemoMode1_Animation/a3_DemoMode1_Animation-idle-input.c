@@ -174,6 +174,51 @@ void a3animation_input(a3_DemoState* demoState, a3_DemoMode1_Animation* demoMode
 		}
 		else
 		{
+			// Update rotation of the character
+			switch (demoMode->ctrl_rotation)
+			{
+			case animation_input_direct:
+			{
+				// Get the rotation by normalizing the IJKL inputs (if possible)
+
+				a3real2 direction = { 0.0, 0.0 };
+
+				if (a3keyboardGetState(demoState->keyboard, a3key_I))
+				{
+					direction[1] += 1;
+				}
+				if (a3keyboardGetState(demoState->keyboard, a3key_K))
+				{
+					direction[1] -= 1;
+				}
+				if (a3keyboardGetState(demoState->keyboard, a3key_J))
+				{
+					direction[0] -= 1;
+				}
+				if (a3keyboardGetState(demoState->keyboard, a3key_L))
+				{
+					direction[0] += 1;
+				}
+
+				// Checking to avoid a divide by zero error during normalization
+				if (direction[0] == 0.0) {}
+				else if (direction[1] == 0.0) {}
+				else { a3real2Normalize(direction); }
+
+				demoState->demoMode1_animation->obj_skeleton_ctrl->euler.z -= a3atan2d((a3real)direction[0], (a3real)direction[1]);
+
+				break;
+			}
+			case animation_input_euler:
+				break;
+			case animation_input_kinematic:
+				break;
+			case animation_input_interpolate1:
+				break;
+			case animation_input_interpolate2:
+				break;
+			}
+
 			// Update position of the character
 			switch (demoMode->ctrl_position)
 			{
