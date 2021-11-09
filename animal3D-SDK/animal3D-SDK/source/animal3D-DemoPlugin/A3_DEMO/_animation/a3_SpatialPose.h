@@ -134,7 +134,6 @@ struct a3_WholeSpatialPose
 	a3vec4 user;
 };
 
-
 //-----------------------------------------------------------------------------
 
 // set rotation values for a single node pose

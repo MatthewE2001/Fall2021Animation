@@ -1,3 +1,4 @@
+﻿#include "..\a3_HierarchyStateBlend.h"
 /*
 	Copyright 2011-2020 Daniel S. Buckstein
 
@@ -85,6 +86,33 @@ inline a3_HierarchyPose* a3hierarchyPoseOpLERP(a3_HierarchyPose* pose_out, a3_Hi
 
 	// done
 	return pose_out;
+}
+
+inline a3real a3SpatialPoseIntegrateEuler(a3real x, a3real dxdt, a3real dt)
+{
+	//Math: xt + dt = xt + x′tdt = xt + (dxt / dt)dt
+	a3real eulerIntegrate;
+	eulerIntegrate = x + (dxdt / dt) * dt;
+
+	return eulerIntegrate;
+}
+
+inline a3real a3SpatialPoseIntegrateKinematic(a3real x, a3real dxdt, a3real dxdt2, a3real dt)
+{
+	//Math: xt+dt=xt+x′tdt+x′′tdt2/2=xt+(dxt/dt)dt+(d2xt/dt2)dt2/2
+	a3real kinematicIntegrate;
+	kinematicIntegrate = x + (dxdt / dt) * dt + (dxdt2 / (dt * dt)) * ((dt * dt) / 2);
+
+	return kinematicIntegrate;
+}
+
+inline a3real a3SpatialPoseIntegrateLerp(a3real x, a3real xc, a3real u)
+{
+	//Math: xt+dt=LERPxt,xc(u)=xt+(xc−xt)u
+	a3real lerpIntegrate;
+	lerpIntegrate = x + (xc - x) * u;
+
+	return lerpIntegrate;
 }
 
 

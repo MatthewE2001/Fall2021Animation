@@ -68,6 +68,11 @@ a3_HierarchyPose* a3hierarchyPoseOpLERP(a3_HierarchyPose* pose_out, a3_Hierarchy
 
 //-----------------------------------------------------------------------------
 
+a3real a3SpatialPoseIntegrateEuler(a3real x, a3real dxdt, a3real dt);
+
+a3real a3SpatialPoseIntegrateKinematic(a3real x, a3real dxdt, a3real dxdt2, a3real dt);
+
+a3real a3SpatialPoseIntegrateLerp(a3real x, a3real xc, a3real u);
 
 #ifdef __cplusplus
 }
