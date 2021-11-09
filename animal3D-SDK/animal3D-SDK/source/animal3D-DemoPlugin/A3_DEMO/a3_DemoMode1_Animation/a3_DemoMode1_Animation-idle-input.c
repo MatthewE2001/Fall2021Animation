@@ -132,42 +132,98 @@ void a3animation_input(a3_DemoState* demoState, a3_DemoMode1_Animation* demoMode
 			// Update the rotation of the character node
 			switch (demoMode->ctrl_rotation)
 			{
-			// Direct assignment from controller input
+			// Direct value
 			case animation_input_direct:
+			{
+				// The horizontal axis of your orientation input (JL or horizontal tilt) directly maps
+				// to the character's rotation about the world's "up" axis (e.g. default is Z in animal3D). 
 				demoState->demoMode1_animation->obj_skeleton_ctrl->euler.z -= a3atan2d((a3real)rJoystick[0], (a3real)rJoystick[1]);
 				break;
+			}
+			// Control Velocity
 			case animation_input_euler:
-
+			{
+				// The horizontal axis of your orientation input directly maps to the character's angular
+				// velocity about the world's "up" axis.  Integrate this into rotation using Euler's method.
 				break;
+			}
+			// Control Acceleration
 			case animation_input_kinematic:
+			{
+				// The horizontal axis of your orientation input directly maps to the character's angular
+				// acceleration about the world's "up" axis.  Integrate both the current angular velocity
+				// and this angular acceleration into rotation using kinematic integration, then integrate
+				// angular acceleration into angular velocity using Euler's method.
 				break;
+			}
+			// Fake velocity
 			case animation_input_interpolate1:
+			{
+				// The horizontal axis of your orientation input directly maps to the character's target
+				// rotation about the world's "up" axis.  Integrate using interpolation.
+				demoState->demoMode1_animation->obj_skeleton_ctrl->euler.z = a3SpatialPoseIntegrateLerp(demoState->demoMode1_animation->obj_skeleton_ctrl->euler.z,
+					(a3real)180.0, (a3real)rJoystick[0]);
 				break;
+			}
+			// Fake Acceleration
 			case animation_input_interpolate2:
+			{
+				// The horizontal axis of your orientation input directly maps to the character's target
+				// angular velocity about the world's "up" axis.  Integrate the current angular velocity
+				// into rotation using Euler's method, then integrate angular velocity using interpolation.
 				break;
+			}
 			}
 
 			// Update the position of the character
 			switch (demoMode->ctrl_position)
 			{
-			// Direct assignment from controller input
+			// Direct value
 			case animation_input_direct:
+			{
+				// The 2D vector from your locomotion input(WASD or joystick) directly maps to the character's
+				// position in world-space (AD or horizontal tilt for WS or vertical tilt for Y axis).
 				demoState->demoMode1_animation->obj_skeleton_ctrl->position.x += ((a3real)lJoystick[0] * a3real_pi);
 				demoState->demoMode1_animation->obj_skeleton_ctrl->position.y += ((a3real)lJoystick[1] * a3real_pi);
 				break;
+			}
+			// Control Velocity
 			case animation_input_euler:
+			{
 				// The 2D vector from your locomotion input directly maps to the character's velocity in world space.
 				// Integrate this into position using Euler's method.
-				demoState->demoMode1_animation->obj_skeleton_ctrl->position.x += (a3real)lJoystick[0] * (a3real)demoState->dt_timer;
-
 
 				break;
+			}
+			// Control Acceleration
 			case animation_input_kinematic:
+			{
+				// The 2D vector from your locomotion input directly maps to the character's acceleration in world space.
+				// Integrate both the current velocity and this acceleration into position using kinematic integration,
+				// then integrate acceleration into velocity using Euler's method.
+
 				break;
+			}
+			// Fake Velocity
 			case animation_input_interpolate1:
-				break;
+			{
+				// The 2D vector from your locomotion input directly maps to the character's target
+				// position in world space.  Integrate using interpolation.
+				demoState->demoMode1_animation->obj_skeleton_ctrl->position.x = a3SpatialPoseIntegrateLerp(demoState->demoMode1_animation->obj_skeleton_ctrl->position.x,
+					a3real_pi, (a3real)lJoystick[0]);
+				demoState->demoMode1_animation->obj_skeleton_ctrl->position.y = a3SpatialPoseIntegrateLerp(demoState->demoMode1_animation->obj_skeleton_ctrl->position.y,
+					a3real_pi, (a3real)lJoystick[1]);
+
+					break;
+			}
+			// Fake Acceleration
 			case animation_input_interpolate2:
+			{
+				// The 2D vector from your locomotion input directly maps to the character's target
+				// velocity in world space.  Integrate the current velocity into position using Euler's
+				// method, then integrate velocity using interpolation.
 				break;
+			}
 			}
 		
 
@@ -330,16 +386,54 @@ void a3animation_input(a3_DemoState* demoState, a3_DemoMode1_Animation* demoMode
 				else { a3real2Normalize(direction); }
 
 				// Set the position based on the normalized vector
-				demoState->demoMode1_animation->obj_skeleton_ctrl->position.x += ((a3real)direction[0] * a3real_pi);
-				demoState->demoMode1_animation->obj_skeleton_ctrl->position.y += ((a3real)direction[1] * a3real_pi);
+				
+				demoState->demoMode1_animation->obj_skeleton_ctrl->position.x = a3SpatialPoseIntegrateLerp(demoState->demoMode1_animation->obj_skeleton_ctrl->position.x,
+					a3real_pi, (a3real)direction[0]);
+				demoState->demoMode1_animation->obj_skeleton_ctrl->position.y = a3SpatialPoseIntegrateLerp(demoState->demoMode1_animation->obj_skeleton_ctrl->position.y,
+					a3real_pi, (a3real)direction[1]);
+
 				break;
 			}
 			case animation_input_euler:
 				break;
 			case animation_input_kinematic:
 				break;
+
+			// Fake Velocity
 			case animation_input_interpolate1:
+			{
+				// Get the position by normalizing the WASD inputs (if possible)
+
+				a3real2 direction = { 0.0, 0.0 };
+
+				if (a3keyboardGetState(demoState->keyboard, a3key_W))
+				{
+					direction[1] += 1;
+				}
+				if (a3keyboardGetState(demoState->keyboard, a3key_S))
+				{
+					direction[1] -= 1;
+				}
+				if (a3keyboardGetState(demoState->keyboard, a3key_A))
+				{
+					direction[0] -= 1;
+				}
+				if (a3keyboardGetState(demoState->keyboard, a3key_D))
+				{
+					direction[0] += 1;
+				}
+
+				// Checking to avoid a divide by zero error during normalization
+				if (direction[0] == 0.0) {}
+				else if (direction[1] == 0.0) {}
+				else { a3real2Normalize(direction); }
+
+				// Set the position based on the normalized vector
+				demoState->demoMode1_animation->obj_skeleton_ctrl->position.x += ((a3real)direction[0] * a3real_pi);
+				demoState->demoMode1_animation->obj_skeleton_ctrl->position.y += ((a3real)direction[1] * a3real_pi);
 				break;
+
+			}
 			case animation_input_interpolate2:
 				break;
 			}
