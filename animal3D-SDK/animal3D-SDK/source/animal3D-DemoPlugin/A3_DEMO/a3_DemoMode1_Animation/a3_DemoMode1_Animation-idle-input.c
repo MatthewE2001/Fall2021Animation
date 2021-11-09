@@ -32,7 +32,7 @@
 
 //typedef struct a3_DemoState a3_DemoState;
 #include "../a3_DemoState.h"
-
+#include <stdio.h>
 #include "../_a3_demo_utilities/a3_DemoMacros.h"
 
 
@@ -75,10 +75,9 @@ void a3animation_input_keyCharPress(a3_DemoState const* demoState, a3_DemoMode1_
 
 void a3animation_input_keyCharHold(a3_DemoState const* demoState, a3_DemoMode1_Animation* demoMode, a3i32 const asciiKey, a3i32 const state)
 {
-//	switch (asciiKey)
-//	{
-//
-//	}
+	//switch (asciiKey)
+	//{
+	//}
 }
 
 
@@ -127,12 +126,146 @@ void a3animation_input(a3_DemoState* demoState, a3_DemoMode1_Animation* demoMode
 		{
 			// ****TO-DO:
 			// get directly from joysticks
+
+			// Right joystick controls rotation of the character, left controls movement
+			// These values get updated continuously
+			a3f64 lJoystick[2], rJoystick[2];
+			a3XboxControlGetJoysticks(demoState->xcontrol, lJoystick, rJoystick);
+
+			// Update the rotation of the character node
+			switch (demoMode->ctrl_rotation)
+			{
+			// Direct assignment from controller input
+			case animation_input_direct:
+				demoState->demoMode1_animation->obj_skeleton_ctrl->euler.z -= a3atan2d((a3real)rJoystick[0], (a3real)rJoystick[1]);
+				break;
+			case animation_input_euler:
+				break;
+			case animation_input_kinematic:
+				break;
+			case animation_input_interpolate1:
+				break;
+			case animation_input_interpolate2:
+				break;
+			}
+
+			// Update the position of the character
+			switch (demoMode->ctrl_position)
+			{
+			// Direct assignment from controller input
+			case animation_input_direct:
+				demoState->demoMode1_animation->obj_skeleton_ctrl->position.x += ((a3real)lJoystick[0] * a3real_pi);
+				demoState->demoMode1_animation->obj_skeleton_ctrl->position.y += ((a3real)lJoystick[1] * a3real_pi);
+				break;
+			case animation_input_euler:
+				// Horizontal axis of orientation maps to character's angular velocity around the world "up" axis
+				// Use Euler's method to integrate into rotation
+
+				break;
+			case animation_input_kinematic:
+				break;
+			case animation_input_interpolate1:
+				break;
+			case animation_input_interpolate2:
+				break;
+			}
 		
+
 		}
 		else
 		{
-			// ****TO-DO:
-			// calculate normalized vectors given keyboard state
+			// Update rotation of the character
+			switch (demoMode->ctrl_rotation)
+			{
+			case animation_input_direct:
+			{
+				// Get the rotation by normalizing the IJKL inputs (if possible)
+
+				a3real2 direction = { 0.0, 0.0 };
+
+				if (a3keyboardGetState(demoState->keyboard, a3key_I))
+				{
+					direction[1] += 1;
+				}
+				if (a3keyboardGetState(demoState->keyboard, a3key_K))
+				{
+					direction[1] -= 1;
+				}
+				if (a3keyboardGetState(demoState->keyboard, a3key_J))
+				{
+					direction[0] -= 1;
+				}
+				if (a3keyboardGetState(demoState->keyboard, a3key_L))
+				{
+					direction[0] += 1;
+				}
+
+				// Checking to avoid a divide by zero error during normalization
+				if (direction[0] == 0.0) {}
+				else if (direction[1] == 0.0) {}
+				else { a3real2Normalize(direction); }
+
+				demoState->demoMode1_animation->obj_skeleton_ctrl->euler.z -= a3atan2d((a3real)direction[0], (a3real)direction[1]);
+
+				break;
+			}
+			case animation_input_euler:
+				break;
+			case animation_input_kinematic:
+				break;
+			case animation_input_interpolate1:
+				break;
+			case animation_input_interpolate2:
+				break;
+			}
+
+			// Update position of the character
+			switch (demoMode->ctrl_position)
+			{
+			// Direct assignment from keyboard input
+			case animation_input_direct:
+			{
+				// Get the position by normalizing the WASD inputs (if possible)
+
+				a3real2 direction = { 0.0, 0.0 };
+
+				if (a3keyboardGetState(demoState->keyboard, a3key_W))
+				{
+					direction[1] += 1;
+				}
+				if (a3keyboardGetState(demoState->keyboard, a3key_S))
+				{
+					direction[1] -= 1;
+				}
+				if (a3keyboardGetState(demoState->keyboard, a3key_A))
+				{
+					direction[0] -= 1;
+				}
+				if (a3keyboardGetState(demoState->keyboard, a3key_D))
+				{
+					direction[0] += 1;
+				}
+
+				// Checking to avoid a divide by zero error during normalization
+				if (direction[0] == 0.0) { }
+				else if (direction[1] == 0.0) { }
+				else { a3real2Normalize(direction); }
+
+				// Set the position based on the normalized vector
+				demoState->demoMode1_animation->obj_skeleton_ctrl->position.x += ((a3real)direction[0] * a3real_pi);
+				demoState->demoMode1_animation->obj_skeleton_ctrl->position.y += ((a3real)direction[1] * a3real_pi);
+				break;
+			}
+			case animation_input_euler:
+				break;
+			case animation_input_kinematic:
+				break;
+			case animation_input_interpolate1:
+				break;
+			case animation_input_interpolate2:
+				break;
+			}
+
 
 		}
 		break;
