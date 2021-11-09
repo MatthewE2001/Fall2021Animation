@@ -210,6 +210,8 @@ void a3animation_input(a3_DemoState* demoState, a3_DemoMode1_Animation* demoMode
 				break;
 			}
 			case animation_input_euler:
+				//a3SpatialPoseIntegrateEuler();
+
 				break;
 			case animation_input_kinematic:
 				break;
