@@ -125,6 +125,7 @@ void a3animation_input(a3_DemoState* demoState, a3_DemoMode1_Animation* demoMode
 		a3demo_input_controlProjector(demoState, projector,
 			dt, projector->ctrlMoveSpeed, projector->ctrlRotateSpeed, projector->ctrlZoomSpeed);
 		break;
+	//A lot of stuff here that needs to get done
 	case animation_ctrl_character:
 	case animation_ctrl_neckLookat:
 	case animation_ctrl_wristEffector_r:
