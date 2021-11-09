@@ -141,7 +141,10 @@ void a3animation_input(a3_DemoState* demoState, a3_DemoMode1_Animation* demoMode
 				break;
 			case animation_input_kinematic:
 				break;
+			// Fake velocity
 			case animation_input_interpolate1:
+				demoState->demoMode1_animation->obj_skeleton_ctrl->euler.z = a3SpatialPoseIntegrateLerp(demoState->demoMode1_animation->obj_skeleton_ctrl->euler.z,
+					(a3real)180.0, (a3real)rJoystick[0]);
 				break;
 			case animation_input_interpolate2:
 				break;
@@ -158,14 +161,22 @@ void a3animation_input(a3_DemoState* demoState, a3_DemoMode1_Animation* demoMode
 			case animation_input_euler:
 				// The 2D vector from your locomotion input directly maps to the character's velocity in world space.
 				// Integrate this into position using Euler's method.
-				demoState->demoMode1_animation->obj_skeleton_ctrl->position.x += (a3real)lJoystick[0] * (a3real)demoState->dt_timer;
-
 
 				break;
 			case animation_input_kinematic:
 				break;
 			case animation_input_interpolate1:
-				break;
+			{
+
+				// The 2D vector from your locomotion input directly maps to the character's target position
+				// in world space.  Integrate using interpolation.
+				demoState->demoMode1_animation->obj_skeleton_ctrl->position.x = a3SpatialPoseIntegrateLerp(demoState->demoMode1_animation->obj_skeleton_ctrl->position.x,
+					a3real_pi, (a3real)lJoystick[0]);
+				demoState->demoMode1_animation->obj_skeleton_ctrl->position.y = a3SpatialPoseIntegrateLerp(demoState->demoMode1_animation->obj_skeleton_ctrl->position.y,
+					a3real_pi, (a3real)lJoystick[1]);
+
+					break;
+			}
 			case animation_input_interpolate2:
 				break;
 			}
@@ -252,16 +263,54 @@ void a3animation_input(a3_DemoState* demoState, a3_DemoMode1_Animation* demoMode
 				else { a3real2Normalize(direction); }
 
 				// Set the position based on the normalized vector
-				demoState->demoMode1_animation->obj_skeleton_ctrl->position.x += ((a3real)direction[0] * a3real_pi);
-				demoState->demoMode1_animation->obj_skeleton_ctrl->position.y += ((a3real)direction[1] * a3real_pi);
+				
+				demoState->demoMode1_animation->obj_skeleton_ctrl->position.x = a3SpatialPoseIntegrateLerp(demoState->demoMode1_animation->obj_skeleton_ctrl->position.x,
+					a3real_pi, (a3real)direction[0]);
+				demoState->demoMode1_animation->obj_skeleton_ctrl->position.y = a3SpatialPoseIntegrateLerp(demoState->demoMode1_animation->obj_skeleton_ctrl->position.y,
+					a3real_pi, (a3real)direction[1]);
+
 				break;
 			}
 			case animation_input_euler:
 				break;
 			case animation_input_kinematic:
 				break;
+
+			// Fake Velocity
 			case animation_input_interpolate1:
+			{
+				// Get the position by normalizing the WASD inputs (if possible)
+
+				a3real2 direction = { 0.0, 0.0 };
+
+				if (a3keyboardGetState(demoState->keyboard, a3key_W))
+				{
+					direction[1] += 1;
+				}
+				if (a3keyboardGetState(demoState->keyboard, a3key_S))
+				{
+					direction[1] -= 1;
+				}
+				if (a3keyboardGetState(demoState->keyboard, a3key_A))
+				{
+					direction[0] -= 1;
+				}
+				if (a3keyboardGetState(demoState->keyboard, a3key_D))
+				{
+					direction[0] += 1;
+				}
+
+				// Checking to avoid a divide by zero error during normalization
+				if (direction[0] == 0.0) {}
+				else if (direction[1] == 0.0) {}
+				else { a3real2Normalize(direction); }
+
+				// Set the position based on the normalized vector
+				demoState->demoMode1_animation->obj_skeleton_ctrl->position.x += ((a3real)direction[0] * a3real_pi);
+				demoState->demoMode1_animation->obj_skeleton_ctrl->position.y += ((a3real)direction[1] * a3real_pi);
 				break;
+
+			}
 			case animation_input_interpolate2:
 				break;
 			}
