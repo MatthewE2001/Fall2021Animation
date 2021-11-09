@@ -210,12 +210,88 @@ void a3animation_input(a3_DemoState* demoState, a3_DemoMode1_Animation* demoMode
 				break;
 			}
 			case animation_input_euler:
-				//a3SpatialPoseIntegrateEuler();
+				a3real directionX = 0.0;
+				a3real directionY = 0.0;
+
+				if (a3keyboardGetState(demoState->keyboard, a3key_I))
+				{
+					directionY += 1;
+				}
+				if (a3keyboardGetState(demoState->keyboard, a3key_K))
+				{
+					directionY -= 1;
+				}
+				if (a3keyboardGetState(demoState->keyboard, a3key_J))
+				{
+					directionX -= 1;
+				}
+				if (a3keyboardGetState(demoState->keyboard, a3key_L))
+				{
+					directionX += 1;
+				}
+
+				// Checking to avoid a divide by zero error during normalization
+				if (directionX == 0.0) {}
+				else if (directionY == 0.0) {}
+
+				a3SpatialPoseIntegrateEuler(demoState->demoMode1_animation->obj_skeleton_ctrl->euler.z, a3atan2d(directionX, directionY), (a3real)demoState->dt_timer);
 
 				break;
 			case animation_input_kinematic:
+				a3real directionXKin = 0.0;
+				a3real directionYKin = 0.0;
+
+				if (a3keyboardGetState(demoState->keyboard, a3key_I))
+				{
+					directionYKin += 1;
+				}
+				if (a3keyboardGetState(demoState->keyboard, a3key_K))
+				{
+					directionYKin -= 1;
+				}
+				if (a3keyboardGetState(demoState->keyboard, a3key_J))
+				{
+					directionXKin -= 1;
+				}
+				if (a3keyboardGetState(demoState->keyboard, a3key_L))
+				{
+					directionXKin += 1;
+				}
+
+				// Checking to avoid a divide by zero error during normalization
+				if (directionXKin == 0.0) {}
+				else if (directionYKin == 0.0) {}
+
+				a3SpatialPoseIntegrateKinematic(demoState->demoMode1_animation->obj_skeleton_ctrl->euler.z, directionXKin, directionYKin, (a3real)demoState->dt_timer);
+
 				break;
 			case animation_input_interpolate1:
+				a3real directionXLerp = 0.0;
+				a3real directionYLerp = 0.0;
+
+				if (a3keyboardGetState(demoState->keyboard, a3key_I))
+				{
+					directionYLerp += 1;
+				}
+				if (a3keyboardGetState(demoState->keyboard, a3key_K))
+				{
+					directionYLerp -= 1;
+				}
+				if (a3keyboardGetState(demoState->keyboard, a3key_J))
+				{
+					directionXLerp -= 1;
+				}
+				if (a3keyboardGetState(demoState->keyboard, a3key_L))
+				{
+					directionXLerp += 1;
+				}
+
+				// Checking to avoid a divide by zero error during normalization
+				if (directionXLerp == 0.0) {}
+				else if (directionYLerp == 0.0) {}
+
+				a3SpatialPoseIntegrateLerp(demoState->demoMode1_animation->obj_skeleton_ctrl->euler.z, a3atan2d(directionXLerp, directionYLerp), (a3real)demoState->dt_timer);
+
 				break;
 			case animation_input_interpolate2:
 				break;
