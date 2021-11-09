@@ -124,9 +124,6 @@ void a3animation_input(a3_DemoState* demoState, a3_DemoMode1_Animation* demoMode
 		// capture axes
 		if (a3XboxControlIsConnected(demoState->xcontrol))
 		{
-			// ****TO-DO:
-			// get directly from joysticks
-
 			// Right joystick controls rotation of the character, left controls movement
 			// These values get updated continuously
 			a3f64 lJoystick[2], rJoystick[2];
@@ -140,6 +137,7 @@ void a3animation_input(a3_DemoState* demoState, a3_DemoMode1_Animation* demoMode
 				demoState->demoMode1_animation->obj_skeleton_ctrl->euler.z -= a3atan2d((a3real)rJoystick[0], (a3real)rJoystick[1]);
 				break;
 			case animation_input_euler:
+
 				break;
 			case animation_input_kinematic:
 				break;
@@ -158,8 +156,10 @@ void a3animation_input(a3_DemoState* demoState, a3_DemoMode1_Animation* demoMode
 				demoState->demoMode1_animation->obj_skeleton_ctrl->position.y += ((a3real)lJoystick[1] * a3real_pi);
 				break;
 			case animation_input_euler:
-				// Horizontal axis of orientation maps to character's angular velocity around the world "up" axis
-				// Use Euler's method to integrate into rotation
+				// The 2D vector from your locomotion input directly maps to the character's velocity in world space.
+				// Integrate this into position using Euler's method.
+				demoState->demoMode1_animation->obj_skeleton_ctrl->position.x += (a3real)lJoystick[0] * (a3real)demoState->dt_timer;
+
 
 				break;
 			case animation_input_kinematic:
