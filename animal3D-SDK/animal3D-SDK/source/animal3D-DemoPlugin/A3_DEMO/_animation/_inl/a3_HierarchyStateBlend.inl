@@ -115,6 +115,7 @@ inline a3real a3SpatialPoseIntegrateLerp(a3real x, a3real xc, a3real u)
 	return lerpIntegrate;
 }
 
+//found formula for quadratic bezier here: https://stackoverflow.com/questions/1074395/quadratic-bezier-interpolation
 inline a3real a3SpatialPoseQuadraticBezier(a3real p0, a3real p1, a3real p2, a3real const t)
 {
 	//P(t) = P0*(1-t)^2 + P1*2*(1-t)*t + P2*t^2
