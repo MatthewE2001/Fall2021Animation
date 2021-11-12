@@ -261,7 +261,7 @@ void a3animation_input(a3_DemoState* demoState, a3_DemoMode1_Animation* demoMode
 				else if (direction[1] == 0.0) {}
 				else { a3real2Normalize(direction); }
 
-				demoState->demoMode1_animation->obj_skeleton_ctrl->euler.z -= a3atan2d((a3real)direction[0], (a3real)direction[1]);
+				demoState->demoMode1_animation->obj_skeleton_ctrl->euler.z = a3atan2d((a3real)direction[0], (a3real)direction[1]);
 
 				break;
 			}
@@ -290,7 +290,10 @@ void a3animation_input(a3_DemoState* demoState, a3_DemoMode1_Animation* demoMode
 				if (directionX == 0.0) {}
 				else if (directionY == 0.0) {}
 
-				a3SpatialPoseIntegrateEuler(demoState->demoMode1_animation->obj_skeleton_ctrl->euler.z, a3atan2d(directionX, directionY), (a3real)demoState->dt_timer);
+				demoState->demoMode1_animation->obj_skeleton_ctrl->euler.z = 
+					a3SpatialPoseIntegrateEuler(demoState->demoMode1_animation->obj_skeleton_ctrl->euler.z,
+					a3atan2d(directionX, directionY), (a3real)demoState->dt_timer);
+				//assign to velocity, then integrate into the angle itself
 
 				break;
 			case animation_input_kinematic:
@@ -318,7 +321,11 @@ void a3animation_input(a3_DemoState* demoState, a3_DemoMode1_Animation* demoMode
 				if (directionXKin == 0.0) {}
 				else if (directionYKin == 0.0) {}
 
-				a3SpatialPoseIntegrateKinematic(demoState->demoMode1_animation->obj_skeleton_ctrl->euler.z, directionXKin, directionYKin, (a3real)demoState->dt_timer);
+				demoState->demoMode1_animation->obj_skeleton_ctrl->euler.z =
+					a3SpatialPoseIntegrateKinematic(demoState->demoMode1_animation->obj_skeleton_ctrl->euler.z, 
+						directionXKin, directionYKin, (a3real)demoState->dt_timer);
+				//have some values stored for position, velocity, angular acceleration, and others
+				//then we can assign them to what they should be at the end of the process
 
 				break;
 			case animation_input_interpolate1:
