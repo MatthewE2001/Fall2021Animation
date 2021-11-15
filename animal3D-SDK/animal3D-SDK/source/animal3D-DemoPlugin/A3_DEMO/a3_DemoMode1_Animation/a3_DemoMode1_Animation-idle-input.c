@@ -127,8 +127,13 @@ void a3animation_input(a3_DemoState* demoState, a3_DemoMode1_Animation* demoMode
 		break;
 	//A lot of stuff here that needs to get done
 	case animation_ctrl_character:
+		//what needs to happen in this spot
 	case animation_ctrl_neckLookat:
+		//need a look at matrix for the neck transformation
+		//ik pipeline done to bring joint back to a delta pose
 	case animation_ctrl_wristEffector_r:
+		//set target locator in the world
+		//character grabs it with chain IK solver
 	case animation_ctrl_wristConstraint_r:
 		sceneObject = demoMode->obj_skeleton_ctrl + demoMode->ctrl_target - animation_ctrl_character;
 		a3demo_input_controlObject(demoState, sceneObject, dt, a3real_one, a3real_zero);
