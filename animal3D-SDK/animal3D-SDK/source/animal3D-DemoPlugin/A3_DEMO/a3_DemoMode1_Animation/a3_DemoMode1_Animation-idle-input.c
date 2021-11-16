@@ -131,6 +131,7 @@ void a3animation_input(a3_DemoState* demoState, a3_DemoMode1_Animation* demoMode
 	case animation_ctrl_neckLookat:
 		//need a look at matrix for the neck transformation
 		//ik pipeline done to bring joint back to a delta pose
+		//a3mat4 lookAtMatrix; //set the transform to a point for character to look at?
 	case animation_ctrl_wristEffector_r:
 		//set target locator in the world
 		//character grabs it with chain IK solver
