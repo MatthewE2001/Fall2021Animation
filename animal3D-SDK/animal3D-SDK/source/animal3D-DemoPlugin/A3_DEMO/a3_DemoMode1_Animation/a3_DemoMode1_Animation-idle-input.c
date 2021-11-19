@@ -117,6 +117,9 @@ void a3animation_input(a3_DemoState* demoState, a3_DemoMode1_Animation* demoMode
 		a3real4Real4x4Mul(projector->sceneObject->modelMat.m, coord.v);
 	}
 	
+	a3mat4 worldTJoint; //for procedural grabbing
+	a3mat4 lookAtMatrix; //for procedural looking
+
 	// choose control target
 	switch (demoMode->ctrl_target)
 	{
@@ -131,10 +134,22 @@ void a3animation_input(a3_DemoState* demoState, a3_DemoMode1_Animation* demoMode
 	case animation_ctrl_neckLookat:
 		//need a look at matrix for the neck transformation
 		//ik pipeline done to bring joint back to a delta pose
-		//a3mat4 lookAtMatrix; //set the transform to a point for character to look at?
-	case animation_ctrl_wristEffector_r:
+			//set the transform to a point for character to look at?
+	case animation_ctrl_wristEffector_r: //calculate magnitude of vector between two bones to find length between bones
 		//set target locator in the world
 		//character grabs it with chain IK solver
+		//1) Solve Positions
+			// Find vector from base to the end/grab effector
+			// Distance check (to make sure arm does not extend longer than the arm has length)
+			// Also need a constraint locator (cause plane has 3 points)
+			//p-> = p0-> + Dd^ + Hh^ (arrows should be above p/p0 and ^ is adove d/h)
+		//2) Solve Rotations
+			// know normal basis from solving positions and we know tangent of each bone
+			// Frenet-Serret frame (assemble global matrix from three basis vectors in common space)
+			// world T joint (4x4) = [t^ b^ n^ p->	0 0 0 1]
+		//3) Solve Local
+			// Apply IK formula for affected joint chain only (rest of skeleton already solved)
+		//a3kinematicsSolveInverseSingle(); //single to keep it to the affected joint only
 	case animation_ctrl_wristConstraint_r:
 		sceneObject = demoMode->obj_skeleton_ctrl + demoMode->ctrl_target - animation_ctrl_character;
 		a3demo_input_controlObject(demoState, sceneObject, dt, a3real_one, a3real_zero);
