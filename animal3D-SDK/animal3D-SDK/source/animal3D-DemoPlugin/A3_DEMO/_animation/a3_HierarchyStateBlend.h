@@ -65,6 +65,16 @@ a3_HierarchyPose* a3hierarchyPoseOpIdentity(a3_HierarchyPose* pose_out);
 // pointer-based LERP operation for hierarchical pose
 a3_HierarchyPose* a3hierarchyPoseOpLERP(a3_HierarchyPose* pose_out, a3_HierarchyPose const* pose0, a3_HierarchyPose const* pose1, a3real const u);
 
+//-----------------------------------------------------------------------------
+
+a3real a3SpatialPoseIntegrateEuler(a3real x, a3real dxdt, a3real dt);
+
+a3real a3SpatialPoseIntegrateKinematic(a3real x, a3real dxdt, a3real dxdt2, a3real dt);
+
+a3real a3SpatialPoseIntegrateLerp(a3real x, a3real xc, a3real u);
+
+a3real a3SpatialPoseQuadraticBezier(a3real p0, a3real p1, a3real p2, a3real const t);
+
 
 //-----------------------------------------------------------------------------
 
