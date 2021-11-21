@@ -173,14 +173,15 @@ void a3animation_input(a3_DemoState* demoState, a3_DemoMode1_Animation* demoMode
 				// Direct value
 			case animation_input_direct:
 			{
-				// The horizontal axis of your orientation input (JL or horizontal tilt) directly maps
-				// to the character's rotation about the world's "up" axis (e.g. default is Z in animal3D).
-
-				// Old ethod using atan2
+				// Old ethod using atan2 to approximate joystick rotation
 				//a3real angle_raw = demoState->demoMode1_animation->obj_skeleton_ctrl->euler.z - a3atan2d((a3real)rJoystick[0], (a3real)rJoystick[1]);
 
 				// New method using direct input from the horizontal axis of the joystick
-				a3real angle_raw = demoState->demoMode1_animation->obj_skeleton_ctrl->euler.z - (a3real)rJoystick[0];
+				// Multiplier for speed
+				a3real multiplier = 2.0;
+				// Raw angle based on current angle and horizontal joystick input
+				a3real angle_raw = demoState->demoMode1_animation->obj_skeleton_ctrl->euler.z - ((a3real)rJoystick[0] * multiplier);
+				// Angle correction and assignment
 				demoState->demoMode1_animation->obj_skeleton_ctrl->euler.z = (a3real)fmod(angle_raw, (a3real)360.0);
 				
 
@@ -189,10 +190,11 @@ void a3animation_input(a3_DemoState* demoState, a3_DemoMode1_Animation* demoMode
 			// Control Velocity
 			case animation_input_euler:
 			{
-				// The horizontal axis of your orientation input directly maps to the character's angular
-				// velocity about the world's "up" axis.  Integrate this into rotation using Euler's method.
+				// Velocity coming from horizontal joystick input
 				a3real dxdt = (a3real)rJoystick[0];
+				// Time change (locked to 1.0)
 				a3real dt = 1.0;
+				// Euler method integration and assignment
 				demoState->demoMode1_animation->obj_skeleton_ctrl->euler.z = a3SpatialPoseIntegrateEuler(demoState->demoMode1_animation->obj_skeleton_ctrl->euler.z,
 					dxdt, dt);
 
