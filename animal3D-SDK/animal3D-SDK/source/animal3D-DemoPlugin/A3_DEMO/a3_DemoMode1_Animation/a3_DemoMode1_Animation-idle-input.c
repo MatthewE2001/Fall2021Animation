@@ -35,6 +35,9 @@
 
 #include "../_a3_demo_utilities/a3_DemoMacros.h"
 
+#include <stdio.h>
+#include <math.h>
+
 
 //-----------------------------------------------------------------------------
 // CALLBACKS
@@ -118,8 +121,9 @@ void a3animation_input(a3_DemoState* demoState, a3_DemoMode1_Animation* demoMode
 		a3real4Real4x4Mul(projector->sceneObject->modelMat.m, coord.v);
 	}
 	
-	a3mat4 worldTJoint; //for procedural grabbing
-	a3mat4 lookAtMatrix; //for procedural looking
+	// Lines below are temporarily commented out to avoid build errors
+	// a3mat4 worldTJoint; //for procedural grabbing
+	// a3mat4 lookAtMatrix; //for procedural looking
 
 	// choose control target
 	switch (demoMode->ctrl_target)
@@ -170,8 +174,15 @@ void a3animation_input(a3_DemoState* demoState, a3_DemoMode1_Animation* demoMode
 			case animation_input_direct:
 			{
 				// The horizontal axis of your orientation input (JL or horizontal tilt) directly maps
-				// to the character's rotation about the world's "up" axis (e.g. default is Z in animal3D). 
-				demoState->demoMode1_animation->obj_skeleton_ctrl->euler.z -= a3atan2d((a3real)rJoystick[0], (a3real)rJoystick[1]);
+				// to the character's rotation about the world's "up" axis (e.g. default is Z in animal3D).
+
+				a3real angle_raw = demoState->demoMode1_animation->obj_skeleton_ctrl->euler.z - a3atan2d((a3real)rJoystick[0], (a3real)rJoystick[1]);
+
+				//printf("%.6f\n", fmod(angle_raw, (a3real)360.0));
+
+				demoState->demoMode1_animation->obj_skeleton_ctrl->euler.z = (a3real)fmod(angle_raw, (a3real)360.0);
+				
+
 				break;
 			}
 			// Control Velocity
