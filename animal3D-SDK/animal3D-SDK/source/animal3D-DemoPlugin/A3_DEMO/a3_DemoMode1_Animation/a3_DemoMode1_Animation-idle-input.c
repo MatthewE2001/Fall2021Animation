@@ -176,10 +176,11 @@ void a3animation_input(a3_DemoState* demoState, a3_DemoMode1_Animation* demoMode
 				// The horizontal axis of your orientation input (JL or horizontal tilt) directly maps
 				// to the character's rotation about the world's "up" axis (e.g. default is Z in animal3D).
 
-				a3real angle_raw = demoState->demoMode1_animation->obj_skeleton_ctrl->euler.z - a3atan2d((a3real)rJoystick[0], (a3real)rJoystick[1]);
+				// Old ethod using atan2
+				//a3real angle_raw = demoState->demoMode1_animation->obj_skeleton_ctrl->euler.z - a3atan2d((a3real)rJoystick[0], (a3real)rJoystick[1]);
 
-				//printf("%.6f\n", fmod(angle_raw, (a3real)360.0));
-
+				// New method using direct input from the horizontal axis of the joystick
+				a3real angle_raw = demoState->demoMode1_animation->obj_skeleton_ctrl->euler.z - (a3real)rJoystick[0];
 				demoState->demoMode1_animation->obj_skeleton_ctrl->euler.z = (a3real)fmod(angle_raw, (a3real)360.0);
 				
 
@@ -190,11 +191,17 @@ void a3animation_input(a3_DemoState* demoState, a3_DemoMode1_Animation* demoMode
 			{
 				// The horizontal axis of your orientation input directly maps to the character's angular
 				// velocity about the world's "up" axis.  Integrate this into rotation using Euler's method.
+				a3real dxdt = (a3real)rJoystick[0];
+				a3real dt = 1.0;
+				demoState->demoMode1_animation->obj_skeleton_ctrl->euler.z = a3SpatialPoseIntegrateEuler(demoState->demoMode1_animation->obj_skeleton_ctrl->euler.z,
+					dxdt, dt);
+
 				break;
 			}
 			// Control Acceleration
 			case animation_input_kinematic:
 			{
+				printf("Kinematic Rotation");
 				// The horizontal axis of your orientation input directly maps to the character's angular
 				// acceleration about the world's "up" axis.  Integrate both the current angular velocity
 				// and this angular acceleration into rotation using kinematic integration, then integrate
