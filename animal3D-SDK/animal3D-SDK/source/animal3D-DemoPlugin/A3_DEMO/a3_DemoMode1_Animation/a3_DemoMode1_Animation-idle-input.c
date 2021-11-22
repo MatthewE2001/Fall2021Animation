@@ -195,8 +195,8 @@ void a3animation_input(a3_DemoState* demoState, a3_DemoMode1_Animation* demoMode
 			{
 				// Velocity coming from horizontal joystick input
 				a3real dxdt = (a3real)rJoystick[0];
-				// Time change (locked to 1.0)
-				a3real dt = 1.0;
+				// Time change
+				a3real dt = (a3real)demoState->dt_timer;
 				// Euler method integration and assignment
 				demoState->demoMode1_animation->obj_skeleton_ctrl->euler.z = a3SpatialPoseIntegrateEuler(demoState->demoMode1_animation->obj_skeleton_ctrl->euler.z,
 					dxdt, dt);
@@ -206,11 +206,25 @@ void a3animation_input(a3_DemoState* demoState, a3_DemoMode1_Animation* demoMode
 			// Control Acceleration
 			case animation_input_kinematic:
 			{
-				printf("Kinematic Rotation");
 				// The horizontal axis of your orientation input directly maps to the character's angular
 				// acceleration about the world's "up" axis.  Integrate both the current angular velocity
 				// and this angular acceleration into rotation using kinematic integration, then integrate
 				// angular acceleration into angular velocity using Euler's method.
+
+				//printf("%f\n", demoState->dt_timer);
+
+				// Initial velocity coming from horizontal joystick input
+				a3real dxdt = (a3real)rJoystick[0];
+				a3real dxdt2 = (a3real)(rJoystick[0]); //d2x / dt2
+				printf("dxdt: %f\n", dxdt);
+				printf("dxdt2: %f\n", dxdt2);
+				// Time change
+				a3real dt = (a3real)demoState->dt_timer;
+				// Euler method integration and assignment
+				demoState->demoMode1_animation->obj_skeleton_ctrl->euler.z = a3SpatialPoseIntegrateKinematic(demoState->demoMode1_animation->obj_skeleton_ctrl->euler.z,
+					dxdt, dxdt2, dt);
+
+
 				break;
 			}
 			// Fake velocity
@@ -292,66 +306,49 @@ void a3animation_input(a3_DemoState* demoState, a3_DemoMode1_Animation* demoMode
 			{
 			case animation_input_direct:
 			{
-				// Get the rotation by normalizing the IJKL inputs (if possible)
+				// Get the rotation from JL input
+				a3real direction = 0.0;
 
-				a3real2 direction = { 0.0, 0.0 };
-
-				if (a3keyboardGetState(demoState->keyboard, a3key_I))
-				{
-					direction[1] += 1;
-				}
-				if (a3keyboardGetState(demoState->keyboard, a3key_K))
-				{
-					direction[1] -= 1;
-				}
 				if (a3keyboardGetState(demoState->keyboard, a3key_J))
 				{
-					direction[0] -= 1;
+					direction -= 1.0;
 				}
 				if (a3keyboardGetState(demoState->keyboard, a3key_L))
 				{
-					direction[0] += 1;
+					direction += 1.0;
 				}
 
-				// Checking to avoid a divide by zero error during normalization
-				if (direction[0] == 0.0) {}
-				else if (direction[1] == 0.0) {}
-				else { a3real2Normalize(direction); }
+				// Multiplier for speed
+				a3real multiplier = 2.0;
+				// Raw angle based on current angle and horizontal joystick input
+				a3real angle_raw = demoState->demoMode1_animation->obj_skeleton_ctrl->euler.z - (direction * multiplier);
+				// Angle correction and assignment
+				demoState->demoMode1_animation->obj_skeleton_ctrl->euler.z = (a3real)fmod(angle_raw, (a3real)360.0);
 
-				demoState->demoMode1_animation->obj_skeleton_ctrl->euler.z = a3atan2d((a3real)direction[0], (a3real)direction[1]);
 
 				break;
 			}
 			case animation_input_euler:
 			{
-				a3real directionX = 0.0;
-				a3real directionY = 0.0;
+				// Get the rotation from JL input
+				a3real direction = 0.0;
 
-				if (a3keyboardGetState(demoState->keyboard, a3key_I))
-				{
-					directionY += 1;
-				}
-				if (a3keyboardGetState(demoState->keyboard, a3key_K))
-				{
-					directionY -= 1;
-				}
 				if (a3keyboardGetState(demoState->keyboard, a3key_J))
 				{
-					directionX -= 1;
+					direction -= 1.0;
 				}
 				if (a3keyboardGetState(demoState->keyboard, a3key_L))
 				{
-					directionX += 1;
+					direction += 1.0;
 				}
 
-				// Checking to avoid a divide by zero error during normalization
-				if (directionX == 0.0) {}
-				else if (directionY == 0.0) {}
-
-				demoState->demoMode1_animation->obj_skeleton_ctrl->euler.z =
-					a3SpatialPoseIntegrateEuler(demoState->demoMode1_animation->obj_skeleton_ctrl->euler.z,
-						a3atan2d(directionX, directionY), (a3real)demoState->dt_timer);
-				//assign to velocity, then integrate into the angle itself
+				// Velocity coming from JL key input
+				a3real dxdt = (a3real)direction;
+				// Time change (locked to 1.0)
+				a3real dt = 1.0;
+				// Euler method integration and assignment
+				demoState->demoMode1_animation->obj_skeleton_ctrl->euler.z = a3SpatialPoseIntegrateEuler(demoState->demoMode1_animation->obj_skeleton_ctrl->euler.z,
+					dxdt, dt);
 
 				break;
 			}
@@ -429,25 +426,28 @@ void a3animation_input(a3_DemoState* demoState, a3_DemoMode1_Animation* demoMode
 				// Direct assignment from keyboard input
 			case animation_input_direct:
 			{
-				// Get the position by normalizing the WASD inputs (if possible)
 
+				// Speed multiplier
+				a3real multiplier = 2.0;
+
+				// Get the position by normalizing the WASD inputs (if possible)
 				a3real2 direction = { 0.0, 0.0 };
 
 				if (a3keyboardGetState(demoState->keyboard, a3key_W))
 				{
-					direction[1] += 1;
+					direction[1] += 1.0;
 				}
 				if (a3keyboardGetState(demoState->keyboard, a3key_S))
 				{
-					direction[1] -= 1;
+					direction[1] -= 1.0;
 				}
 				if (a3keyboardGetState(demoState->keyboard, a3key_A))
 				{
-					direction[0] -= 1;
+					direction[0] -= 1.0;
 				}
 				if (a3keyboardGetState(demoState->keyboard, a3key_D))
 				{
-					direction[0] += 1;
+					direction[0] += 1.0;
 				}
 
 				// Checking to avoid a divide by zero error during normalization
@@ -455,17 +455,15 @@ void a3animation_input(a3_DemoState* demoState, a3_DemoMode1_Animation* demoMode
 				else if (direction[1] == 0.0) {}
 				else { a3real2Normalize(direction); }
 
-				// Set the position based on the normalized vector
-
-				demoState->demoMode1_animation->obj_skeleton_ctrl->position.x = a3SpatialPoseIntegrateLerp(demoState->demoMode1_animation->obj_skeleton_ctrl->position.x,
-					a3real_pi, (a3real)direction[0]);
-				demoState->demoMode1_animation->obj_skeleton_ctrl->position.y = a3SpatialPoseIntegrateLerp(demoState->demoMode1_animation->obj_skeleton_ctrl->position.y,
-					a3real_pi, (a3real)direction[1]);
+				// Assign the normalized values to the character position
+				demoState->demoMode1_animation->obj_skeleton_ctrl->position.x += ((a3real)direction[0] * multiplier);
+				demoState->demoMode1_animation->obj_skeleton_ctrl->position.y += ((a3real)direction[1] * multiplier);
 
 				break;
 			}
 			case animation_input_euler:
 				break;
+
 			case animation_input_kinematic:
 				break;
 
