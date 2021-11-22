@@ -146,7 +146,7 @@ void a3animation_input(a3_DemoState* demoState, a3_DemoMode1_Animation* demoMode
 		//character grabs it with chain IK solver
 		//1) Solve Positions
 			// Find vector from base to the end/grab effector
-		demoMode->hierarchyState_skel->hierarchy;
+		demoMode->hierarchyState_skel_final->hierarchy;
 			// Distance check (to make sure arm does not extend longer than the arm has length)
 			// Also need a constraint locator (cause plane has 3 points)
 			//p-> = p0-> + Dd^ + Hh^ (arrows should be above p/p0 and ^ is adove d/h)
