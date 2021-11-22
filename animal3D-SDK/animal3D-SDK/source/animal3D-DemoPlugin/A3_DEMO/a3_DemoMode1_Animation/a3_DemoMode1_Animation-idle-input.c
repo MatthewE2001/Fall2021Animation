@@ -124,6 +124,8 @@ void a3animation_input(a3_DemoState* demoState, a3_DemoMode1_Animation* demoMode
 	// Lines below are temporarily commented out to avoid build errors
 	// a3mat4 worldTJoint; //for procedural grabbing
 	// a3mat4 lookAtMatrix; //for procedural looking
+	//a3mat4 grabPoint; //need something to grab towards
+	//a3real4x4SetMajors(grabPoint.m);
 
 	// choose control target
 	switch (demoMode->ctrl_target)
@@ -144,6 +146,7 @@ void a3animation_input(a3_DemoState* demoState, a3_DemoMode1_Animation* demoMode
 		//character grabs it with chain IK solver
 		//1) Solve Positions
 			// Find vector from base to the end/grab effector
+		demoMode->hierarchyState_skel->hierarchy;
 			// Distance check (to make sure arm does not extend longer than the arm has length)
 			// Also need a constraint locator (cause plane has 3 points)
 			//p-> = p0-> + Dd^ + Hh^ (arrows should be above p/p0 and ^ is adove d/h)
