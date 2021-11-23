@@ -179,8 +179,12 @@ void a3animation_input(a3_DemoState* demoState, a3_DemoMode1_Animation* demoMode
 				// Time change (locked to 1.0)
 				a3real dt = 1.0;
 				// Euler method integration and assignment
-				demoState->demoMode1_animation->obj_skeleton_neckLookat_ctrl->euler.z = a3SpatialPoseIntegrateEuler(demoState->demoMode1_animation->obj_skeleton_ctrl->euler.z,
-					dxdt, dt);
+				demoState->demoMode1_animation->obj_skeleton_neckLookat_ctrl->position.x = 
+					a3SpatialPoseIntegrateEuler(demoState->demoMode1_animation->obj_skeleton_ctrl->position.x, 
+						dxdt, dt);
+				a3kinematicsSolveInversePartial(demoState->demoMode1_animation->hierarchyState_skel_ik, 
+					a3hierarchyGetNodeIndex(demoMode->hierarchy_skel, "skel:wrist_r"), 4);
+				//demoState->demoMode1_animation->ctrl_target;
 
 				break;
 			}
