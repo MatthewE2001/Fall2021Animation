@@ -183,6 +183,9 @@ struct a3_DemoState
 	a3boolean stencilTest;
 	a3boolean skipIntermediatePasses;
 
+	// Velocity from last frame
+	a3real dxdt2;
+
 
 	//-------------------------------------------------------------------------
 	// object arrays: organized as anonymous unions for two reasons: 
