@@ -198,7 +198,90 @@ void a3animation_input(a3_DemoState* demoState, a3_DemoMode1_Animation* demoMode
 		}
 		else
 		{
+			switch (demoMode->ctrl_position)
+			{
+				// Direct assignment from keyboard input
+			case animation_input_direct:
+			{
 
+				// Speed multiplier
+				a3real multiplier = 2.0;
+
+				// Get the position by normalizing the WASD inputs (if possible)
+				a3real2 direction = { 0.0, 0.0 };
+
+				if (a3keyboardGetState(demoState->keyboard, a3key_W))
+				{
+					direction[1] += 1.0;
+				}
+				if (a3keyboardGetState(demoState->keyboard, a3key_S))
+				{
+					direction[1] -= 1.0;
+				}
+				if (a3keyboardGetState(demoState->keyboard, a3key_A))
+				{
+					direction[0] -= 1.0;
+				}
+				if (a3keyboardGetState(demoState->keyboard, a3key_D))
+				{
+					direction[0] += 1.0;
+				}
+
+				// Checking to avoid a divide by zero error during normalization
+				if (direction[0] == 0.0) {}
+				else if (direction[1] == 0.0) {}
+				else { a3real2Normalize(direction); }
+
+				// Assign the normalized values to the character position
+				demoState->demoMode1_animation->obj_skeleton_neckLookat_ctrl->position.x += ((a3real)direction[0] * multiplier);
+				demoState->demoMode1_animation->obj_skeleton_neckLookat_ctrl->position.y += ((a3real)direction[1] * multiplier);
+
+				break;
+			}
+			case animation_input_euler:
+				break;
+
+			case animation_input_kinematic:
+				break;
+
+				// Fake Velocity
+			case animation_input_interpolate1:
+			{
+				// Get the position by normalizing the WASD inputs (if possible)
+
+				a3real2 direction = { 0.0, 0.0 };
+
+				if (a3keyboardGetState(demoState->keyboard, a3key_W))
+				{
+					direction[1] += 1;
+				}
+				if (a3keyboardGetState(demoState->keyboard, a3key_S))
+				{
+					direction[1] -= 1;
+				}
+				if (a3keyboardGetState(demoState->keyboard, a3key_A))
+				{
+					direction[0] -= 1;
+				}
+				if (a3keyboardGetState(demoState->keyboard, a3key_D))
+				{
+					direction[0] += 1;
+				}
+
+				// Checking to avoid a divide by zero error during normalization
+				if (direction[0] == 0.0) {}
+				else if (direction[1] == 0.0) {}
+				else { a3real2Normalize(direction); }
+
+				// Set the position based on the normalized vector
+				demoState->demoMode1_animation->obj_skeleton_neckLookat_ctrl->position.x += ((a3real)direction[0] * a3real_pi);
+				demoState->demoMode1_animation->obj_skeleton_neckLookat_ctrl->position.y += ((a3real)direction[1] * a3real_pi);
+				break;
+
+			}
+			case animation_input_interpolate2:
+				break;
+			}
 		}
 	case animation_ctrl_wristEffector_r: //calculate magnitude of vector between two bones to find length between bones
 		//set target locator in the world
