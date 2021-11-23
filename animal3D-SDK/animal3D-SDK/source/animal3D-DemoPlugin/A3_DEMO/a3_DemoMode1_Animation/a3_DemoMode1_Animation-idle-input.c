@@ -141,6 +141,65 @@ void a3animation_input(a3_DemoState* demoState, a3_DemoMode1_Animation* demoMode
 		//need a look at matrix for the neck transformation
 		//ik pipeline done to bring joint back to a delta pose
 			//set the transform to a point for character to look at?
+
+		if (a3XboxControlIsConnected(demoState->xcontrol))
+		{
+			a3f64 lJoystick[2], rJoystick[2];
+			a3XboxControlGetJoysticks(demoState->xcontrol, lJoystick, rJoystick);
+
+			switch (demoMode->ctrl_position)
+			{
+				// Direct value
+			case animation_input_direct:
+			{
+				// The 2D vector from your locomotion input(WASD or joystick) directly maps to the character's
+				// position in world-space (AD or horizontal tilt for WS or vertical tilt for Y axis).
+				demoState->demoMode1_animation->obj_skeleton_neckLookat_ctrl->position.x += ((a3real)lJoystick[0] * a3real_pi);
+				demoState->demoMode1_animation->obj_skeleton_neckLookat_ctrl->position.y += ((a3real)lJoystick[1] * a3real_pi);
+				break;
+			}
+			// Control Velocity
+			case animation_input_euler:
+			{
+				// The 2D vector from your locomotion input directly maps to the character's velocity in world space.
+				// Integrate this into position using Euler's method.
+
+				break;
+			}
+			// Control Acceleration
+			case animation_input_kinematic:
+			{
+				// The 2D vector from your locomotion input directly maps to the character's acceleration in world space.
+				// Integrate both the current velocity and this acceleration into position using kinematic integration,
+				// then integrate acceleration into velocity using Euler's method.
+				break;
+			}
+			// Fake Velocity
+			case animation_input_interpolate1:
+			{
+				// The 2D vector from your locomotion input directly maps to the character's target
+				// position in world space.  Integrate using interpolation.
+				demoState->demoMode1_animation->obj_skeleton_neckLookat_ctrl->position.x = a3SpatialPoseIntegrateLerp(demoState->demoMode1_animation->obj_skeleton_neckLookat_ctrl->position.x,
+					a3real_pi, (a3real)lJoystick[0]);
+				demoState->demoMode1_animation->obj_skeleton_neckLookat_ctrl->position.y = a3SpatialPoseIntegrateLerp(demoState->demoMode1_animation->obj_skeleton_neckLookat_ctrl->position.y,
+					a3real_pi, (a3real)lJoystick[1]);
+
+				break;
+			}
+			// Fake Acceleration
+			case animation_input_interpolate2:
+			{
+				// The 2D vector from your locomotion input directly maps to the character's target
+				// velocity in world space.  Integrate the current velocity into position using Euler's
+				// method, then integrate velocity using interpolation.
+				break;
+			}
+			}
+		}
+		else
+		{
+
+		}
 	case animation_ctrl_wristEffector_r: //calculate magnitude of vector between two bones to find length between bones
 		//set target locator in the world
 		//character grabs it with chain IK solver
