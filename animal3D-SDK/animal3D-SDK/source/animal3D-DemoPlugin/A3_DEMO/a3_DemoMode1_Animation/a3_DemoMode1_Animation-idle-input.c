@@ -163,6 +163,24 @@ void a3animation_input(a3_DemoState* demoState, a3_DemoMode1_Animation* demoMode
 			{
 				// The 2D vector from your locomotion input directly maps to the character's velocity in world space.
 				// Integrate this into position using Euler's method.
+				a3real direction = 0.0;
+
+				if (a3keyboardGetState(demoState->keyboard, a3key_J))
+				{
+					direction -= 1.0;
+				}
+				if (a3keyboardGetState(demoState->keyboard, a3key_L))
+				{
+					direction += 1.0;
+				}
+
+				// Velocity coming from JL key input
+				a3real dxdt = (a3real)direction;
+				// Time change (locked to 1.0)
+				a3real dt = 1.0;
+				// Euler method integration and assignment
+				demoState->demoMode1_animation->obj_skeleton_neckLookat_ctrl->euler.z = a3SpatialPoseIntegrateEuler(demoState->demoMode1_animation->obj_skeleton_ctrl->euler.z,
+					dxdt, dt);
 
 				break;
 			}
