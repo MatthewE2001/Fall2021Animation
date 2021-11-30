@@ -165,27 +165,6 @@ void a3animation_input(a3_DemoState* demoState, a3_DemoMode1_Animation* demoMode
 				// Integrate this into position using Euler's method.
 				a3real direction = 0.0;
 
-				if (a3keyboardGetState(demoState->keyboard, a3key_J))
-				{
-					direction -= 1.0;
-				}
-				if (a3keyboardGetState(demoState->keyboard, a3key_L))
-				{
-					direction += 1.0;
-				}
-
-				// Velocity coming from JL key input
-				a3real dxdt = (a3real)direction;
-				// Time change (locked to 1.0)
-				a3real dt = 1.0;
-				// Euler method integration and assignment
-				demoState->demoMode1_animation->obj_skeleton_neckLookat_ctrl->position.x = 
-					a3SpatialPoseIntegrateEuler(demoState->demoMode1_animation->obj_skeleton_ctrl->position.x, 
-						dxdt, dt);
-				a3kinematicsSolveInversePartial(demoState->demoMode1_animation->hierarchyState_skel_ik, 
-					a3hierarchyGetNodeIndex(demoMode->hierarchy_skel, "skel:wrist_r"), 4);
-				//demoState->demoMode1_animation->ctrl_target;
-
 				break;
 			}
 			// Control Acceleration
@@ -261,6 +240,29 @@ void a3animation_input(a3_DemoState* demoState, a3_DemoMode1_Animation* demoMode
 				break;
 			}
 			case animation_input_euler:
+
+				a3real direction = 0.0;
+
+				if (a3keyboardGetState(demoState->keyboard, a3key_J))
+				{
+					direction -= 1.0;
+				}
+				if (a3keyboardGetState(demoState->keyboard, a3key_L))
+				{
+					direction += 1.0;
+				}
+
+				// Velocity coming from JL key input
+				a3real dxdt = (a3real)direction;
+				// Time change (locked to 1.0)
+				a3real dt = 1.0;
+				// Euler method integration and assignment
+				demoState->demoMode1_animation->obj_skeleton_neckLookat_ctrl->position.x =
+					a3SpatialPoseIntegrateEuler(demoState->demoMode1_animation->obj_skeleton_ctrl->position.x,
+						dxdt, dt);
+				a3kinematicsSolveInversePartial(demoState->demoMode1_animation->hierarchyState_skel_ik,
+					a3hierarchyGetNodeIndex(demoMode->hierarchy_skel, "skel:wrist_r"), 4);
+				//demoState->demoMode1_animation->ctrl_target;
 				break;
 
 			case animation_input_kinematic:
