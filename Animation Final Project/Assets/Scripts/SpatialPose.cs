@@ -22,4 +22,26 @@ public class SpatialPose : MonoBehaviour
     {
         
     }
+
+    public void SetRotation(Vector4 tmpRotate)
+    {
+
+    }
+
+    public void SetTranslation(Vector4 tmpTranslate)
+    {
+
+    }
+
+    public void SetScale(Vector4 tmpScale)
+    {
+
+    }
+
+    public void CopyPose(GameObject poseToCopy)
+    {
+        //set the values of this pose to those of the gameobject parameter
+    }
+
+    //public void SpatialPoseLerp()
 }
