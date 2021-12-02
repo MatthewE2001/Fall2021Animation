@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class Hierarchy : MonoBehaviour
 {
+    int index;
+    int parentIndex;
+
+    //Node node;
+
     // Start is called before the first frame update
     void Start()
     {
