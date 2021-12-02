@@ -7,7 +7,7 @@ public class Hierarchy : MonoBehaviour
     int index;
     int parentIndex;
 
-    //Node node;
+    Transform node; //I think making the nodes transforms will be a good plan
 
     // Start is called before the first frame update
     void Start()
