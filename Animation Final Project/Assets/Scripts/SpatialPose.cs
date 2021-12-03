@@ -9,7 +9,7 @@ public class SpatialPose : MonoBehaviour
     Vector4 translation;
     Vector4 rotation;
     //Vector4 user; //unsure what user is exactly
-    Matrix4x4 transform; //need to set this to value for no warning
+    Matrix4x4 transformMat; //need to set this to value for no warning
 
     // Start is called before the first frame update
     void Start()
