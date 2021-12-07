@@ -18,19 +18,24 @@ public class Kinematics : MonoBehaviour
         
     }
 
-    public void SolveForwardKinematics() //parameter hierarchy state?
+    public void SolveForwardKinematics(GameObject hierarchyState) //parameter hierarchy state?
     {
 
     }
 
     public void SolvePartialForwardKinematics(int firstIndex, int nodeCount) //parameter hierarchy state?
     {
-
+        for (int i = firstIndex; i < nodeCount; i++)
+        {
+            
+            //if (i 
+        }
     }
 
     public void SolveSingleForwardKinematics(int index, int parentIndex) //parameter hierarchy state?
     {
         //need to differentiate between object space and local space (Space.World and Space.Self)
+        //4x4matrix times 4x4 matrix
     }
 
     public void SolveInverseKinematics() //parameter hierarchy state?
