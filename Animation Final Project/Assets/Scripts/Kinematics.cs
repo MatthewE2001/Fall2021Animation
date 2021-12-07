@@ -29,7 +29,10 @@ public class Kinematics : MonoBehaviour
 
         for (int i = firstIndex; i < nodeCount; i++)
         {
-            //if (tmp.GetNode(i). )
+            //if (tmp.GetNode(i).GetParentIndex() >= 0)
+                //SolveSingleForwardKinematics(hierarchyState, tmp.GetNode(i).GetIndex(), tmp.GetNode(i).GetParentIndex());
+            //else
+                //hierarchyState.SetWorldPose(hierarchyState.GetLocalPose(tmp.GetNode(i).GetIndex());
         }
     }
 
