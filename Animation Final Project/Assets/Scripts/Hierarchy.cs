@@ -34,6 +34,18 @@ public class Hierarchy : MonoBehaviour
 
     }
 
+    public Transform GetNode(int index)
+    {
+        if (index < nodes.Length && index > -1)
+        {
+            return nodes[index];
+        }
+        else
+        {
+            return null;
+        }
+    }
+
     public int GetNodeIndex(string name)
     {
         for (int i = 0; i < nodes.Length; i++)

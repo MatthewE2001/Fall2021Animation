@@ -5,6 +5,7 @@ using UnityEngine;
 public class HierarchyState : MonoBehaviour
 {
     //any necessary data here
+    Hierarchy hierarchy;
 
     // Start is called before the first frame update
     void Start()
@@ -52,5 +53,10 @@ public class HierarchyState : MonoBehaviour
         bezier = p0 * ((1 - t) * (1 - t)) + p1 * 2 * (1 - t) * t + p2 * (t * t);
 
         return bezier;
+    }
+
+    public Hierarchy GetHierarchy()
+    {
+        return hierarchy;
     }
 }
