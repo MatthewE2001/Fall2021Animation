@@ -29,14 +29,19 @@ public class Kinematics : MonoBehaviour
 
         for (int i = firstIndex; i < nodeCount; i++)
         {
-            //if (tmp.GetNode(i).GetParentIndex() >= 0)
-                //SolveSingleForwardKinematics(hierarchyState, tmp.GetNode(i).GetIndex(), tmp.GetNode(i).GetParentIndex());
-            //else
+            if (tmp.GetNode(i).GetParentIndex() >= 0)
+            {
+                SolveSingleForwardKinematics(hierarchyState, tmp.GetNode(i).GetIndex(), tmp.GetNode(i).GetParentIndex());
+            }
+            else
+            {
                 //hierarchyState.SetWorldPose(hierarchyState.GetLocalPose(tmp.GetNode(i).GetIndex());
+            }
+
         }
     }
 
-    public void SolveSingleForwardKinematics(int index, int parentIndex) //parameter hierarchy state?
+    public void SolveSingleForwardKinematics(GameObject hierarchyState, int index, int parentIndex) //parameter hierarchy state?
     {
         //need to differentiate between object space and local space (Space.World and Space.Self)
         //I think this will be two vector4 multiplied together

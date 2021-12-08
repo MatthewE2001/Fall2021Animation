@@ -7,7 +7,7 @@ public class Hierarchy : MonoBehaviour
     int index;
     int parentIndex;
 
-    Transform[] nodes; //Should this be an array
+    Node[] nodes; //Should this be an array
 
     // Start is called before the first frame update
     void Start()
@@ -34,7 +34,7 @@ public class Hierarchy : MonoBehaviour
 
     }
 
-    public Transform GetNode(int index)
+    public Node GetNode(int index)
     {
         if (index < nodes.Length && index > -1)
         {
