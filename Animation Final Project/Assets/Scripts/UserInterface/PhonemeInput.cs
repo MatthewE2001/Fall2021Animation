@@ -5,10 +5,41 @@ using TMPro;
 using UnityEditor;
 using UnityEditor.Scripting.Python;
 
+ [System.Serializable]
+ public class SerializedPhonemes
+ {
+      public List<string> phonemes;
+
+      public void Add(string input)
+      {
+          if(phonemes == null)
+          {
+              phonemes = new List<string>();
+              phonemes.Add(input);
+          }
+          else
+          {
+          phonemes.Add(input);
+          }
+      }
+ }
+
+
 public class PhonemeInput : MonoBehaviour
 {
     public TMP_InputField InputField;
-    public List<string> Phonemes;
+    public List<SerializedPhonemes> words;
+    
+
+    void Awake()
+    {
+        Debug.Log("Running");
+        // For each word, add a SerializedPhonemes
+        words.Add(new SerializedPhonemes());
+        // For each phoneme, add said phoneme to the corresponding index list
+        words[0].Add("Test");
+
+    }
 
     public void CopyText()
     {
