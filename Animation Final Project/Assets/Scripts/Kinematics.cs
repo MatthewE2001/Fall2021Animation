@@ -21,6 +21,7 @@ public class Kinematics : MonoBehaviour
     public void SolveForwardKinematics(GameObject hierarchyState) //parameter hierarchy state?
     {
         //hierarchyState
+        //SolvePartialForwardKinematics(hierarchyState, hierarchyState.GetComponent<HierarchyState>())
     }
 
     public void SolvePartialForwardKinematics(GameObject hierarchyState, int firstIndex, int nodeCount) //parameter hierarchy state?
@@ -45,11 +46,20 @@ public class Kinematics : MonoBehaviour
     public void SolveSingleForwardKinematics(GameObject hierarchyState, int index, int parentIndex) //parameter hierarchy state?
     {
         //need to differentiate between object space and local space (Space.World and Space.Self)
-        //I think this will be two vector4 multiplied together
-        //hierarchyState.GetComponent<HierarchyState>().getLocalPose()
-        //hierarchyState.GetComponent<HierarchyState>().getObjectPose(),
+        Vector4 tmp1;
+        tmp1.x = hierarchyState.GetComponent<HierarchyState>().GetLocalPose().transform.position.x
+            * hierarchyState.GetComponent<HierarchyState>().GetObjectPose().transform.position.x;
+        tmp1.y = hierarchyState.GetComponent<HierarchyState>().GetLocalPose().transform.position.y
+            * hierarchyState.GetComponent<HierarchyState>().GetObjectPose().transform.position.y;
+        tmp1.z = hierarchyState.GetComponent<HierarchyState>().GetLocalPose().transform.position.z
+            * hierarchyState.GetComponent<HierarchyState>().GetObjectPose().transform.position.z;
         //multiple pose and parent pose parts in Space.World
-        //hierarchyState->localSpace->pose[index].transformMat.m
+        tmp1.x = hierarchyState.GetComponent<HierarchyState>().GetLocalPose().transform.position.x
+        * tmp1.x;
+        tmp1.y = hierarchyState.GetComponent<HierarchyState>().GetLocalPose().transform.position.y
+        * tmp1.y;
+        tmp1.z = hierarchyState.GetComponent<HierarchyState>().GetLocalPose().transform.position.z
+        * tmp1.z;
         //multiply that result by pose in Space.Self
 
     }
