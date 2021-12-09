@@ -6,6 +6,8 @@ public class HierarchyState : MonoBehaviour
 {
     //any necessary data here
     Hierarchy hierarchy;
+    SpatialPose localPose;
+    SpatialPose objectPose;
 
     // Start is called before the first frame update
     void Start()
@@ -58,5 +60,20 @@ public class HierarchyState : MonoBehaviour
     public Hierarchy GetHierarchy()
     {
         return hierarchy;
+    }
+
+    public SpatialPose GetLocalPose()
+    {
+        return localPose;
+    }
+
+    public SpatialPose GetObjectPose()
+    {
+        return objectPose;
+    }
+
+    public void SetObjectPose(SpatialPose pose)
+    {
+        objectPose = pose;
     }
 }

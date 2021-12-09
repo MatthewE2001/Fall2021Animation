@@ -35,7 +35,8 @@ public class Kinematics : MonoBehaviour
             }
             else
             {
-                //hierarchyState.SetWorldPose(hierarchyState.GetLocalPose(tmp.GetNode(i).GetIndex());
+                hierarchyState.GetComponent<HierarchyState>().SetObjectPose(
+                    hierarchyState.GetComponent<HierarchyState>().GetLocalPose());
             }
 
         }
@@ -45,12 +46,12 @@ public class Kinematics : MonoBehaviour
     {
         //need to differentiate between object space and local space (Space.World and Space.Self)
         //I think this will be two vector4 multiplied together
-        //hierarchyState->objectSpace->pose[index].transformMat.m,
-		//hierarchyState->objectSpace->pose[parentIndex].transformMat.m,
-            //multiple pose and parent pose parts in Space.World
-		//hierarchyState->localSpace->pose[index].transformMat.m
-            //multiply that result by pose in Space.Self
-        
+        //hierarchyState.GetComponent<HierarchyState>().getLocalPose()
+        //hierarchyState.GetComponent<HierarchyState>().getObjectPose(),
+        //multiple pose and parent pose parts in Space.World
+        //hierarchyState->localSpace->pose[index].transformMat.m
+        //multiply that result by pose in Space.Self
+
     }
 
     public void SolveInverseKinematics() //parameter hierarchy state?
