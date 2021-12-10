@@ -54,28 +54,32 @@ public class Kinematics : MonoBehaviour
         tmp1.z = hierarchyState.GetComponent<HierarchyState>().GetLocalPose().transform.position.z
             * hierarchyState.GetComponent<HierarchyState>().GetObjectPose().transform.position.z;
         //multiple pose and parent pose parts in Space.World
-        tmp1.x = hierarchyState.GetComponent<HierarchyState>().GetLocalPose().transform.position.x
-        * tmp1.x;
-        tmp1.y = hierarchyState.GetComponent<HierarchyState>().GetLocalPose().transform.position.y
-        * tmp1.y;
-        tmp1.z = hierarchyState.GetComponent<HierarchyState>().GetLocalPose().transform.position.z
-        * tmp1.z;
+        //hierarchyState.GetComponent<HierarchyState>().GetLocalPose().transform.position = tmp1;
         //multiply that result by pose in Space.Self
 
     }
 
-    public void SolveInverseKinematics() //parameter hierarchy state?
+    public void SolveInverseKinematics(GameObject hierarchyState)
+    {
+        //SolvePartialInverseKinematics();
+    }
+
+    public void SolvePartialInverseKinematics(GameObject hierarchyState, int firstIndex, int nodeCount)
     {
 
     }
 
-    public void SolvePartialInverseKinematics(int firstIndex, int nodeCount) //parameter hierarchy state?
+    public void SolveSingleInverseKinematics(GameObject hierarchyState, int index, int parentIndex)
     {
+        Vector4 tmp1;
+        //need to change this to object inverse
+        tmp1.x = hierarchyState.GetComponent<HierarchyState>().GetLocalPose().transform.position.x
+            * hierarchyState.GetComponent<HierarchyState>().GetObjectPose().transform.position.x;
+        tmp1.y = hierarchyState.GetComponent<HierarchyState>().GetLocalPose().transform.position.y
+            * hierarchyState.GetComponent<HierarchyState>().GetObjectPose().transform.position.y;
+        tmp1.z = hierarchyState.GetComponent<HierarchyState>().GetLocalPose().transform.position.z
+            * hierarchyState.GetComponent<HierarchyState>().GetObjectPose().transform.position.z;
 
-    }
-
-    public void SolveSingleInverseKinematics(int index, int parentIndex) //parameter hierarchy state?
-    {
-
+        //hierarchyState.GetComponent<HierarchyState>().GetObjectPose().transform.position = tmp1;
     }
 }
