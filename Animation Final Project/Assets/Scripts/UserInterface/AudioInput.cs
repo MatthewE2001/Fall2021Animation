@@ -1,6 +1,8 @@
 using UnityEngine;
+using UnityEngine.Networking;
 using TMPro;
 using System;
+using System.Collections;
 using System.Runtime.InteropServices;
 
 // Runtime file dialog based on solution discussed at
@@ -46,7 +48,27 @@ public class DllTest
 
 public class AudioInput : MonoBehaviour
 {
-    public TMP_InputField InputField;
+    public TMP_InputField inputField;
+    public string audioPath;
+    public AudioClip audio;
+
+    IEnumerator GetAudioClipFromFile(string path)
+    {
+        using (UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip("file:///" + path, AudioType.WAV))
+        {
+            yield return www.SendWebRequest();
+
+            if (www.result == UnityWebRequest.Result.ConnectionError)
+            {
+                Debug.Log(www.error);
+            }
+            else
+            {
+                Debug.Log("Successfully Retrieved Audio!");
+                audio = DownloadHandlerAudioClip.GetContent(www);
+            }
+        }
+    }
 
     public void OnButtonPress()
     {
@@ -68,13 +90,18 @@ public class AudioInput : MonoBehaviour
             Debug.Log("Selected File: " + ofn.file);
 
             // Set the audio path input field to the selected file
-            InputField.text = ofn.file;
+            inputField.text = ofn.file;
+            audioPath = ofn.file;
+
+            // Load audio clip
+            StartCoroutine(GetAudioClipFromFile(audioPath));
+
 
         }
         else
         {
             // Clear audio path input field to the selected file
-            InputField.text = "";
+            inputField.text = "";
 
             Debug.Log("No File Selected!");
         }
