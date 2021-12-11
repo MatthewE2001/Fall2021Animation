@@ -67,13 +67,15 @@ public class AudioInput : MonoBehaviour
         {
             Debug.Log("Selected File: " + ofn.file);
 
-            // Set the Audio Path
-            //TMP_InputField inputField_Text = InputField.GetComponent<TMP_InputField>();
-
+            // Set the audio path input field to the selected file
+            InputField.text = ofn.file;
 
         }
         else
         {
+            // Clear audio path input field to the selected file
+            InputField.text = "";
+
             Debug.Log("No File Selected!");
         }
     }
