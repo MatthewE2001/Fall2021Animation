@@ -45,7 +45,7 @@ public class PhonemeInput : MonoBehaviour
     {
         // When button is pressed, run an external Python script
 
-        PythonRunner.RunFile($"{Application.dataPath}/Scripts/Python/Test.py");
+        PythonRunner.RunFile($"{Application.dataPath}/Scripts/Python/PhonemeGeneration.py");
 
         // Feed the text through the pronouncing library via Python API
         // This can be converted to an external Python file later
