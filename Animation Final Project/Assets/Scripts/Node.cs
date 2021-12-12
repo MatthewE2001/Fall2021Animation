@@ -5,9 +5,9 @@ using UnityEngine;
 public class Node : MonoBehaviour
 {
     //these could all theoretically be public variables
-    Transform location; //this is just the transform of the gameobject this is assigned to probably
-    int index;
-    int parentIndex;
+    public Transform location; //this is just the transform of the gameobject this is assigned to probably
+    public int index;
+    public int parentIndex;
 
     // Start is called before the first frame update
     void Start()
