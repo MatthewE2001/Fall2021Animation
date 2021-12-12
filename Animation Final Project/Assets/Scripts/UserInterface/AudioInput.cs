@@ -50,7 +50,8 @@ public class AudioInput : MonoBehaviour
 {
     public TMP_InputField inputField;
     public string audioPath;
-    public AudioClip audio;
+    public GameObject playbackSystem;
+    //public AudioClip audioClip;
 
     IEnumerator GetAudioClipFromFile(string path)
     {
@@ -65,7 +66,9 @@ public class AudioInput : MonoBehaviour
             else
             {
                 Debug.Log("Successfully Retrieved Audio!");
-                audio = DownloadHandlerAudioClip.GetContent(www);
+
+                // Set the audio of the playback system
+                playbackSystem.GetComponent<AudioSource>().clip = DownloadHandlerAudioClip.GetContent(www);
             }
         }
     }
