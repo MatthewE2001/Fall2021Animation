@@ -558,6 +558,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playButton: {fileID: 654959042}
   pauseButton: {fileID: 1637470535}
+  isPaused: 0
+  isPlaying: 0
 --- !u!1 &500079866
 GameObject:
   m_ObjectHideFlags: 0
@@ -818,7 +820,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 388820602}
         m_TargetAssemblyTypeName: Playback, Assembly-CSharp
-        m_MethodName: onPlay
+        m_MethodName: OnPlayButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2440,7 +2442,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 388820602}
         m_TargetAssemblyTypeName: Playback, Assembly-CSharp
-        m_MethodName: onPause
+        m_MethodName: OnPauseButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
