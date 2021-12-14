@@ -65,8 +65,9 @@ public class SpatialPose : MonoBehaviour
 
     }
 
-    public void SpatialPoseConvert(SpatialPoseOrder order)
+    public void SpatialPoseConvert(SpatialPoseOrder order, Vector4 rotation)
     {
+        
         //a3mat4 rx, ry, rz, r;
         //a3real4x4SetRotateX(rx.m, a3trigValid_sind(spatialPose->rotate.x));
         //a3real4x4SetRotateY(ry.m, a3trigValid_sind(spatialPose->rotate.y));
@@ -77,9 +78,27 @@ public class SpatialPose : MonoBehaviour
             case SpatialPoseOrder.XYZ:
                 //a3real4x4Product(r.m, rx.m, ry.m);
                 //a3real4x4Product(spatialPose->transformMat.m, r.m, rz.m);
+                gameObject.transform.Rotate(rotation, Space.World); //world space clarification?
+                
+
+                break;
+            case SpatialPoseOrder.XZY:
+
+                break;
+            case SpatialPoseOrder.YXZ:
+
+                break;
+            case SpatialPoseOrder.YZX:
+
+                break;
+            case SpatialPoseOrder.ZXY:
+
+                break;
+            case SpatialPoseOrder.ZYX:
 
                 break;
             default:
+                //maybe default should just be xyz
 
                 break;
         }
