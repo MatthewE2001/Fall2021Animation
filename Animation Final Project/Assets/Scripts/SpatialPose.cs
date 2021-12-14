@@ -60,9 +60,34 @@ public class SpatialPose : MonoBehaviour
 
     }
 
-    public void SpatialPoseConcat()
+    public void SpatialPoseConcat(GameObject left, GameObject right)
     {
+        rotation.x = left.GetComponent<SpatialPose>().rotation.x + right.GetComponent<SpatialPose>().rotation.x;
+        rotation.y = left.GetComponent<SpatialPose>().rotation.y + right.GetComponent<SpatialPose>().rotation.y;
+        rotation.z = left.GetComponent<SpatialPose>().rotation.z + right.GetComponent<SpatialPose>().rotation.z;
 
+        scale.x = left.GetComponent<SpatialPose>().scale.x + right.GetComponent<SpatialPose>().scale.x;
+        scale.y = left.GetComponent<SpatialPose>().scale.y + right.GetComponent<SpatialPose>().scale.y;
+        scale.z = left.GetComponent<SpatialPose>().scale.z + right.GetComponent<SpatialPose>().scale.z;
+
+        translation.x = left.GetComponent<SpatialPose>().translation.x + right.GetComponent<SpatialPose>().translation.x;
+        translation.y = left.GetComponent<SpatialPose>().translation.y + right.GetComponent<SpatialPose>().translation.y;
+        translation.z = left.GetComponent<SpatialPose>().translation.z + right.GetComponent<SpatialPose>().translation.z;
+    }
+
+    public void SpatialPoseDeConcat(GameObject left, GameObject right)
+    {
+        rotation.x = left.GetComponent<SpatialPose>().rotation.x - right.GetComponent<SpatialPose>().rotation.x;
+        rotation.y = left.GetComponent<SpatialPose>().rotation.y - right.GetComponent<SpatialPose>().rotation.y;
+        rotation.z = left.GetComponent<SpatialPose>().rotation.z - right.GetComponent<SpatialPose>().rotation.z;
+
+        scale.x = left.GetComponent<SpatialPose>().scale.x - right.GetComponent<SpatialPose>().scale.x;
+        scale.y = left.GetComponent<SpatialPose>().scale.y - right.GetComponent<SpatialPose>().scale.y;
+        scale.z = left.GetComponent<SpatialPose>().scale.z - right.GetComponent<SpatialPose>().scale.z;
+
+        translation.x = left.GetComponent<SpatialPose>().translation.x - right.GetComponent<SpatialPose>().translation.x;
+        translation.y = left.GetComponent<SpatialPose>().translation.y - right.GetComponent<SpatialPose>().translation.y;
+        translation.z = left.GetComponent<SpatialPose>().translation.z - right.GetComponent<SpatialPose>().translation.z;
     }
 
     public void SpatialPoseConvert(SpatialPoseOrder order, Vector4 rotation)
