@@ -108,5 +108,9 @@ public class AudioInput : MonoBehaviour
 
             Debug.Log("No File Selected!");
         }
+
+        // Stop playback system
+        playbackSystem.GetComponent<Playback>().PlaybackStop();
+
     }
 }
