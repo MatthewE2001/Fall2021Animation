@@ -25,10 +25,10 @@ public class Clip : MonoBehaviour
         
     }
 
-    public void InitializeClip(string tmpName, Keyframe keyframeFirst, Keyframe keyframeFinal)
+    public void InitializeClip(string tmpName, GameObject keyframeFirst, GameObject keyframeFinal)
     {
         clipName = tmpName;
-        //firstKeyframe = keyframeFirst.GetComponent<Keyframe>().GetIndex();
-        //finalKeyframe = keyframeFinal.GetComponent<Keyframe>().GetIndex();
+        firstKeyframe = keyframeFirst.GetComponent<Keyframe>().GetIndex();
+        finalKeyframe = keyframeFinal.GetComponent<Keyframe>().GetIndex();
     }
 }

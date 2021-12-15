@@ -29,4 +29,9 @@ public class Keyframe : MonoBehaviour
         durationStep = timeStep;
         durationSeconds = playbackPerSec;
     }
+
+    public int GetIndex()
+    {
+        return index;
+    }
 }
