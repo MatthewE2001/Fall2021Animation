@@ -49,6 +49,7 @@ if len(input_string) > 0:
                 output += "]"
 
             # Transfer the output string to Unity
+            output = ''.join([i for i in output if not i.isdigit()])
             UnityEngine.GameObject.Find("System_PhonemeInput").GetComponent("PhonemeInput").dataString = output
 
     else:
