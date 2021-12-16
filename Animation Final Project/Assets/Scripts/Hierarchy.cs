@@ -7,7 +7,7 @@ public class Hierarchy : MonoBehaviour
     int index;
     int parentIndex;
 
-    Node[] nodes;
+    public Node[] nodes;
 
     // Start is called before the first frame update
     void Start()
