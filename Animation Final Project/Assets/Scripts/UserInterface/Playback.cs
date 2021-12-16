@@ -10,8 +10,12 @@ public class Playback : MonoBehaviour
     public Button playButton;
     public Button pauseButton;
 
+    public GameObject mouth;
+
     public bool isPaused;
     public bool isPlaying;
+
+    public float timer = 0.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -22,6 +26,24 @@ public class Playback : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Update the playback timer
+        if (isPlaying)
+        {
+            if (!isPaused)
+            {
+                timer += Time.deltaTime;
+
+                // Stop if the timer runs longer than the audio
+                if (timer >= GetComponent<AudioSource>().clip.length)
+                {
+                    PlaybackStop();
+                    // Loop
+                    PlaybackStart();
+                }
+            }
+        }
+
+        // Update the animation
     }
 
     /// <summary>
@@ -30,6 +52,9 @@ public class Playback : MonoBehaviour
     public void PlaybackStart()
     {
         Debug.Log("Start Playback!");
+
+        // Reset timer
+        timer = 0.0f;
 
         // Set active play state
         isPlaying = true;
@@ -60,6 +85,9 @@ public class Playback : MonoBehaviour
     public void PlaybackStop()
     {
         Debug.Log("Stop Playback!");
+
+        // Reset timer
+        timer = 0.0f;
 
         // Set inactive play state
         isPlaying = false;
