@@ -33,17 +33,29 @@ if len(input_string) > 0:
             else:
                 # Clear the phrase phoneme list
                 input_phonemes.clear()
+                UnityEngine.GameObject.Find("System_PhonemeInput").GetComponent("PhonemeInput").dataString = "invalid"
                 print("ERROR: UNRECOGNIZED WORD")
                 break
 
-        # Check if the phrase has been converted to phonemes successfully, and transfer the output
+        # Check if the phrase has been converted to phonemes successfully, and build an output string
         if len(input_phonemes) > 0:
-            print(input_phonemes)
+            print(str(input_phonemes))
+            output = ""
+            for word in input_phonemes:
+                output += "["
+                for phoneme in word[:-1]:
+                    output += phoneme + ","
+                output += word[-1]
+                output += "]"
 
+            # Transfer the output string to Unity
+            UnityEngine.GameObject.Find("System_PhonemeInput").GetComponent("PhonemeInput").dataString = output
 
     else:
+        UnityEngine.GameObject.Find("System_PhonemeInput").GetComponent("PhonemeInput").dataString = "invalid"
         print("ERROR: NO VALID CHARACTERS")
 else:
+    UnityEngine.GameObject.Find("System_PhonemeInput").GetComponent("PhonemeInput").dataString = "invalid"
     print("ERROR: EMPTY STRING")
 
 
