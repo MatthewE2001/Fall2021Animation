@@ -66,7 +66,20 @@ public class Kinematics : MonoBehaviour
 
     public void SolvePartialInverseKinematics(GameObject hierarchyState, int firstIndex, int nodeCount)
     {
+        //Hierarchy tmp = hierarchyState.GetComponent<HierarchyState>().GetHierarchy();
 
+        for (int i = firstIndex; i < nodeCount; i++)
+        {
+            if (hierarchyState.GetComponent<HierarchyState>().GetHierarchy().GetNode(i).GetParentIndex() >= 0)
+            {
+                SolveSingleInverseKinematics(hierarchyState, i, hierarchyState.GetComponent<HierarchyState>().GetHierarchy().GetNode(i).GetParentIndex());
+            }
+            else
+            {
+                hierarchyState.GetComponent<HierarchyState>().SetLocalPose(
+                    hierarchyState.GetComponent<HierarchyState>().GetObjectPose());
+            }
+        }
     }
 
     public void SolveSingleInverseKinematics(GameObject hierarchyState, int index, int parentIndex)

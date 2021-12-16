@@ -76,4 +76,9 @@ public class HierarchyState : MonoBehaviour
     {
         objectPose = pose;
     }
+
+    public void SetLocalPose(SpatialPose pose)
+    {
+        localPose = pose;
+    }
 }

@@ -7,7 +7,7 @@ public class Hierarchy : MonoBehaviour
     int index;
     int parentIndex;
 
-    Node[] nodes; //Should this be an array
+    Node[] nodes;
 
     // Start is called before the first frame update
     void Start()
@@ -25,7 +25,8 @@ public class Hierarchy : MonoBehaviour
     {
         for (int i = 0; i < numberOfNodes; i++)
         {
-            //nodes[i].name = name;
+            nodes[i].name = name;
+            nodes[i].index = i;
         }
     }
 
