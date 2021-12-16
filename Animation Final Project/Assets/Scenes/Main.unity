@@ -558,8 +558,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playButton: {fileID: 654959042}
   pauseButton: {fileID: 1637470535}
+  mouth: {fileID: 985436205}
   isPaused: 0
   isPlaying: 0
+  timer: 0
 --- !u!1 &500079866
 GameObject:
   m_ObjectHideFlags: 0
@@ -1181,6 +1183,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 866766075}
   m_CullTransparentMesh: 1
+--- !u!1 &985436205 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 64167731c0a12e44eaa5ed1f654a30e5, type: 3}
+  m_PrefabInstance: {fileID: 1658246908}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1056645608
 GameObject:
   m_ObjectHideFlags: 0

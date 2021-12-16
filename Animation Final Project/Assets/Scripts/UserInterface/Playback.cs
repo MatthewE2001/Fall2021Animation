@@ -31,19 +31,21 @@ public class Playback : MonoBehaviour
         {
             if (!isPaused)
             {
+                // Update the timer
                 timer += Time.deltaTime;
 
-                // Stop if the timer runs longer than the audio
+                // Update the animation
+
+                // Loop if the timer runs longer than the audio
                 if (timer >= GetComponent<AudioSource>().clip.length)
                 {
+                    // Stop the current playback session
                     PlaybackStop();
-                    // Loop
+                    // Restart playback from the beginning
                     PlaybackStart();
                 }
             }
         }
-
-        // Update the animation
     }
 
     /// <summary>
