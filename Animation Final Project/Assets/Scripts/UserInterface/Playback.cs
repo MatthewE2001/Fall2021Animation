@@ -68,7 +68,8 @@ public class Playback : MonoBehaviour
                 }
 
                 // Update the mouth bone rotation
-                mouth.transform.Find("Root/Jaw_Start").gameObject.transform.Rotate(45, 0, 0, Space.World);
+                mouth.transform.Find("Root/Jaw_Start").gameObject.transform.rotation = transform.parent.rotation;
+                mouth.transform.Find("Root/Jaw_Start").gameObject.transform.Rotate(clipLoudness * 128, 0, 0, Space.World);
 
 
 
@@ -92,6 +93,9 @@ public class Playback : MonoBehaviour
         isPlaying = true;
         // Set inactive pause state
         isPaused = false;
+
+        // Reset transformation
+        mouth.transform.Find("Root/Jaw_Start").gameObject.transform.rotation = transform.parent.rotation;
 
         // Set active play button (Blue)
         playButton.GetComponent<Image>().color = new Color(35f / 255f, 74f / 255f, 108f / 255f);
@@ -125,6 +129,9 @@ public class Playback : MonoBehaviour
         isPlaying = false;
         // Set inactive pause state
         isPaused = false;
+
+        // Reset transformation
+        mouth.transform.Find("Root/Jaw_Start").gameObject.transform.rotation = transform.parent.rotation;
 
         // Set inactive play button (Gray 88)
         playButton.GetComponent<Image>().color = new Color(88f / 255f, 88f / 255f, 88f / 255f);
