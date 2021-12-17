@@ -69,7 +69,12 @@ public class Playback : MonoBehaviour
 
                 // Update the mouth bone rotation
                 mouth.transform.Find("Root/Jaw_Start").gameObject.transform.rotation = transform.parent.rotation;
-                mouth.transform.Find("Root/Jaw_Start").gameObject.transform.Rotate(clipLoudness * 128, 0, 0, Space.World);
+                mouth.transform.Find("Root/Jaw_Start").gameObject.transform.Rotate(clipLoudness * 32, 0, 0, Space.World);
+
+                // Workaround for the phoneme system since we have only two viseme blendshapes
+                mouth.transform.Find("Preview_Mouth").gameObject.GetComponent<SkinnedMeshRenderer>().SetBlendShapeWeight(0, Mathf.Clamp(clipLoudness * 400.0f, 0.0f, 100.0f));
+                //Mathf.Clamp(clipLoudness * 250.0f, 0.0f, 100.0f);
+
 
 
 
@@ -111,6 +116,7 @@ public class Playback : MonoBehaviour
         else
         {
             Debug.Log("No audio clip loaded!");
+            PlaybackStop();
         }
 
     }
