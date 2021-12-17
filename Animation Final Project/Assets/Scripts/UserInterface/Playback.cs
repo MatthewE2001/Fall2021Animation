@@ -11,16 +11,23 @@ public class Playback : MonoBehaviour
     public Button pauseButton;
 
     public GameObject mouth;
+    public AudioSource audioSource;
 
     public bool isPaused;
     public bool isPlaying;
 
     public float timer = 0.0f;
 
+    private int sampleDataLength = 1024;
+    public float clipLoudness;
+    private float[] clipSampleData;
+
+
     // Start is called before the first frame update
     void Start()
     {
         isPaused = false;
+        clipSampleData = new float[sampleDataLength];
     }
 
     // Update is called once per frame
@@ -34,16 +41,39 @@ public class Playback : MonoBehaviour
                 // Update the timer
                 timer += Time.deltaTime;
 
-                // Update the animation
-
                 // Loop if the timer runs longer than the audio
-                if (timer >= GetComponent<AudioSource>().clip.length)
+                if (timer >= audioSource.clip.length)
                 {
+                    Debug.Log("Duration Exceeded!");
                     // Stop the current playback session
                     PlaybackStop();
                     // Restart playback from the beginning
                     PlaybackStart();
                 }
+
+                // Update the sound amplitude information
+                if (audioSource.clip != null)
+                {
+                    audioSource.clip.GetData(clipSampleData, audioSource.timeSamples);
+                    clipLoudness = 0f;
+                    foreach (var sample in clipSampleData)
+                    {
+                        clipLoudness += Mathf.Abs(sample);
+                    }
+                    clipLoudness /= sampleDataLength;
+                }
+                else
+                {
+                    clipLoudness = 0.0f;
+                }
+
+                // Update the mouth bone rotation
+                mouth.transform.Find("Root/Jaw_Start").gameObject.transform.Rotate(45, 0, 0, Space.World);
+
+
+
+
+
             }
         }
     }

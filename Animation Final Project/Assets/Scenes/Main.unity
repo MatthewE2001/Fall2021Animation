@@ -564,9 +564,11 @@ MonoBehaviour:
   playButton: {fileID: 654959042}
   pauseButton: {fileID: 1637470535}
   mouth: {fileID: 12203054}
+  audioSource: {fileID: 388820601}
   isPaused: 0
   isPlaying: 0
   timer: 0
+  clipLoudness: 0
 --- !u!1 &500079866
 GameObject:
   m_ObjectHideFlags: 0
@@ -1269,7 +1271,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inputField: {fileID: 500079868}
   audioPath: 
-  playbackSystem: {fileID: 0}
+  playbackSystem: {fileID: 388820599}
 --- !u!4 &1056645610
 Transform:
   m_ObjectHideFlags: 0
