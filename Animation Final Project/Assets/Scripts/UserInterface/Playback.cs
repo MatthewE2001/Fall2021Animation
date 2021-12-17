@@ -72,13 +72,21 @@ public class Playback : MonoBehaviour
                 mouth.transform.Find("Root/Jaw_Start").gameObject.transform.Rotate(clipLoudness * 32, 0, 0, Space.World);
 
                 // Workaround for the phoneme system since we have only two viseme blendshapes
-                mouth.transform.Find("Preview_Mouth").gameObject.GetComponent<SkinnedMeshRenderer>().SetBlendShapeWeight(0, Mathf.Clamp(clipLoudness * 400.0f, 0.0f, 100.0f));
-                //Mathf.Clamp(clipLoudness * 250.0f, 0.0f, 100.0f);
-
-
-
-
-
+                float phoneme_control = Mathf.Clamp(clipLoudness * 400.0f, 0.0f, 100.0f);
+                if (phoneme_control <= 25.0f)
+                {
+                    // AE controls
+                    mouth.transform.Find("Preview_Mouth").gameObject.GetComponent<SkinnedMeshRenderer>().SetBlendShapeWeight(0, 0.0f);
+                    // AO controls
+                    mouth.transform.Find("Preview_Mouth").gameObject.GetComponent<SkinnedMeshRenderer>().SetBlendShapeWeight(1, phoneme_control);
+                }
+                else
+                {
+                    // AO control
+                    mouth.transform.Find("Preview_Mouth").gameObject.GetComponent<SkinnedMeshRenderer>().SetBlendShapeWeight(1, 0.0f);
+                    // AE controls
+                    mouth.transform.Find("Preview_Mouth").gameObject.GetComponent<SkinnedMeshRenderer>().SetBlendShapeWeight(0, phoneme_control);
+                }
 
             }
         }
